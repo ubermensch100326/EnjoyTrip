@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div></div>
+  <h1>Select.vue</h1>
 </template>
 
 <style scoped></style>

@@ -4,7 +4,7 @@ const msg = ref("테스트용 페이지");
 </script>
 
 <template>
-  <h1>HomeView.vue</h1>
+  <h1>TheHomeView.vue</h1>
   <div class="mb-3">
     <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
     <textarea

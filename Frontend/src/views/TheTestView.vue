@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <h1>TestView.vue</h1>
+  <h1>TheTestView.vue</h1>
 </template>
 
 <style scoped></style>
