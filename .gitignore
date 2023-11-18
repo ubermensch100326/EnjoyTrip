@@ -6,6 +6,8 @@
 # VITE_ARTICLE_NAVIGATION_SIZE=10
 .env
 
+# DB
+Dump20230324.sql
 
 # Logs
 logs
