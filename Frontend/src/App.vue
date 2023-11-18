@@ -8,4 +8,10 @@ import TheNavigationbarVue from "./components/layout/TheNavigationbar.vue";
   <router-view></router-view>
 </template>
 
-<style scoped></style>
+<style scoped>
+:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+</style>

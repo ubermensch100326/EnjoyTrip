@@ -16,7 +16,7 @@ const logout = () => {
 <template>
   <h1>TheNavigationBar.vue</h1>
   <body style="overflow-y: scroll">
-    <nav class="navbar navbar-expand-md bg-dark-subtle bg-gradient shadow-sm fixed-top">
+    <nav class="navbar navbar-expand-sm bg-dark-subtle bg-gradient shadow-sm fixed-top">
       <div class="container">
         <router-link :to="{ name: 'home' }" class="navbar-brand">
           <img src="@/assets/enjoytrip_logo.png" alt="favicon" width="50" />
