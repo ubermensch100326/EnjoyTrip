@@ -1,3 +1,12 @@
+# env (clone해서 프로젝트를 실행하고자 한다면 별도로 .env 파일 생성해야 함)
+# VITE_OPEN_API_SERVICE_KEY=공공데이터키
+# VITE_KAKAO_MAP_SERVICE_KEY=카카오키
+# VITE_VUE_API_URL=http://localhost/vue
+# VITE_ARTICLE_LIST_SIZE=20
+# VITE_ARTICLE_NAVIGATION_SIZE=10
+.env
+
+
 # Logs
 logs
 *.log

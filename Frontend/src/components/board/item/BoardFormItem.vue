@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { registArticle, getModifyArticle, modifyArticle } from "@/api/board";
+import { registerBoard, toModifyBoard, modifyBoard } from "@/api/board";
 
 const router = useRouter();
 const route = useRoute();
@@ -10,9 +10,9 @@ const props = defineProps({ type: String });
 
 const isUseId = ref(false);
 
-const article = ref({
-  articleNo: 0,
-  subject: "",
+const board = ref({
+  boardNo: 0,
+  title: "",
   content: "",
   userId: "",
   userName: "",
@@ -21,11 +21,11 @@ const article = ref({
 });
 
 if (props.type === "modify") {
-  let { articleno } = route.params;
-  getModifyArticle(
-    articleno,
+  let { no } = route.params;
+  toModifyBoard(
+    no,
     ({ data }) => {
-      article.value = data;
+      board.value = data;
       isUseId.value = true;
     },
     (error) => {
@@ -35,20 +35,20 @@ if (props.type === "modify") {
   isUseId.value = true;
 }
 
-const subjectErrMsg = ref("");
+const titleErrMsg = ref("");
 const contentErrMsg = ref("");
 watch(
-  () => article.value.subject,
+  () => board.value.title,
   (value) => {
     let len = value.length;
     if (len == 0 || len > 30) {
-      subjectErrMsg.value = "제목을 확인해 주세요!!!";
-    } else subjectErrMsg.value = "";
+      titleErrMsg.value = "제목을 확인해 주세요!!!";
+    } else titleErrMsg.value = "";
   },
   { immediate: true }
 );
 watch(
-  () => article.value.content,
+  () => board.value.content,
   (value) => {
     let len = value.length;
     if (len == 0 || len > 500) {
@@ -61,19 +61,19 @@ watch(
 function onSubmit() {
   // event.preventDefault();
 
-  if (subjectErrMsg.value) {
-    alert(subjectErrMsg.value);
+  if (titleErrMsg.value) {
+    alert(titleErrMsg.value);
   } else if (contentErrMsg.value) {
     alert(contentErrMsg.value);
   } else {
-    props.type === "regist" ? writeArticle() : updateArticle();
+    props.type === "register" ? writeArticle() : updateArticle();
   }
 }
 
 function writeArticle() {
-  console.log("글등록하자!!", article.value);
-  registArticle(
-    article.value,
+  console.log("글등록하자!!", board.value);
+  registerBoard(
+    board.value,
     (response) => {
       let msg = "글등록 처리시 문제 발생했습니다.";
       if (response.status == 201) msg = "글등록이 완료되었습니다.";
@@ -85,23 +85,23 @@ function writeArticle() {
 }
 
 function updateArticle() {
-  console.log(article.value.articleNo + "번글 수정하자!!", article.value);
-  modifyArticle(
-    article.value,
+  console.log(board.value.boardNo + "번글 수정하자!!", board.value);
+  modifyBoard(
+    board.value,
     (response) => {
       let msg = "글수정 처리시 문제 발생했습니다.";
       if (response.status == 200) msg = "글정보 수정이 완료되었습니다.";
       alert(msg);
       moveList();
-      // router.push({ name: "article-view" });
-      // router.push(`/board/view/${article.value.articleNo}`);
+      // router.push({ name: "board-view" });
+      // router.push(`/board/view/${board.value.boardNo}`);
     },
     (error) => console.log(error)
   );
 }
 
 function moveList() {
-  router.push({ name: "article-list" });
+  router.push({ name: "board-list" });
 }
 </script>
 
@@ -113,21 +113,21 @@ function moveList() {
       <input
         type="text"
         class="form-control"
-        v-model="article.userId"
+        v-model="board.userId"
         :disabled="isUseId"
         placeholder="작성자ID..."
       />
     </div>
     <div class="mb-3">
-      <label for="subject" class="form-label">제목 : </label>
-      <input type="text" class="form-control" v-model="article.subject" placeholder="제목..." />
+      <label for="title" class="form-label">제목 : </label>
+      <input type="text" class="form-control" v-model="board.title" placeholder="제목..." />
     </div>
     <div class="mb-3">
       <label for="content" class="form-label">내용 : </label>
-      <textarea class="form-control" v-model="article.content" rows="10"></textarea>
+      <textarea class="form-control" v-model="board.content" rows="10"></textarea>
     </div>
     <div class="col-auto text-center">
-      <button type="submit" class="btn btn-outline-primary mb-3" v-if="type === 'regist'">
+      <button type="submit" class="btn btn-outline-primary mb-3" v-if="type === 'register'">
         글작성
       </button>
       <button type="submit" class="btn btn-outline-success mb-3" v-else>글수정</button>

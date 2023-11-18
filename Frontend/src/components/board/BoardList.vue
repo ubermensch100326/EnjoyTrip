@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-// import { listArticle } from "@/api/board.js";
+// import { listBoard } from "@/api/board.js";
 
 import OptionSelect from "@/components/common/OptionSelect.vue";
 import BoardListItem from "@/components/board/item/BoardListItem.vue";
@@ -11,12 +11,12 @@ const router = useRouter();
 
 const optionList = ref([
   { text: "검색조건", value: "" },
-  { text: "글번호", value: "article_no" },
+  { text: "글번호", value: "board_no" },
   { text: "제목", value: "subject" },
   { text: "작성자아이디", value: "user_id" },
 ]);
 
-const articles = ref([]);
+const boardList = ref([]);
 const currentPage = ref(1);
 const totalPage = ref(0);
 const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
@@ -28,18 +28,18 @@ const param = ref({
 });
 
 onMounted(() => {
-  getArticleList();
+  getBoardList();
 });
 
 const changeKey = (val) => {
   param.value.key = val;
 };
 
-const getArticleList = () => {
-  // listArticle(
+const getBoardList = () => {
+  // listBoard(
   //   param.value,
   //   ({ data }) => {
-  //     articles.value = data.articles;
+  //     boardList.value = data.boardList;
   //     currentPage.value = data.currentPage;
   //     totalPage.value = data.totalPageCount;
   //   },
@@ -52,7 +52,7 @@ const getArticleList = () => {
 const onPageChange = (val) => {
   currentPage.value = val;
   param.value.pgno = val;
-  getArticleList();
+  getBoardList();
 };
 
 const moveWrite = () => {
@@ -86,7 +86,7 @@ const moveWrite = () => {
                   v-model="param.word"
                   placeholder="검색어..."
                 />
-                <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
+                <button class="btn btn-dark" type="button" @click="getBoardList">검색</button>
               </div>
             </form>
           </div>
@@ -103,9 +103,9 @@ const moveWrite = () => {
           </thead>
           <tbody>
             <BoardListItem
-              v-for="article in articles"
-              :key="article.articleNo"
-              :article="article"
+              v-for="board in boardList"
+              :key="board.boardNo"
+              :board="board"
             ></BoardListItem>
           </tbody>
         </table>

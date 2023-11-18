@@ -35,6 +35,7 @@
             name="user_password"
             type="password"
             placeholder="비밀번호"
+            autocomplete="off"
             style="width: 202px"
           />
           <br />
@@ -43,6 +44,7 @@
             id="checkpwd"
             name="checkpwd"
             type="password"
+            autocomplete="off"
             placeholder="비밀번호 확인"
             style="width: 202px"
           />

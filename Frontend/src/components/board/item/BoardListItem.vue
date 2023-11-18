@@ -1,22 +1,22 @@
 <script setup>
-defineProps({ article: Object });
+defineProps({ board: Object });
 </script>
 
 <template>
   <h1>BoardListItem.vue</h1>
   <tr class="text-center">
-    <th scope="row">{{ article.articleNo }}</th>
+    <th scope="row">{{ board.boardNo }}</th>
     <td class="text-start">
       <router-link
-        :to="{ name: 'article-view', params: { articleno: article.articleNo } }"
-        class="article-title link-dark"
+        :to="{ name: 'board-view', params: { boardno: board.boardNo } }"
+        class="board-title link-dark"
       >
-        {{ article.subject }}
+        {{ board.subject }}
       </router-link>
     </td>
-    <td>{{ article.userName }}</td>
-    <td>{{ article.hit }}</td>
-    <td>{{ article.registerTime }}</td>
+    <td>{{ board.userName }}</td>
+    <td>{{ board.hit }}</td>
+    <td>{{ board.registerTime }}</td>
   </tr>
 </template>
 

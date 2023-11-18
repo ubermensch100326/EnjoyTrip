@@ -12,7 +12,7 @@ import BoardFormItem from "./item/BoardFormItem.vue";
         </h2>
       </div>
       <div class="col-lg-10 text-start">
-        <BoardFormItem type="regist" />
+        <BoardFormItem type="register" />
       </div>
     </div>
   </div>

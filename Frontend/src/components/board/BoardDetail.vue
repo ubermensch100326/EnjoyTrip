@@ -1,25 +1,25 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { detailArticle, deleteArticle } from "@/api/board";
+import { viewBoard, deleteBoard } from "@/api/board";
 
 const route = useRoute();
 const router = useRouter();
 
-// const articleno = ref(route.params.articleno);
-const { articleno } = route.params;
+// const no = ref(route.params.no);
+const { no } = route.params;
 
-const article = ref({});
+const board = ref({});
 
 onMounted(() => {
-  getArticle();
+  getBoard();
 });
 
-const getArticle = () => {
-  detailArticle(
-    articleno,
+const getBoard = () => {
+  viewBoard(
+    no,
     ({ data }) => {
-      article.value = data;
+      board.value = data;
     },
     (error) => {
       console.error(error);
@@ -28,16 +28,16 @@ const getArticle = () => {
 };
 
 function moveList() {
-  router.push({ name: "article-list" });
+  router.push({ name: "board-list" });
 }
 
 function moveModify() {
-  router.push({ name: "article-modify", params: { articleno } });
+  router.push({ name: "board-modify", params: { no } });
 }
 
-function onDeleteArticle() {
-  deleteArticle(
-    articleno,
+function onDeleteBoard() {
+  deleteBoard(
+    no,
     (response) => {
       if (response.status == 200) moveList();
     },
@@ -59,7 +59,7 @@ function onDeleteArticle() {
       </div>
       <div class="col-lg-10 text-start">
         <div class="row my-2">
-          <h2 class="text-secondary px-5">{{ article.articleNo }}. {{ article.subject }}</h2>
+          <h2 class="text-secondary px-5">{{ board.boardNo }}. {{ board.subject }}</h2>
         </div>
         <div class="row">
           <div class="col-md-8">
@@ -71,7 +71,7 @@ function onDeleteArticle() {
               <p>
                 <span class="fw-bold">안효인</span> <br />
                 <span class="text-secondary fw-light">
-                  {{ article.registerTime }}1 조회 : {{ article.hit }}
+                  {{ board.registerTime }}1 조회 : {{ board.hit }}
                 </span>
               </p>
             </div>
@@ -79,7 +79,7 @@ function onDeleteArticle() {
           <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
           <div class="divider mb-3"></div>
           <div class="text-secondary">
-            {{ article.content }}
+            {{ board.content }}
           </div>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">
@@ -89,7 +89,7 @@ function onDeleteArticle() {
             <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify">
               글수정
             </button>
-            <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteArticle">
+            <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteBoard">
               글삭제
             </button>
           </div>
