@@ -1,5 +1,4 @@
 <script setup>
-
 import { ref, watch, onMounted } from "vue";
 
 var map;
@@ -13,8 +12,9 @@ onMounted(() => {
     initMap();
   } else {
     const script = document.createElement("script");
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
-      }&libraries=services,clusterer`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
+      import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
+    }&libraries=services,clusterer`;
     /* global kakao */
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
@@ -26,7 +26,10 @@ watch(
   () => props.selectedMyAttraction.value,
   () => {
     // 이동할 위도 경도 위치를 생성합니다
-    var moveLatLon = new kakao.maps.LatLng(props.selectedMyAttraction.lat, props.selectedMyAttraction.lng);
+    var moveLatLon = new kakao.maps.LatLng(
+      props.selectedMyAttraction.lat,
+      props.selectedMyAttraction.lng
+    );
 
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
@@ -50,6 +53,17 @@ watch(
   },
   { deep: true }
 );
+
+const initMap = () => {
+  const container = document.getElementById("map");
+  const options = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667),
+    level: 3,
+  };
+  map = new kakao.maps.Map(container, options);
+
+  // loadMarkers();
+};
 
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
@@ -89,7 +103,6 @@ const deleteMarkers = () => {
     markers.value.forEach((marker) => marker.setMap(null));
   }
 };
-
 </script>
 
 <template>

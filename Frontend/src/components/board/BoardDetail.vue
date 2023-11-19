@@ -6,8 +6,8 @@ import { viewBoard, deleteBoard } from "@/api/board";
 const route = useRoute();
 const router = useRouter();
 
-// const no = ref(route.params.no);
-const { no } = route.params;
+// const boardno = ref(route.params.boardno);
+const { boardno } = route.params;
 
 const board = ref({});
 
@@ -17,7 +17,7 @@ onMounted(() => {
 
 const getBoard = () => {
   viewBoard(
-    no,
+    boardno,
     ({ data }) => {
       board.value = data;
     },
@@ -32,12 +32,12 @@ function moveList() {
 }
 
 function moveModify() {
-  router.push({ name: "board-modify", params: { no } });
+  router.push({ name: "board-modify", params: { boardno } });
 }
 
 function onDeleteBoard() {
   deleteBoard(
-    no,
+    boardno,
     (response) => {
       if (response.status == 200) moveList();
     },

@@ -45,10 +45,10 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`attraction_info`
+-- Table `enjoytrip`.`attraction`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_info` (
-  `attraction_info_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction` (
+  `attraction_id` INT NOT NULL,
   `type` INT NOT NULL,
   `title` VARCHAR(100) NOT NULL,
   `addr1` VARCHAR(100) NULL DEFAULT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_info` (
   `latitude` DECIMAL(20,17) NULL DEFAULT NULL,
   `longitude` DECIMAL(20,17) NULL DEFAULT NULL,
   `mlevel` VARCHAR(2) NULL DEFAULT NULL,
-  PRIMARY KEY (`attraction_info_id`),
+  PRIMARY KEY (`attraction_id`),
   INDEX `attraction_to_sido_code_fk_idx` (`sido_code` ASC) VISIBLE,
   INDEX `attraction_to_gugun_code_fk_idx` (`gugun_code` ASC) VISIBLE,
   CONSTRAINT `attraction_to_gugun_code_fk`
@@ -80,14 +80,14 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- Table `enjoytrip`.`attraction_description`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_description` (
-  `attraction_info_id` INT NOT NULL,
+  `attraction_id` INT NOT NULL,
   `homepage` VARCHAR(100) NULL DEFAULT NULL,
   `overview` VARCHAR(10000) NULL DEFAULT NULL,
   `telname` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`attraction_info_id`),
+  PRIMARY KEY (`attraction_id`),
   CONSTRAINT `attraction_detail_to_attraciton_id_fk`
-    FOREIGN KEY (`attraction_info_id`)
-    REFERENCES `enjoytrip`.`attraction_info` (`attraction_info_id`))
+    FOREIGN KEY (`attraction_id`)
+    REFERENCES `enjoytrip`.`attraction` (`attraction_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
@@ -96,17 +96,17 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- Table `enjoytrip`.`attraction_detail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_detail` (
-  `attraction_info_id` INT NOT NULL,
+  `attraction_id` INT NOT NULL,
   `cat1` VARCHAR(3) NULL DEFAULT NULL,
   `cat2` VARCHAR(5) NULL DEFAULT NULL,
   `cat3` VARCHAR(9) NULL DEFAULT NULL,
   `create_time` DATETIME NULL DEFAULT NULL,
   `modify_time` DATETIME NULL DEFAULT NULL,
   `booktour` VARCHAR(5) NULL DEFAULT NULL,
-  PRIMARY KEY (`attraction_info_id`),
+  PRIMARY KEY (`attraction_id`),
   CONSTRAINT `attraction_detail_to_basic_content_id_fk`
-    FOREIGN KEY (`attraction_info_id`)
-    REFERENCES `enjoytrip`.`attraction_info` (`attraction_info_id`))
+    FOREIGN KEY (`attraction_id`)
+    REFERENCES `enjoytrip`.`attraction` (`attraction_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
@@ -132,10 +132,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`board_info`
+-- Table `enjoytrip`.`board`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`board_info` (
-  `board_info_no` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`board` (
+  `board_no` INT NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(16) NOT NULL,
   `title` VARCHAR(100) NOT NULL,
   `content` VARCHAR(2000) NULL DEFAULT NULL,
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`board_info` (
   `register_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` DATETIME NULL,
   `private` TINYINT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`board_info_no`),
+  PRIMARY KEY (`board_no`),
   INDEX `board_to_member_user_id_fk` (`user_id` ASC) VISIBLE,
   CONSTRAINT `board_to_member_user_id_fk`
     FOREIGN KEY (`user_id`)
@@ -157,15 +157,15 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `enjoytrip`.`board_like`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`board_like` (
-  `board_info_no` INT NOT NULL AUTO_INCREMENT,
+  `board_no` INT NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(16) NOT NULL,
   `like_time` DATETIME NOT NULL,
-  PRIMARY KEY (`board_info_no`, `user_id`),
+  PRIMARY KEY (`board_no`, `user_id`),
   INDEX `fk_board_has_user_user1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_board_has_user_board1_idx` (`board_info_no` ASC) VISIBLE,
+  INDEX `fk_board_has_user_board1_idx` (`board_no` ASC) VISIBLE,
   CONSTRAINT `fk_board_has_user_board1`
-    FOREIGN KEY (`board_info_no`)
-    REFERENCES `enjoytrip`.`board_info` (`board_info_no`),
+    FOREIGN KEY (`board_no`)
+    REFERENCES `enjoytrip`.`board` (`board_no`),
   CONSTRAINT `fk_board_has_user_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `enjoytrip`.`user` (`user_id`))
@@ -179,16 +179,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`comment` (
   `comment_no` INT NOT NULL AUTO_INCREMENT,
-  `board_info_no` INT NOT NULL,
+  `board_no` INT NOT NULL,
   `user_id` VARCHAR(16) NOT NULL,
   `content` VARCHAR(500) NOT NULL,
   `register_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_no`),
-  INDEX `memo_to_board_article_no_fk` (`board_info_no` ASC) VISIBLE,
+  INDEX `memo_to_board_article_no_fk` (`board_no` ASC) VISIBLE,
   INDEX `memo_to_member_fk_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `memo_to_board_article_no_fk`
-    FOREIGN KEY (`board_info_no`)
-    REFERENCES `enjoytrip`.`board_info` (`board_info_no`),
+    FOREIGN KEY (`board_no`)
+    REFERENCES `enjoytrip`.`board` (`board_no`),
   CONSTRAINT `memo_to_member_user_id_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `enjoytrip`.`user` (`user_id`))
@@ -220,21 +220,21 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- Table `enjoytrip`.`board_detail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`board_detail` (
-  `board_info_no` INT NOT NULL,
-  `attraction_info_id` INT NOT NULL,
+  `board_no` INT NOT NULL,
+  `attraction_id` INT NOT NULL,
   `order` INT NOT NULL,
   `image_url` LONGTEXT NULL,
-  INDEX `fk_board_board_detail_attraction_info1_idx` (`attraction_info_id` ASC) VISIBLE,
-  INDEX `fk_board_board_detail_board_board_info1_idx` (`board_info_no` ASC) VISIBLE,
-  PRIMARY KEY (`board_info_no`, `attraction_info_id`),
-  CONSTRAINT `fk_board_board_detail_attraction_info1`
-    FOREIGN KEY (`attraction_info_id`)
-    REFERENCES `enjoytrip`.`attraction_info` (`attraction_info_id`)
+  INDEX `fk_board_board_detail_attraction1_idx` (`attraction_id` ASC) VISIBLE,
+  INDEX `fk_board_board_detail_board_board1_idx` (`board_no` ASC) VISIBLE,
+  PRIMARY KEY (`board_no`, `attraction_id`),
+  CONSTRAINT `fk_board_board_detail_attraction1`
+    FOREIGN KEY (`attraction_id`)
+    REFERENCES `enjoytrip`.`attraction` (`attraction_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_board_board_detail_board_board_info1`
-    FOREIGN KEY (`board_info_no`)
-    REFERENCES `enjoytrip`.`board_info` (`board_info_no`)
+  CONSTRAINT `fk_board_board_detail_board_board1`
+    FOREIGN KEY (`board_no`)
+    REFERENCES `enjoytrip`.`board` (`board_no`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -245,18 +245,18 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- Table `enjoytrip`.`attraction_like`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_like` (
-  `attraction_info_id` INT NOT NULL,
+  `attraction_id` INT NOT NULL,
   `user_id` VARCHAR(16) NOT NULL,
   `like_time` DATETIME NOT NULL,
-  PRIMARY KEY (`attraction_info_id`, `user_id`),
-  INDEX `fk_attraction_info_has_user_user1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_attraction_info_has_user_attraction_info1_idx` (`attraction_info_id` ASC) VISIBLE,
-  CONSTRAINT `fk_attraction_info_has_user_attraction_info1`
-    FOREIGN KEY (`attraction_info_id`)
-    REFERENCES `enjoytrip`.`attraction_info` (`attraction_info_id`)
+  PRIMARY KEY (`attraction_id`, `user_id`),
+  INDEX `fk_attraction_has_user_user1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_attraction_has_user_attraction1_idx` (`attraction_id` ASC) VISIBLE,
+  CONSTRAINT `fk_attraction_has_user_attraction1`
+    FOREIGN KEY (`attraction_id`)
+    REFERENCES `enjoytrip`.`attraction` (`attraction_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_attraction_info_has_user_user1`
+  CONSTRAINT `fk_attraction_has_user_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `enjoytrip`.`user` (`user_id`)
     ON DELETE NO ACTION

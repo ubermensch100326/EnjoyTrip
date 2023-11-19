@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-// import { listBoard } from "@/api/board.js";
+import { listBoard } from "@/api/board.js";
 
 import OptionSelect from "@/components/common/OptionSelect.vue";
 import BoardListItem from "@/components/board/item/BoardListItem.vue";
@@ -36,17 +36,18 @@ const changeKey = (val) => {
 };
 
 const getBoardList = () => {
-  // listBoard(
-  //   param.value,
-  //   ({ data }) => {
-  //     boardList.value = data.boardList;
-  //     currentPage.value = data.currentPage;
-  //     totalPage.value = data.totalPageCount;
-  //   },
-  //   (error) => {
-  //     console.error(error);
-  //   }
-  // );
+  listBoard(
+    param.value,
+    ({ data }) => {
+      console.log(data);
+      boardList.value = data.boardList;
+      currentPage.value = data.currentPage;
+      totalPage.value = data.totalPageCount;
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
 };
 
 const onPageChange = (val) => {

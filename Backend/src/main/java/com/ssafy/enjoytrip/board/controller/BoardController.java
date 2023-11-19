@@ -30,6 +30,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
+// 변수명 board, board_info 결정
+// 파일 테이블
+// 다중 파일
+// 스웨거
+// 테스트 코드
 //@CrossOrigin(origins = { "*" }, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.POST} , maxAge = 6000)
 @RestController
 @RequestMapping("/board")
@@ -43,12 +48,6 @@ public class BoardController {
 	public BoardController(BoardService boardService) {
 		super();
 		this.boardService = boardService;
-	}
-	
-	// 테스트
-	@GetMapping
-	public void testBoard() {
-		
 	}
 
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다.")
@@ -74,6 +73,7 @@ public class BoardController {
 		log.info("listBoard map - {}", map);
 		try {
 			BoardListDto boardListDto = boardService.listBoard(map);
+			System.out.println(boardListDto);
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			return ResponseEntity.ok().headers(header).body(boardListDto);

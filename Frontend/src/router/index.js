@@ -53,7 +53,7 @@ const router = createRouter({
           component: () => import("@/components/board/BoardList.vue"),
         },
         {
-          path: "view/:articleno",
+          path: "view/:boardno",
           name: "board-view",
           component: () => import("@/components/board/BoardDetail.vue"),
         },
@@ -63,11 +63,10 @@ const router = createRouter({
           component: () => import("@/components/board/BoardWrite.vue"),
         },
         {
-          path: "modify/:articleno",
+          path: "modify/:boardno",
           name: "board-modify",
           component: () => import("@/components/board/BoardModify.vue"),
         },
-
       ],
     },
   ],

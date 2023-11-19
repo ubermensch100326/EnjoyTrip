@@ -6,25 +6,25 @@ function listBoard(param, success, fail) {
   local.get(`/board`, { params: param }).then(success).catch(fail);
 }
 
-function viewBoard(articleno, success, fail) {
-  local.get(`/board/${articleno}`).then(success).catch(fail);
+function viewBoard(boardno, success, fail) {
+  local.get(`/board/${boardno}`).then(success).catch(fail);
 }
 
-function registerBoard(article, success, fail) {
-  console.log("boardjs article", article);
-  local.post(`/board`, JSON.stringify(article)).then(success).catch(fail);
+function registerBoard(board, success, fail) {
+  console.log("boardjs board", board);
+  local.post(`/board`, JSON.stringify(board)).then(success).catch(fail);
 }
 
-function toModifyBoard(articleno, success, fail) {
-  local.get(`/board/modify/${articleno}`).then(success).catch(fail);
+function toModifyBoard(boardno, success, fail) {
+  local.get(`/board/modify/${boardno}`).then(success).catch(fail);
 }
 
-function modifyBoard(article, success, fail) {
-  local.put(`/board`, JSON.stringify(article)).then(success).catch(fail);
+function modifyBoard(board, success, fail) {
+  local.put(`/board`, JSON.stringify(board)).then(success).catch(fail);
 }
 
-function deleteBoard(articleno, success, fail) {
-  local.delete(`/board/${articleno}`).then(success).catch(fail);
+function deleteBoard(boardno, success, fail) {
+  local.delete(`/board/${boardno}`).then(success).catch(fail);
 }
 
 export { listBoard, viewBoard, registerBoard, toModifyBoard, modifyBoard, deleteBoard };

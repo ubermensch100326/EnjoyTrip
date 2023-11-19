@@ -23,7 +23,7 @@ public class BoardDto {
 	@ApiModelProperty(value = "작성자 이름")
 	private String userName;
 	@ApiModelProperty(value = "글제목")
-	private String subject;
+	private String title;
 	@ApiModelProperty(value = "글내용")
 	private String content;
 	@ApiModelProperty(value = "조회수")

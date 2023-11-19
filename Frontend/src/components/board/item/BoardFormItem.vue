@@ -21,9 +21,9 @@ const board = ref({
 });
 
 if (props.type === "modify") {
-  let { no } = route.params;
+  let { boardno } = route.params;
   toModifyBoard(
-    no,
+    boardno,
     ({ data }) => {
       board.value = data;
       isUseId.value = true;
