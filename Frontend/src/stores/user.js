@@ -22,11 +22,15 @@ export const useUserStore = defineStore("userStore", () => {
           let { data } = response;
           let accessToken = data["access-token"];
           let refreshToken = data["refresh-token"];
+
+          // 로그인에 성공했으면 isLogin.value 가 true로 설정
           isLogin.value = true;
           isLoginError.value = false;
           isValidToken.value = true;
+
           sessionStorage.setItem("accessToken", accessToken);
           sessionStorage.setItem("refreshToken", refreshToken);
+          console.log("sessionStorage 에 Token 담음. : ", isLogin.value);
         } else {
           isLogin.value = false;
           isLoginError.value = true;
@@ -34,7 +38,7 @@ export const useUserStore = defineStore("userStore", () => {
         }
       },
       (error) => {
-        console.error(error);
+        console.error("api/user.js : " + error);
       }
     );
   };
@@ -45,9 +49,10 @@ export const useUserStore = defineStore("userStore", () => {
       decodeToken.userId,
       (response) => {
         if (response.status === httpStatusCode.OK) {
+          // UserInfo에 데이터 저장해두기
           userInfo.value = response.data.userInfo;
         } else {
-          console.log("유저 정보 없음!!!!");
+          console.log("찾는 유저 정보 없음!!!!  : " + decodeToken.userId);
         }
       },
       async (error) => {

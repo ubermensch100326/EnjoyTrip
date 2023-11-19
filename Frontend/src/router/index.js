@@ -34,6 +34,11 @@ const router = createRouter({
           name: "user-mypage",
           component: () => import("@/components/user/UserMyPage.vue"),
         },
+        {
+          path: "tripplan",
+          name: "user-trip-plan",
+          component: () => import("@/components/user/UserTripPlan.vue"),
+        },
       ],
     },
     {
@@ -62,6 +67,7 @@ const router = createRouter({
           name: "board-modify",
           component: () => import("@/components/board/BoardModify.vue"),
         },
+
       ],
     },
   ],

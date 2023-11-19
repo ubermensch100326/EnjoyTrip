@@ -2,8 +2,10 @@ import { localAxios } from "@/util/http-commons";
 
 const local = localAxios();
 
-async function login(param, success, fail) {
+async function userConfirm(param, success, fail) {
+  console.log("api/user.js : userConfirm => ", param);
   await local.post(`/user/login`, param).then(success).catch(fail);
+  console.log("api/user.js : userConfirm =>  userConfirm ok");
 }
 
 async function logout(userid, success, fail) {
@@ -15,9 +17,9 @@ async function findById(userid, success, fail) {
   await local.get(`/user/info/${userid}`).then(success).catch(fail);
 }
 
-async function regenerateToken(user, success, fail) {
+async function tokenRegeneration(user, success, fail) {
   local.defaults.headers["refreshToken"] = sessionStorage.getItem("refreshToken"); //axios header에 refresh-token 셋팅
   await local.post(`/user/refresh`, user).then(success).catch(fail);
 }
 
-export { login, logout, findById, regenerateToken };
+export { userConfirm, logout, findById, tokenRegeneration };

@@ -10,6 +10,7 @@ const { changeNavigationBarState } = navigationBarStore;
 const logout = () => {
   console.log("TheNavigationBar.vue : 로그아웃");
   changeNavigationBarState();
+  
 };
 </script>
 
