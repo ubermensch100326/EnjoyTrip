@@ -55,7 +55,7 @@ const router = createRouter({
         {
           path: "view/:boardno",
           name: "board-view",
-          component: () => import("@/components/board/BoardDetail.vue"),
+          component: () => import("@/components/board/BoardView.vue"),
         },
         {
           path: "write",

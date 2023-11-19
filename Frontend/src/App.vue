@@ -4,8 +4,11 @@ import TheFooter from "./components/layout/TheFooter.vue";
 </script>
 
 <template>
+  <br />
+  <br />
+  <br />
   <h1>App.vue</h1>
-  <div id='wrapper'>
+  <div id="wrapper">
     <the-navigationbar-vue></the-navigationbar-vue>
     <router-view></router-view>
   </div>

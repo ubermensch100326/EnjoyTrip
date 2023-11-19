@@ -11,7 +11,7 @@ defineProps({ board: Object });
         :to="{ name: 'board-view', params: { boardno: board.boardNo } }"
         class="board-title link-dark"
       >
-        {{ board.subject }}
+        {{ board.title }}
       </router-link>
     </td>
     <td>{{ board.userName }}</td>

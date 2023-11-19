@@ -12,7 +12,7 @@ const router = useRouter();
 const optionList = ref([
   { text: "검색조건", value: "" },
   { text: "글번호", value: "board_no" },
-  { text: "제목", value: "subject" },
+  { text: "제목", value: "title" },
   { text: "작성자아이디", value: "user_id" },
 ]);
 
