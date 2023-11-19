@@ -36,7 +36,7 @@ public class SwaggerConfiguration {
             .groupName("ALL-API")
             .apiInfo(allApiInfo())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.ssafy.vue"))
+            .apis(RequestHandlerSelectors.basePackage("com.ssafy.enjoytrip"))
             .paths(PathSelectors.ant("/**"))
             .build()
             .useDefaultResponseMessages(false);

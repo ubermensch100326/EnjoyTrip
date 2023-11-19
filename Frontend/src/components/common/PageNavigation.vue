@@ -36,6 +36,7 @@ function onPageChange(pg) {
 </script>
 
 <template>
+  <h1>PageNavigation.vue</h1>
   <div class="row">
     <ul class="pagination justify-content-center">
       <li class="page-item">

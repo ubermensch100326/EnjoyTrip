@@ -16,6 +16,7 @@ import TheFooter from "./components/layout/TheFooter.vue";
 </template>
 
 <style scoped>
+
 :focus {
   border-color: none !important;
   box-shadow: none !important;
@@ -25,12 +26,13 @@ import TheFooter from "./components/layout/TheFooter.vue";
 #wrapper {
   height: auto;
   min-height: 100%;
-  padding-bottom: (footer높이);
+  padding-bottom: 10px;
 }
 
 the-footer {
-  height: (footer높이);
+  height: 10px;
   position: relative;
   transform: translateY(-100%);
 }
+
 </style>
