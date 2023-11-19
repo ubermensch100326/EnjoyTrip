@@ -10,27 +10,20 @@ const { changeNavigationBarState } = navigationBarStore;
 const logout = () => {
   console.log("TheNavigationBar.vue : 로그아웃");
   changeNavigationBarState();
-  
+
 };
 </script>
 
 <template>
-  <h1>TheNavigationBar.vue</h1>
   <body style="overflow-y: scroll">
     <nav class="navbar navbar-expand-sm bg-dark-subtle bg-gradient shadow-sm fixed-top">
       <div class="container">
         <router-link :to="{ name: 'home' }" class="navbar-brand">
           <img src="@/assets/enjoytrip_logo.png" alt="favicon" width="50" />
         </router-link>
-        <button
-          class="navbar-toggler border-0"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

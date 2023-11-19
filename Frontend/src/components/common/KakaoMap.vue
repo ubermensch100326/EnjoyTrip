@@ -8,19 +8,6 @@ const markers = ref([]);
 
 const props = defineProps({ MyAttraction: Array, selectedMyAttraction: Object });
 
-watch(
-  () => props.selectedMyAttraction.value,
-  () => {
-    // 이동할 위도 경도 위치를 생성합니다
-    var moveLatLon = new kakao.maps.LatLng(props.selectedMyAttraction.lat, props.selectedMyAttraction.lng);
-
-    // 지도 중심을 부드럽게 이동시킵니다
-    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-    map.panTo(moveLatLon);
-  },
-  { deep: true }
-);
-
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
@@ -33,6 +20,20 @@ onMounted(() => {
     document.head.appendChild(script);
   }
 });
+
+// 선택한 관광지를 맵 중앙으로 맞추기
+watch(
+  () => props.selectedMyAttraction.value,
+  () => {
+    // 이동할 위도 경도 위치를 생성합니다
+    var moveLatLon = new kakao.maps.LatLng(props.selectedMyAttraction.lat, props.selectedMyAttraction.lng);
+
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    map.panTo(moveLatLon);
+  },
+  { deep: true }
+);
 
 watch(
   () => props.stations.value,
