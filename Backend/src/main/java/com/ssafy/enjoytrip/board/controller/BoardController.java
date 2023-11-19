@@ -44,6 +44,12 @@ public class BoardController {
 		super();
 		this.boardService = boardService;
 	}
+	
+	// 테스트
+	@GetMapping
+	public void testBoard() {
+		
+	}
 
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다.")
 	@PostMapping
