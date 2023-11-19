@@ -20,7 +20,7 @@ public class LoggingAspect {
 //		logger.debug("메서드 선언부 : {} 전달 파라미터 : {}", joinPoint.getSignature(), Arrays.toString(joinPoint.getArgs()));
 //	}
 
-	@Around(value = "execution(* com.ssafy.vue.board.model.mapper.Board*.*(..))")
+	@Around(value = "execution(* com.ssafy.enjoytrip.board.model.mapper.Board*.*(..))")
 	public Object executionTime(ProceedingJoinPoint joinPoint) throws Throwable {
 		logger.debug("around call method : {} ", joinPoint.getSignature());
 		StopWatch stopWatch = new StopWatch();

@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,6 +39,7 @@ public class BoardController {
 
 	private BoardService boardService;
 
+	@Autowired
 	public BoardController(BoardService boardService) {
 		super();
 		this.boardService = boardService;

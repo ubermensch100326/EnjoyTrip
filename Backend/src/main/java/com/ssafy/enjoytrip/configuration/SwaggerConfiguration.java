@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.config;
+package com.ssafy.enjoytrip.configuration;
 
 import java.util.HashSet;
 import java.util.Set;

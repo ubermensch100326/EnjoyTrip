@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.config;
+package com.ssafy.enjoytrip.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
-@MapperScan(basePackages = { "com.ssafy.vue.*.model.mapper" })
+@MapperScan(basePackages = { "com.ssafy.enjoytrip.*.model.mapper" })
 public class DataBaseConfiguration {
 	
 	final ApplicationContext applicationContext;
@@ -41,7 +41,7 @@ public class DataBaseConfiguration {
 		SqlSessionFactoryBean session = new SqlSessionFactoryBean();
 		session.setDataSource(dataSource);
 		session.setMapperLocations(applicationContext.getResources("classpath:mapper/**/*.xml"));
-		session.setTypeAliasesPackage("com.ssafy.vue.*.model");
+		session.setTypeAliasesPackage("com.ssafy.enjoytrip.*.model");
 //		session.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis/mybatis-config.xml"));
 		return session.getObject();
 	}

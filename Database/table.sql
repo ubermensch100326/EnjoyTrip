@@ -132,10 +132,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`plan_info`
+-- Table `enjoytrip`.`board_info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`plan_info` (
-  `plan_info_no` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`board_info` (
+  `board_info_no` INT NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(16) NOT NULL,
   `title` VARCHAR(100) NOT NULL,
   `content` VARCHAR(2000) NULL DEFAULT NULL,
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`plan_info` (
   `register_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` DATETIME NULL,
   `private` TINYINT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`plan_info_no`),
+  PRIMARY KEY (`board_info_no`),
   INDEX `board_to_member_user_id_fk` (`user_id` ASC) VISIBLE,
   CONSTRAINT `board_to_member_user_id_fk`
     FOREIGN KEY (`user_id`)
@@ -154,18 +154,18 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`plan_like`
+-- Table `enjoytrip`.`board_like`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`plan_like` (
-  `plan_info_no` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`board_like` (
+  `board_info_no` INT NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(16) NOT NULL,
   `like_time` DATETIME NOT NULL,
-  PRIMARY KEY (`plan_info_no`, `user_id`),
+  PRIMARY KEY (`board_info_no`, `user_id`),
   INDEX `fk_board_has_user_user1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_board_has_user_board1_idx` (`plan_info_no` ASC) VISIBLE,
+  INDEX `fk_board_has_user_board1_idx` (`board_info_no` ASC) VISIBLE,
   CONSTRAINT `fk_board_has_user_board1`
-    FOREIGN KEY (`plan_info_no`)
-    REFERENCES `enjoytrip`.`plan_info` (`plan_info_no`),
+    FOREIGN KEY (`board_info_no`)
+    REFERENCES `enjoytrip`.`board_info` (`board_info_no`),
   CONSTRAINT `fk_board_has_user_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `enjoytrip`.`user` (`user_id`))
@@ -179,16 +179,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`comment` (
   `comment_no` INT NOT NULL AUTO_INCREMENT,
-  `plan_info_no` INT NOT NULL,
+  `board_info_no` INT NOT NULL,
   `user_id` VARCHAR(16) NOT NULL,
   `content` VARCHAR(500) NOT NULL,
   `register_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_no`),
-  INDEX `memo_to_board_article_no_fk` (`plan_info_no` ASC) VISIBLE,
+  INDEX `memo_to_board_article_no_fk` (`board_info_no` ASC) VISIBLE,
   INDEX `memo_to_member_fk_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `memo_to_board_article_no_fk`
-    FOREIGN KEY (`plan_info_no`)
-    REFERENCES `enjoytrip`.`plan_info` (`plan_info_no`),
+    FOREIGN KEY (`board_info_no`)
+    REFERENCES `enjoytrip`.`board_info` (`board_info_no`),
   CONSTRAINT `memo_to_member_user_id_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `enjoytrip`.`user` (`user_id`))
@@ -217,24 +217,24 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`plan_detail`
+-- Table `enjoytrip`.`board_detail`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`plan_detail` (
-  `plan_info_no` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`board_detail` (
+  `board_info_no` INT NOT NULL,
   `attraction_info_id` INT NOT NULL,
   `order` INT NOT NULL,
   `image_url` LONGTEXT NULL,
-  INDEX `fk_board_plan_detail_attraction_info1_idx` (`attraction_info_id` ASC) VISIBLE,
-  INDEX `fk_board_plan_detail_board_plan_info1_idx` (`plan_info_no` ASC) VISIBLE,
-  PRIMARY KEY (`plan_info_no`, `attraction_info_id`),
-  CONSTRAINT `fk_board_plan_detail_attraction_info1`
+  INDEX `fk_board_board_detail_attraction_info1_idx` (`attraction_info_id` ASC) VISIBLE,
+  INDEX `fk_board_board_detail_board_board_info1_idx` (`board_info_no` ASC) VISIBLE,
+  PRIMARY KEY (`board_info_no`, `attraction_info_id`),
+  CONSTRAINT `fk_board_board_detail_attraction_info1`
     FOREIGN KEY (`attraction_info_id`)
     REFERENCES `enjoytrip`.`attraction_info` (`attraction_info_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_board_plan_detail_board_plan_info1`
-    FOREIGN KEY (`plan_info_no`)
-    REFERENCES `enjoytrip`.`plan_info` (`plan_info_no`)
+  CONSTRAINT `fk_board_board_detail_board_board_info1`
+    FOREIGN KEY (`board_info_no`)
+    REFERENCES `enjoytrip`.`board_info` (`board_info_no`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

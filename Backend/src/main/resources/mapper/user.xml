@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.vue.member.model.mapper.MemberMapper">
+<mapper namespace="com.ssafy.enjoytrip.user.model.mapper.UserMapper">
 
-	<resultMap type="memberDto" id="member">
+	<resultMap type="userDto" id="user">
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
 		<result column="user_password" property="userPwd"/>
@@ -14,32 +14,32 @@
 		<result column="token" property="refreshToken"/>
 	</resultMap>
 
-	<select id="login" parameterType="map" resultMap="member">
+	<select id="login" parameterType="map" resultMap="user">
 		select user_id, user_name, token
-		from members
+		from user
 		where user_id = #{userId} and user_password = #{userPwd}
 	</select>
 	
-	<select id="userInfo" parameterType="string" resultMap="member">
+	<select id="userInfo" parameterType="string" resultMap="user">
 		select user_name, user_id, email_id, email_domain, join_date
-		from members
+		from user
 		where user_id = #{userId}
 	</select>
 	
 	<update id="saveRefreshToken" parameterType="map">
-		update members
+		update user
 		set token = #{token}
 		where user_id = #{userId}
 	</update>
 	
 	<select id="getRefreshToken" parameterType="string" resultType="string">
 		select token
-		from members
+		from user
 		where user_id = #{userId}
 	</select>
 	
 	<update id="deleteRefreshToken" parameterType="map">
-		update members
+		update user
 		set token = #{token, jdbcType=VARCHAR}
 		where user_id = #{userId}
 	</update>

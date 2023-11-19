@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.config;
+package com.ssafy.enjoytrip.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
