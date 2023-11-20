@@ -33,6 +33,7 @@ public class MapController {
 		this.mapService = mapService;
 	}
 
+	// git test
 	@ApiOperation(value = "시도 정보", notes = "전국의 시도를 반환한다.", response = List.class)
 	@GetMapping("/sido")
 	public ResponseEntity<List<SidoGugunCodeDto>> sido() throws Exception {
