@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.map.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,11 @@ public class MapServiceImpl implements MapService {
 	@Override
 	public List<SidoGugunCodeDto> getGugunInSido(String sido) throws Exception {
 		return mapMapper.getGugunInSido(sido);
+	}
+
+	@Override
+	public List<Map<String, String>> getAttractionList(Map<String, String> sidogugun) throws Exception {
+		return mapMapper.getAttractionList(sidogugun);
 	}
 
 }
