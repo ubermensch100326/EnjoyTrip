@@ -20,13 +20,19 @@ const loginUser = ref({
 
 const login = async () => {
   console.log("UserLogin.vue : login async 시작");
+  // 여기서 await를 안써주면 밑으로 바로 내려가서 getItem을 할 때 null이 뜨니까 반드시 await를 써야 함
   await userLogin(loginUser.value);
+  // 위의 userLogin이 정상적으로 처리됐다면 stores/user.js에서 session에 access token과 refresh token이 저장된 상태임
+  // 그럼 이제 session에서 얻어오면 된다는 것이므로 아래 코드 수행
   let token = sessionStorage.getItem("accessToken");
   console.log("UserLogin.vue : token => ", token);
   console.log("UserLogin.vue : isLogin => ", isLogin);
 
   // 로그인 성공했으면 isLogin 이 pinia 안에서 true 로 바뀌고 그 값이 여기서도 변경됨.
   if (isLogin) {
+    // 위에서 작업하고 나서 access와 refresh token이 발급된 상태임
+    // 그런데 화면에 아직 user 정보를 찍은 상태는 아님
+    // 그래서 token 정보를 가지고 userinfo로 가야 함
     getUserInfo(token);
     changeNavigationBarState();
   }

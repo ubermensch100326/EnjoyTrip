@@ -56,6 +56,8 @@ public class UserController {
 				
 //				JSON으로 token 전달.
 				resultMap.put("access-token", accessToken);
+				
+//				Cookie로 변경
 				resultMap.put("refresh-token", refreshToken);
 				
 				status = HttpStatus.CREATED;
@@ -72,6 +74,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
+//	header를 통해서 access token이 넘어오고, path variable을 통해서 userId가 넘어옴 (두 개)
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
 	@GetMapping("/info/{userId}")
 	public ResponseEntity<Map<String, Object>> getInfo(
@@ -80,6 +83,8 @@ public class UserController {
 //		logger.debug("userId : {} ", userId);
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
+//		세션을 사용하지 않기 때문에 header 안에서 vue에서 보냈던 token을 받아서 진위성 검증을 해야 함
+//		checkToken은 이 token이 사용할 수 있는 토큰인지 여부를 반환함
 		if (jwtUtility.checkToken(request.getHeader("Authorization"))) {
 			log.info("사용 가능한 토큰!!!");
 			try {
@@ -124,8 +129,11 @@ public class UserController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String token = request.getHeader("refreshToken");
 		log.debug("token : {}, userDto : {}", token, userDto);
+//		이걸 통과하면 토큰 자체에는 문제가 없음
 		if (jwtUtility.checkToken(token)) {
+//			그런데 이게 탈취한 토큰인지 아닌지 확인하기 위해서 userId에 해당하는 refreshToken과 같은지 체크함
 			if (token.equals(userService.getRefreshToken(userDto.getUserId()))) {
+//				다시 accessToken 발급해줌
 				String accessToken = jwtUtility.createAccessToken(userDto.getUserId());
 				log.debug("token : {}", accessToken);
 				log.debug("정상적으로 액세스토큰 재발급!!!");

@@ -12,6 +12,7 @@ async function logout(userid, success, fail) {
   await local.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
+// 데이터 요청할 때 access toekn을 header에 담아서 spring으로 감
 async function findById(userid, success, fail) {
   local.defaults.headers["Authorization"] = sessionStorage.getItem("accessToken");
   await local.get(`/user/info/${userid}`).then(success).catch(fail);

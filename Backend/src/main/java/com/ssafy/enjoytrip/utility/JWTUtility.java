@@ -24,13 +24,13 @@ public class JWTUtility {
 	private String salt;
 
 	@Value("${jwt.access-token.expiretime}")
-	private long accessTokenExpireTiem;
+	private long accessTokenExpireTime;
 
 	@Value("${jwt.refresh-token.expiretime}")
 	private long refreshTokenExpireTime;
 
 	public String createAccessToken(String userId) {
-		return create(userId, "access-token", accessTokenExpireTiem);
+		return create(userId, "access-token", accessTokenExpireTime);
 	}
 
 //	AccessToken에 비해 유효기간을 길게 설정.
@@ -85,9 +85,21 @@ public class JWTUtility {
 //			Json Web Signature? 서버에서 인증을 근거로 인증정보를 서버의 private key로 서명 한것을 토큰화 한것
 //			setSigningKey : JWS 서명 검증을 위한  secret key 세팅
 //			parseClaimsJws : 파싱하여 원본 jws 만들기
+//			token을 가지고 파싱했을 때 exception이 나지 않았다는 것은 정상적인 claims를 받아왔다는 것이고, 이건 진짜 토큰임을 의미함
 			Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(token);
 //			Claims 는 Map의 구현체 형태
 			log.debug("claims: {}", claims);
+			
+//			Date expiration = claims.getBody().getExpiration();
+//			Date now = new Date();
+//			if (expiration.before(now)) {
+//				log.debug("Before Expiration => Access Success!!!");
+//				return true;
+//			}
+//			else {
+//				log.debug("After Expiration => Access Fail!!!");
+//				return false;
+//			}
 			return true;
 		} catch (Exception e) {
 			log.error(e.getMessage());

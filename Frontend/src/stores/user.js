@@ -18,6 +18,8 @@ export const useUserStore = defineStore("userStore", () => {
     await userConfirm(
       loginUser,
       (response) => {
+        // api/user.js에서 useConfirm axios 요청을 하고 success를 반환받으면 reponse.status가 201임
+        // http-status에 CREATE는 201이라고 해놨음
         if (response.status === httpStatusCode.CREATE) {
           let { data } = response;
           let accessToken = data["access-token"];
@@ -44,22 +46,27 @@ export const useUserStore = defineStore("userStore", () => {
   };
 
   const getUserInfo = (token) => {
+    // 가져온 token을 디코딩함
     let decodeToken = jwtDecode(token);
     findById(
+      // userId를 가지고 findById axios 호출 (밑에는 잠시 대기)
       decodeToken.userId,
       (response) => {
         if (response.status === httpStatusCode.OK) {
           // UserInfo에 데이터 저장해두기
           userInfo.value = response.data.userInfo;
         } else {
+          // 정상적으로 권한이 없다고 하면 여기로 들어옴
           console.log("찾는 유저 정보 없음!!!!  : " + decodeToken.userId);
         }
       },
+      // 토큰 자체는 진짜인데 더 이상 유효하지 않은 정보를 가지고 있어서 exception이 나는 경우는 spring에서 custom error를 던짐
       async (error) => {
         console.error(
           "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
           error.response.status
         );
+        // 더이상 사용할 수 없는 토큰이므로 false로 바꾸고 토큰 재생성하러 감
         isValidToken.value = false;
 
         await tokenRegenerate();
@@ -68,6 +75,8 @@ export const useUserStore = defineStore("userStore", () => {
   };
 
   const tokenRegenerate = async () => {
+    // 사용자 정보를 들고 axios 요청
+    // tokenRegeneration에서는 세션에 있는 refreshToken을 가지고 요청
     await tokenRegeneration(
       JSON.stringify(userInfo.value),
       (response) => {

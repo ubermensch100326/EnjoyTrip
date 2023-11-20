@@ -25,7 +25,7 @@ public class UserDto {
 	@ApiModelProperty(value = "이메일 도메인")
 	private String emailDomain;
 	@ApiModelProperty(value = "가입일")
-	private String joinDate;
+	private String registerTime;
 	@ApiModelProperty(value = "refreshToken")
 	private String refreshToken;
 	
