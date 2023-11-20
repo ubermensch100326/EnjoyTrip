@@ -11,9 +11,7 @@ function listGugun(param, success, fail) {
 }
 
 function listAttraction(param, success, fail) {
-  console.log("start");
-  local.get(`/attraction`, { params: param }).then(success).catch(fail);
-  console.log("end");
+  local.get(`/map/attraction`, { params: param }).then(success).catch(fail);
 }
 
 export { listSido, listGugun, listAttraction };

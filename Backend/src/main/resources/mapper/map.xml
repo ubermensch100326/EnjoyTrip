@@ -26,5 +26,20 @@
 		where left(sido_code,2) = #{sido}
 		order by gugun_code
 	</select>
+	
+	<select id="getAttractionList" parameterType="map" resultType="attractionDto" >
+		select *
+		from attraction 
+		where 1=1
+		<if test='sido != null'>
+			and sido_code=#{sido} 
+		</if>
+		<if test='gugun != null'>
+			and gugun_code=#{gugun}
+		</if>
+		<if test='keyword != null'>
+			and title like concat('%' , #{keyword}, '%') 
+		</if> 
+	</select>
 
 </mapper>

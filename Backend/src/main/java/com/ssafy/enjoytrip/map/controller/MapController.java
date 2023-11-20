@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.map.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ public class MapController {
 		this.mapService = mapService;
 	}
 
+	// git test
 	@ApiOperation(value = "시도 정보", notes = "전국의 시도를 반환한다.", response = List.class)
 	@GetMapping("/sido")
 	public ResponseEntity<List<SidoGugunCodeDto>> sido() throws Exception {
@@ -47,11 +49,24 @@ public class MapController {
 		return new ResponseEntity<List<SidoGugunCodeDto>>(mapService.getGugunInSido(sido), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "관광지 정보", notes = "시도,구군,검색어를 받아서 관광지 정보를 반환한다.", response = List.class)
 	@GetMapping("/attraction")
-	public ResponseEntity<List<AttractionDto>> attraction(Map<String, String> map) throws Exception {
-		System.out.println(map.keySet());
-		System.out.println(map.values());
-		return null;
+	public ResponseEntity<List<AttractionDto>> attraction(
+			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido,
+			@RequestParam("gugun") @ApiParam(value = "구군코드.", required = true) String gugun,
+			@RequestParam("keyword") @ApiParam(value = "검색어.", required = false) String keyWord) throws Exception {
+		
+		Map map = new HashMap<String, String>();
+		if (sido != null)
+			map.put("sido", sido);
+		if (gugun != null)
+			map.put("gugun", gugun);
+		if (keyWord != null)
+			map.put("keyword", keyWord);
+		
+		List<AttractionDto> result = mapService.getAttractionList(map);
+		
+		return new ResponseEntity<List<AttractionDto>> (mapService.getAttractionList(map), HttpStatus.OK);
 	}
 	
 }
