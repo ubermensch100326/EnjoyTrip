@@ -8,7 +8,7 @@
 	<resultMap type="sidoGugunCodeDto" id="sidoGugunCode">
 		<result column="sido_code" property="sidoCode"></result>
 		<result column="sido_name" property="sidoName"></result>
-		<result column="gugun_code" property="gugunName"></result>
+		<result column="gugun_code" property="gugunCode"></result>
 		<result column="gugun_name" property="gugunName"></result>
 	</resultMap>
 
@@ -38,7 +38,7 @@
 			and gugun_code=#{gugun}
 		</if>
 		<if test='keyword != null'>
-			and title like concat('%' , #{keyword}, '%') 
+			and title like concat('%' , #{keyword}, '%'); 
 		</if> 
 	</select>
 
