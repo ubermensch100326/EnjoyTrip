@@ -5,11 +5,27 @@ import { listSido, listGugun, listAttraction } from "@/api/map";
 import TestMap from "@/components/common/TestMap.vue";
 import OptionSelect from "@/components/common/OptionSelect.vue";
 
+const props = defineProps({ electStation: Object });
+
+watch(
+    () => props.selectStation.value,
+    () => {
+        // 이동할 위도 경도 위치를 생성합니다
+        var moveLatLon = new kakao.maps.LatLng(props.selectStation.lat, props.selectStation.lng);
+
+        // 지도 중심을 부드럽게 이동시킵니다
+        // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+        map.panTo(moveLatLon);
+    },
+    { deep: true }
+);
+
 const sidoList = ref([]);
 const gugunList = ref([{ text: "구군선택", value: "" }]);
 const attractionList = ref([]);
 const attractionSelect = ref({});
 const keyword = ref("");
+const type = ref("");
 
 const param = ref({
     pageNo: 1,
@@ -18,6 +34,7 @@ const param = ref({
     sido: 0,
     gugun: 0,
     keyword: "가",
+    typeNum: 12
 });
 
 onMounted(() => {
@@ -66,6 +83,12 @@ const onChangeGugun = (val) => {
     console.log("On change Gugun : val => " + val);
 };
 
+const onChangeType = () => {
+    param.value.typeNum = type.value;
+    console.log("On change type : val => " + type.value);
+};
+
+
 // const onChangeType
 
 const onSearchButtonClick = () => {
@@ -105,7 +128,16 @@ const viewAttraction = (attraction) => {
                 <OptionSelect :optionList="gugunList" @onKeySelect="onChangeGugun" />
             </div>
             <div class="col">
-                <OptionSelect :optionList="typeList" @onKeySelect="onChangeType" />
+                <select @change="onChangeType" v-model="type">
+                    <option value="12">관광지</option>
+                    <option value="14">문화시설</option>
+                    <option value="15">축제공연행사</option>
+                    <option value="25">여행코스</option>
+                    <option value="28">레포츠</option>
+                    <option value="32">숙박</option>
+                    <option value="38">쇼핑</option>
+                    <option value="39">음식점</option>
+                </select>
             </div>
             <div class="col">
                 <input type="text" v-model="keyword" @keyup.enter="onSearchButtonClick" />
@@ -120,12 +152,8 @@ const viewAttraction = (attraction) => {
                 </tr>
             </thead>
             <tbody>
-                <tr
-                    class="text-center"
-                    v-for="attraction in attractionList"
-                    :key="attraction.attraction_id"
-                    @click="viewAttraction(attraction)"
-                >
+                <tr class="text-center" v-for="attraction in attractionList" :key="attraction.attraction_id"
+                    @click="viewAttraction(attraction)">
                     <th><img :src="attraction.first_image" width="50" /></th>
                     <th>{{ attraction.attraction_id }}</th>
                     <th>{{ attraction.title }}</th>

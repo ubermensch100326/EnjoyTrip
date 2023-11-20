@@ -56,10 +56,9 @@ public class MapController {
 			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido,
 			@RequestParam("gugun") @ApiParam(value = "구군코드.", required = true) String gugun,
 			@RequestParam("keyword") @ApiParam(value = "검색어.", required = false) String keyWord,
-			@RequestParam("numOfRows") @ApiParam(value = "개수.", required = true) String numOfRows
+			@RequestParam("numOfRows") @ApiParam(value = "개수.", required = true) String numOfRows,
+			@RequestParam("typeNum") @ApiParam(value = "관광지 유형", required = false) String typeNum
 			) throws Exception {
-		
-		System.out.println("###################################################");
 		
 		Map map = new HashMap<String, String>();
 		if (sido != null)
@@ -70,8 +69,8 @@ public class MapController {
 			map.put("keyword", keyWord);
 		if (numOfRows != null)
 			map.put("numOfRows", numOfRows);
-		
-//		List<AttractionDto> result = mapService.getAttractionList(map);
+		if (typeNum != null)
+			map.put("typeNum", typeNum);
 		
 		return new ResponseEntity<List<AttractionDto>> (mapService.getAttractionList(map), HttpStatus.OK);
 	}

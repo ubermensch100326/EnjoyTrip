@@ -38,6 +38,9 @@
 		<if test='gugun != null'>
 			and gugun_code=#{gugun}
 		</if>
+		<if test='typeNum != null'>
+			and type=#{typeNum} 
+		</if>
 		<if test='keyword != null'>
 			and title like concat('%' , #{keyword}, '%')
 		</if>

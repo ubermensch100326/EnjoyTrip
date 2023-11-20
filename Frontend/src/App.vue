@@ -11,10 +11,10 @@ import TheTestView from "./views/TheTestView.vue";
   <h1>App.vue</h1>
   <div id="wrapper">
     <the-navigationbar-vue></the-navigationbar-vue>
-    <!-- <router-view></router-view> -->
+    <router-view></router-view>
   </div>
+  <!-- <the-test-view></the-test-view> -->
   <the-footer></the-footer>
-  <the-test-view></the-test-view>
 </template>
 
 <style scoped>
