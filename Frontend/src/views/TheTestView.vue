@@ -13,7 +13,10 @@ const attractionSelect = ref({});
 const param = ref({
   pageNo: 1,
   numOfRows: 20,
-  zscode: 0,
+  // zscode: 0,
+  sido: 0,
+  gugun: 0,
+  keyword: "가",
 });
 
 onMounted(() => {
@@ -48,6 +51,7 @@ const onChangeSido = (val) => {
       data.forEach((gugun) => {
         options.push({ text: gugun.gugunName, value: gugun.gugunCode });
       });
+      param.value.sido = val;
       gugunList.value = options;
     },
     (err) => {
@@ -57,7 +61,8 @@ const onChangeSido = (val) => {
 };
 
 const onChangeGugun = (val) => {
-  param.value.zscode = val;
+  param.value.gugun = val;
+  console.log("kjSALFHDJAWKFawJKDFhAJKSDASL" + val);
   getAttractionList();
 };
 
@@ -65,7 +70,12 @@ const getAttractionList = () => {
   listAttraction(
     param.value,
     ({ data }) => {
-      attractionList.value = data.items[0].item;
+      console.log("data : " + data);
+      attractionList.value = data;
+      data.forEach((object) => {
+        console.log(object);
+        attractionList.value.push(object);
+      });
     },
     (err) => {
       console.log(err);

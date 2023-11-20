@@ -6,6 +6,7 @@ const emit = defineEmits(["onKeySelect"]);
 const key = ref("");
 
 const onSelect = () => {
+  console.log("21893789214361241837921372189378912" + key.value);
   // console.log(key.value + "선택!!!");
   emit("onKeySelect", key.value);
 };

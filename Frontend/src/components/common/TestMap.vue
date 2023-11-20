@@ -40,7 +40,7 @@ watch(
     positions.value = [];
     props.attractionList.forEach((attraction) => {
       let obj = {};
-      obj.latlng = new kakao.maps.LatLng(attraction.lat, attraction.lng);
+      obj.latlng = new kakao.maps.LatLng(attraction.latitude, attraction.longitude);
       obj.title = attraction.statNm;
 
       positions.value.push(obj);
