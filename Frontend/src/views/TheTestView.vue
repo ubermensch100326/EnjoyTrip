@@ -1,17 +1,17 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { listSido, listGugun, listAttraction } from "@/api/map";
 
 import TestMap from "@/components/common/TestMap.vue";
 import OptionSelect from "@/components/common/OptionSelect.vue";
 
-const props = defineProps({ electStation: Object });
+const props = defineProps({ selectedAttraction: Object });
 
 watch(
-    () => props.selectStation.value,
+    () => props.selectedAttraction.value,
     () => {
         // 이동할 위도 경도 위치를 생성합니다
-        var moveLatLon = new kakao.maps.LatLng(props.selectStation.lat, props.selectStation.lng);
+        var moveLatLon = new kakao.maps.LatLng(props.selectedAttraction.lat, props.selectedAttraction.lng);
 
         // 지도 중심을 부드럽게 이동시킵니다
         // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다

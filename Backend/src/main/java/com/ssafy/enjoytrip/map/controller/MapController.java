@@ -61,6 +61,7 @@ public class MapController {
 			) throws Exception {
 		
 		Map map = new HashMap<String, String>();
+		
 		if (sido != null)
 			map.put("sido", sido);
 		if (gugun != null)
