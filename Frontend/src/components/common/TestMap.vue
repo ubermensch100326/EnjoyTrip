@@ -5,14 +5,13 @@ var map;
 const positions = ref([]);
 const markers = ref([]);
 
-// const props = defineProps({ attractionList: Array, attractionSelect: Object });
-const props = defineProps({ chargingStations: Array, selectStation: Object });
+const props = defineProps({ attractionList: Array, attractionSelect: Object });
 
 watch(
-  () => props.selectStation.value,
+  () => props.attractionSelect.value,
   () => {
     // 이동할 위도 경도 위치를 생성합니다
-    var moveLatLon = new kakao.maps.LatLng(props.selectStation.lat, props.selectStation.lng);
+    var moveLatLon = new kakao.maps.LatLng(props.attractionSelect.lat, props.attractionSelect.lng);
 
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
@@ -36,13 +35,13 @@ onMounted(() => {
 });
 
 watch(
-  () => props.chargingStations.value,
+  () => props.attractionList.value,
   () => {
     positions.value = [];
-    props.chargingStations.forEach((station) => {
+    props.attractionList.forEach((attraction) => {
       let obj = {};
-      obj.latlng = new kakao.maps.LatLng(station.lat, station.lng);
-      obj.title = station.statNm;
+      obj.latlng = new kakao.maps.LatLng(attraction.lat, attraction.lng);
+      obj.title = attraction.statNm;
 
       positions.value.push(obj);
     });
@@ -107,7 +106,7 @@ const deleteMarkers = () => {
   <div id="map"></div>
 </template>
 
-<style>
+<style scoped>
 #map {
   width: 100%;
   height: 700px;

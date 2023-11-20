@@ -1,7 +1,7 @@
 <script setup>
 import TheNavigationbarVue from "./components/layout/TheNavigationbar.vue";
 import TheFooter from "./components/layout/TheFooter.vue";
-import TheElectricChargingStationView from "./views/TheElectricChargingStationView.vue";
+import TheTestView from "./views/TheTestView.vue";
 </script>
 
 <template>
@@ -11,10 +11,10 @@ import TheElectricChargingStationView from "./views/TheElectricChargingStationVi
   <h1>App.vue</h1>
   <div id="wrapper">
     <the-navigationbar-vue></the-navigationbar-vue>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
   <the-footer></the-footer>
-  <the-electric-charging-station-view></the-electric-charging-station-view>
+  <the-test-view></the-test-view>
 </template>
 
 <style scoped>
