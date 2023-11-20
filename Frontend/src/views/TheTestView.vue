@@ -9,6 +9,7 @@ const sidoList = ref([]);
 const gugunList = ref([{ text: "구군선택", value: "" }]);
 const attractionList = ref([]);
 const attractionSelect = ref({});
+const keyword = ref("");
 
 const param = ref({
     pageNo: 1,
@@ -63,6 +64,13 @@ const onChangeSido = (val) => {
 const onChangeGugun = (val) => {
     param.value.gugun = val;
     console.log("On change Gugun : val => " + val);
+};
+
+// const onChangeType
+
+const onSearchButtonClick = () => {
+    console.log(11111);
+    param.value.keyword = keyword.value;
     getAttractionList();
 };
 
@@ -72,10 +80,7 @@ const getAttractionList = () => {
         ({ data }) => {
             console.log("data : " + data);
             attractionList.value = data;
-            data.forEach((object) => {
-                console.log(object);
-                attractionList.value.push(object);
-            });
+            console.log("##################" + attractionList.value);
         },
         (err) => {
             console.log(err);
@@ -93,11 +98,18 @@ const viewAttraction = (attraction) => {
     <div class="container text-center mt-3">
         <div class="alert alert-success" role="alert">관광지 정보</div>
         <div class="row mb-2">
-            <div class="col d-flex flex-row-reverse">
+            <div class="col">
                 <OptionSelect :optionList="sidoList" @onKeySelect="onChangeSido" />
             </div>
             <div class="col">
                 <OptionSelect :optionList="gugunList" @onKeySelect="onChangeGugun" />
+            </div>
+            <div class="col">
+                <OptionSelect :optionList="typeList" @onKeySelect="onChangeType" />
+            </div>
+            <div class="col">
+                <input type="text" v-model="keyword" @keyup.enter="onSearchButtonClick" />
+                <button @click="onSearchButtonClick">검색</button>
             </div>
         </div>
         <TestMap :attractionList="attractionList" :attractionSelect="attractionSelect" />
@@ -108,14 +120,16 @@ const viewAttraction = (attraction) => {
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr
-          class="text-center"
-          v-for="attraction in attractionList"
-          :key="attraction.statId + attraction.chgerId"
-          @click="viewAttraction(attraction)"
-        >
-          <th>{{ attraction.statId }}</th>
-        </tr> -->
+                <tr
+                    class="text-center"
+                    v-for="attraction in attractionList"
+                    :key="attraction.attraction_id"
+                    @click="viewAttraction(attraction)"
+                >
+                    <th><img :src="attraction.first_image" width="50" /></th>
+                    <th>{{ attraction.attraction_id }}</th>
+                    <th>{{ attraction.title }}</th>
+                </tr>
             </tbody>
         </table>
     </div>

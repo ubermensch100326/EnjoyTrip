@@ -44,7 +44,8 @@ public class MapController {
 	@ApiOperation(value = "구군 정보", notes = "시도에 속한 구군을 반환한다.", response = List.class)
 	@GetMapping("/gugun")
 	public ResponseEntity<List<SidoGugunCodeDto>> gugun(
-			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido) throws Exception {
+			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido
+			) throws Exception {
 		log.info("gugun - 호출");
 		return new ResponseEntity<List<SidoGugunCodeDto>>(mapService.getGugunInSido(sido), HttpStatus.OK);
 	}
@@ -54,7 +55,11 @@ public class MapController {
 	public ResponseEntity<List<AttractionDto>> attraction(
 			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido,
 			@RequestParam("gugun") @ApiParam(value = "구군코드.", required = true) String gugun,
-			@RequestParam("keyword") @ApiParam(value = "검색어.", required = false) String keyWord) throws Exception {
+			@RequestParam("keyword") @ApiParam(value = "검색어.", required = false) String keyWord,
+			@RequestParam("numOfRows") @ApiParam(value = "개수.", required = true) String numOfRows
+			) throws Exception {
+		
+		System.out.println("###################################################");
 		
 		Map map = new HashMap<String, String>();
 		if (sido != null)
@@ -63,8 +68,10 @@ public class MapController {
 			map.put("gugun", gugun);
 		if (keyWord != null)
 			map.put("keyword", keyWord);
+		if (numOfRows != null)
+			map.put("numOfRows", numOfRows);
 		
-		List<AttractionDto> result = mapService.getAttractionList(map);
+//		List<AttractionDto> result = mapService.getAttractionList(map);
 		
 		return new ResponseEntity<List<AttractionDto>> (mapService.getAttractionList(map), HttpStatus.OK);
 	}
