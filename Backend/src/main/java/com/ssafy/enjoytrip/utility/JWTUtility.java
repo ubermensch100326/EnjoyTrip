@@ -15,6 +15,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
+// refresh token은 cookie에 저장하고 access token은 session storage에 저장
 @Component
 @Slf4j
 public class JWTUtility {

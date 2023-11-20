@@ -1,4 +1,11 @@
-<script setup></script>
+<script setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const login = () => {
+  router.push({ name: "user-login" });
+};
+</script>
 
 <template>
   <h1>UserRegister.vue</h1>
@@ -75,8 +82,12 @@
             </select>
           </div>
           <div class="my-5"></div>
-          <button id="btn-tologin" class="btn btn-secondary me-3" type="button">로그인</button>
-          <button class="btn btn-secondary ms-3" type="button" id="btn-register">회원가입</button>
+          <button id="btn-tologin" class="btn btn-secondary me-3" type="button" @click="login">
+            로그인
+          </button>
+          <button class="btn btn-secondary ms-3" type="button" id="btn-register" @click="register">
+            회원가입
+          </button>
         </form>
       </div>
     </div>
