@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.map.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.enjoytrip.map.model.AttractionDto;
 import com.ssafy.enjoytrip.map.model.SidoGugunCodeDto;
 import com.ssafy.enjoytrip.map.model.service.MapService;
 
@@ -43,6 +45,13 @@ public class MapController {
 			@RequestParam("sido") @ApiParam(value = "시도코드.", required = true) String sido) throws Exception {
 		log.info("gugun - 호출");
 		return new ResponseEntity<List<SidoGugunCodeDto>>(mapService.getGugunInSido(sido), HttpStatus.OK);
+	}
+	
+	@GetMapping("/attraction")
+	public ResponseEntity<List<AttractionDto>> attraction(Map<String, String> map) throws Exception {
+		System.out.println(map.keySet());
+		System.out.println(map.values());
+		return null;
 	}
 	
 }

@@ -1,6 +1,7 @@
 <script setup>
 import TheNavigationbarVue from "./components/layout/TheNavigationbar.vue";
 import TheFooter from "./components/layout/TheFooter.vue";
+import TheElectricChargingStationView from "./views/TheElectricChargingStationView.vue";
 </script>
 
 <template>
@@ -13,10 +14,10 @@ import TheFooter from "./components/layout/TheFooter.vue";
     <router-view></router-view>
   </div>
   <the-footer></the-footer>
+  <the-electric-charging-station-view></the-electric-charging-station-view>
 </template>
 
 <style scoped>
-
 :focus {
   border-color: none !important;
   box-shadow: none !important;
@@ -34,5 +35,4 @@ the-footer {
   position: relative;
   transform: translateY(-100%);
 }
-
 </style>

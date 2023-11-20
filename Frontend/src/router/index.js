@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/TheHomeView.vue";
+import TheElectricChargingStationView from "@/views/TheElectricChargingStationView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -68,6 +69,11 @@ const router = createRouter({
           component: () => import("@/components/board/BoardModify.vue"),
         },
       ],
+    },
+    {
+      path: "/estations",
+      name: "estations",
+      component: TheElectricChargingStationView,
     },
   ],
 });
