@@ -19,10 +19,10 @@ const optionList = ref([
 const boardList = ref([]);
 const currentPage = ref(1);
 const totalPage = ref(0);
-const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
+const { VITE_BOARD_LIST_SIZE } = import.meta.env;
 const param = ref({
   pgno: currentPage.value,
-  spp: VITE_ARTICLE_LIST_SIZE,
+  spp: VITE_BOARD_LIST_SIZE,
   key: "",
   word: "",
 });

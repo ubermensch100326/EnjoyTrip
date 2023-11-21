@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.BoardListDto;
+import com.ssafy.enjoytrip.board.model.CommentListDto;
 
 public interface BoardService {
 
@@ -16,5 +17,6 @@ public interface BoardService {
 	void modifyBoard(BoardDto boardDto) throws Exception;
 //	
 	void deleteBoard(int boardNo) throws Exception;
+	CommentListDto listComment(Map<String, String> map) throws Exception;
 	
 }

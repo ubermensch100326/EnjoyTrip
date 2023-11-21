@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.BoardListDto;
+import com.ssafy.enjoytrip.board.model.CommentListDto;
 import com.ssafy.enjoytrip.board.model.service.BoardService;
 
 import io.swagger.annotations.Api;
@@ -77,6 +78,24 @@ public class BoardController {
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			return ResponseEntity.ok().headers(header).body(boardListDto);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@ApiOperation(value = "글 댓글목록", notes = "해당 글의 모든 댓글을 반환한다.", response = List.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "댓글목록 OK!!"), @ApiResponse(code = 404, message = "댓글오류!!"),
+			@ApiResponse(code = 500, message = "서버에러!!") })
+	@GetMapping("/comment")
+	public ResponseEntity<?> listComment(
+			@RequestParam @ApiParam(value = "댓글을 얻기위한 글정보.", required = true) Map<String, String> map) {
+		log.info("listComment map - {}", map);
+		try {
+			CommentListDto commentListDto = boardService.listComment(map);
+			System.out.println(commentListDto);
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(commentListDto);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

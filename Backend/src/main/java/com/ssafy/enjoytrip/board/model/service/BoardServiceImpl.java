@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.BoardListDto;
-import com.ssafy.enjoytrip.board.model.FileInfoDto;
+import com.ssafy.enjoytrip.board.model.CommentDto;
+import com.ssafy.enjoytrip.board.model.CommentListDto;
+//import com.ssafy.enjoytrip.board.model.FileInfoDto;
 import com.ssafy.enjoytrip.board.model.mapper.BoardMapper;
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -27,10 +29,10 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public void writeBoard(BoardDto boardDto) throws Exception {
 		boardMapper.writeBoard(boardDto);
-		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
-		if (fileInfos != null && !fileInfos.isEmpty()) {
-			boardMapper.registerFile(boardDto);
-		}
+//		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
+//		if (fileInfos != null && !fileInfos.isEmpty()) {
+//			boardMapper.registerFile(boardDto);
+//		}
 	}
 
 	@Override
@@ -124,6 +126,16 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteBoard(int boardNo) throws Exception {
 		// TODO : BoardDaoImpl의 deleteBoard 호출
 		boardMapper.deleteBoard(boardNo);
+	}
+
+	@Override
+	public CommentListDto listComment(Map<String, String> map) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		int boardNo = Integer.parseInt(map.get("boardno"));
+		List<CommentDto> list = boardMapper.listComment(boardNo);
+		CommentListDto commentListDto = new CommentListDto();
+		commentListDto.setCommentList(list);
+		return commentListDto;
 	}
 
 }

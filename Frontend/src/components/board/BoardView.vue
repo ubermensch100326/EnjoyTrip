@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { viewBoard, deleteBoard } from "@/api/board";
+import { viewBoard, deleteBoard, listComment } from "@/api/board";
+import CommentListItem from "./item/CommentListItem.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -13,6 +14,7 @@ const board = ref({});
 
 onMounted(() => {
   getBoard();
+  getCommentList();
 });
 
 const getBoard = () => {
@@ -46,6 +48,25 @@ function onDeleteBoard() {
     }
   );
 }
+
+// 가능하다면 댓글에도 PageNavigation 컴포넌트 적용시킬 것
+const commentList = ref([]);
+const param = ref({
+  boardno: boardno,
+});
+
+const getCommentList = () => {
+  listComment(
+    param.value,
+    ({ data }) => {
+      console.log(data);
+      commentList.value = data.commentList;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
 </script>
 
 <template>
@@ -95,6 +116,23 @@ function onDeleteBoard() {
           </div>
         </div>
       </div>
+      <table class="table table-hover">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">댓글 번호</th>
+            <th scope="col">댓글 작성자</th>
+            <th scope="col">댓글 내용</th>
+            <th scope="col">댓글 작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <CommentListItem
+            v-for="comment in commentList"
+            :key="comment.commentNo"
+            :commnet="comment"
+          ></CommentListItem>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
