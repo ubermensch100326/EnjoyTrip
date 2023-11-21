@@ -18,5 +18,7 @@ public interface BoardService {
 //	
 	void deleteBoard(int boardNo) throws Exception;
 	CommentListDto listComment(Map<String, String> map) throws Exception;
+	void deleteBoardComment(int boardNo) throws Exception;
+	void deleteComment(int commentno) throws Exception;
 	
 }

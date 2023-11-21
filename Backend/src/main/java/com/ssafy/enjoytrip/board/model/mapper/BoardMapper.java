@@ -30,8 +30,12 @@ public interface BoardMapper {
 //	void deleteFile(int boardNo) throws Exception;
 
 	void deleteBoard(int boardNo) throws SQLException;
+	
+	void deleteBoardComment(int boardNo) throws SQLException;
 
 //	List<FileInfoDto> fileInfoList(int boardNo) throws Exception;
 	
 	List<CommentDto> listComment(int boardNo) throws SQLException;
+
+	void deleteComment(int commentno) throws SQLException;
 }

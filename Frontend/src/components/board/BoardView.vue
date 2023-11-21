@@ -95,12 +95,12 @@ const getCommentList = () => {
               <p>
                 <span class="fw-bold">안효인</span> <br />
                 <span class="text-secondary fw-light">
-                  {{ board.registerTime }}1 조회 : {{ board.hit }}
+                  {{ board.registerTime }} 조회 : {{ board.hit }}
                 </span>
               </p>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
+          <div class="col-md-4 align-self-center text-end">댓글 : {{ commentList.length }}</div>
           <div class="divider mb-3"></div>
           <div class="text-secondary">
             {{ board.content }}
@@ -126,6 +126,7 @@ const getCommentList = () => {
             <th scope="col">댓글 작성자</th>
             <th scope="col">댓글 내용</th>
             <th scope="col">댓글 작성일</th>
+            <th scope="col">비고</th>
           </tr>
         </thead>
         <tbody>

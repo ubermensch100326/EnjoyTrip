@@ -32,6 +32,10 @@ function deleteBoard(boardno, success, fail) {
   local.delete(`/board/${boardno}`).then(success).catch(fail);
 }
 
+function deleteComment(param, success, fail) {
+  local.delete(`/board/comment`, { params: param }).then(success).catch(fail);
+}
+
 export {
   listBoard,
   viewBoard,
@@ -40,4 +44,5 @@ export {
   modifyBoard,
   deleteBoard,
   listComment,
+  deleteComment,
 };

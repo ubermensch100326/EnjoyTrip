@@ -31,8 +31,7 @@ public class JWTUtility {
 
 	public String createAccessToken(String userId) {
 		return create(userId, "access-token", accessTokenExpireTime);
-	}
-
+	} 
 //	AccessToken에 비해 유효기간을 길게 설정.
 	public String createRefreshToken(String userId) {
 		return create(userId, "refresh-token", refreshTokenExpireTime);

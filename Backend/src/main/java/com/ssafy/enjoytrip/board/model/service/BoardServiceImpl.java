@@ -127,6 +127,11 @@ public class BoardServiceImpl implements BoardService {
 		// TODO : BoardDaoImpl의 deleteBoard 호출
 		boardMapper.deleteBoard(boardNo);
 	}
+	
+	@Override
+	public void deleteBoardComment(int boardNo) throws Exception {
+		boardMapper.deleteBoardComment(boardNo);
+	}
 
 	@Override
 	public CommentListDto listComment(Map<String, String> map) throws Exception {
@@ -136,6 +141,11 @@ public class BoardServiceImpl implements BoardService {
 		CommentListDto commentListDto = new CommentListDto();
 		commentListDto.setCommentList(list);
 		return commentListDto;
+	}
+
+	@Override
+	public void deleteComment(int commentno) throws Exception {
+		boardMapper.deleteComment(commentno);
 	}
 
 }

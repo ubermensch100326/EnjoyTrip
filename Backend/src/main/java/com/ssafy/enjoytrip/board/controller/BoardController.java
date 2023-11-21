@@ -134,10 +134,20 @@ public class BoardController {
 	@DeleteMapping("/{boardno}")
 	public ResponseEntity<String> deleteBoard(@PathVariable("boardno") @ApiParam(value = "살제할 글의 글번호.", required = true) int boardno) throws Exception {
 		log.info("deleteBoard - 호출");
+		boardService.deleteBoardComment(boardno);
 		boardService.deleteBoard(boardno);
 		return ResponseEntity.ok().build();
 
 	}
+	
+	@ApiOperation(value = "게시판 특정 댓글삭제", notes = "댓글번호에 해당하는 댓글을 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/comment")
+	public ResponseEntity<?> deleteComment(@RequestParam @ApiParam(value = "특정 댓글을 얻기위한 댓글정보.", required = true) Map<String, String> map) throws Exception {
+		log.info("deleteComment - 호출");
+		boardService.deleteComment(Integer.parseInt(map.get("commentno")));
+		return ResponseEntity.ok().build();
+	}
+	
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
