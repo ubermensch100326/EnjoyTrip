@@ -12,7 +12,6 @@ const gugunList = ref([{ text: "구군선택", value: "" }]);
 const attractionList = ref([]);
 const attractionSelect = ref({});
 const addedAttractionList = ref([]);
-const attractionDelete = ref({});
 const keyword = ref("");
 const type = ref("");
 
@@ -26,7 +25,7 @@ const param = ref({
     typeNum: 12,
 });
 
-provide('attractionDelete', attractionDelete);
+provide('addedAttractionList', addedAttractionList);
 
 watch(
     () => props.selectedAttraction.value,
@@ -126,9 +125,8 @@ const addAttractionMyList = (attraction) => {
     addedAttractionList.value.push(attraction);
 };
 
-const deleteAttractionMyList = (attraction) => {
-    attractionDelete.value = attraction;
-    addedAttractionList.value = addedAttractionList.value.filter((element) => { element != attraction.value });
+const deleteAttractionMyList = (index) => {
+    addedAttractionList.value.splice(index, 1);
 };
 
 </script>
@@ -175,13 +173,14 @@ const deleteAttractionMyList = (attraction) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" v-for="attraction in addedAttractionList" :key="attraction.attraction_id">
+                        <tr class="text-center" v-for="(attraction, index) in addedAttractionList"
+                            :key="attraction.attraction_id">
                             <th><img :src="attraction.first_image" alt="" width="150" /></th>
                             <th>
                                 {{ attraction.title }}
                             </th>
                             <th>
-                                <button @click="deleteAttractionMyList(attraction)">삭제</button>
+                                <button @click="deleteAttractionMyList(index)">삭제</button>
                             </th>
                         </tr>
                     </tbody>

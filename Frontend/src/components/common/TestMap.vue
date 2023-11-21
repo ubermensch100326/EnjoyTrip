@@ -5,8 +5,8 @@ var map;
 var positions = [];
 const markers = ref([]);
 const overlays = ref([]);
-const addedAttractionList = ref([]);
-const attractionDelete = inject('attractionDelete');
+const addedAttractionList = inject('addedAttractionList');
+const PolyLines = [];
 
 const props = defineProps({
     attractionList: Array,
@@ -55,11 +55,15 @@ watch(
 
 /** 사용자가 관광지를 선택, 삭제할 때 마다 선을 이어주는 코드 */
 watch(addedAttractionList.value, () => {
+
     var latlng = [];
+
+    PolyLines.forEach((element) => {
+        element.setMap(null);
+    })
 
     /** latlng 만 저장하는 배열 하나 생성 */
     addedAttractionList.value.forEach((element) => {
-        console.log("element : " + JSON.stringify(element));
         latlng.push(element.latlng);
     });
 
@@ -71,23 +75,10 @@ watch(addedAttractionList.value, () => {
         strokeStyle: "dashed", // 선의 스타일입니다
     });
 
-    console.log("latlng => " + latlng);
+    PolyLines.push(polyline);
+
     polyline.setMap(map);
 });
-
-////// 작성중입니다 //////////
-
-/** 사용자가 삭제할 관광지의 삭제 버튼을 눌렀을 때 watch */
-watch(
-    () => attractionDelete.value,
-    () => {
-        console.log("Delete : addedAttractionList.value before  => " + JSON.stringify(addedAttractionList.value));
-        addedAttractionList.value = addedAttractionList.value.filter((element) => { element != attractionDelete.value })
-        console.log("Delete : addedAttractionList.value after  => " + JSON.stringify(addedAttractionList.value));
-    }
-);
-
-////// 작성중입니다 //////////
 
 onMounted(() => {
     if (window.kakao && window.kakao.maps) {
@@ -122,7 +113,7 @@ const initMap = () => {
 
 const addMyAttraction = (position) => {
     addedAttractionList.value.push(position);
-    emit("addAttractionMyList", position);
+    //emit("addAttractionMyList", position);
     console.log("addAttractionMyList");
 };
 
