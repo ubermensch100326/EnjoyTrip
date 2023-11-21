@@ -1,19 +1,19 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, inject } from "vue";
 
 var map;
 var positions = [];
 const markers = ref([]);
 const overlays = ref([]);
 const addedAttractionList = ref([]);
+const attractionDelete = inject('attractionDelete');
 
 const props = defineProps({
     attractionList: Array,
     attractionSelect: Object,
-    deletedAttraction: Object,
 });
 
-const emit = defineEmits(["addAttractionMyList"]);
+const emit = defineEmits(["addAttractionMyList", "deleteAttractionMyList"]);
 
 watch(
     () => props.attractionList.value,
@@ -77,12 +77,15 @@ watch(addedAttractionList.value, () => {
 
 ////// 작성중입니다 //////////
 
-// watch(
-//     () => props.deletedAttraction.value,
-//     () => {
-//         addedAttractionList.value.remove(props.deletedAttraction.value);
-//     }
-// );
+/** 사용자가 삭제할 관광지의 삭제 버튼을 눌렀을 때 watch */
+watch(
+    () => attractionDelete.value,
+    () => {
+        console.log("Delete : addedAttractionList.value before  => " + JSON.stringify(addedAttractionList.value));
+        addedAttractionList.value = addedAttractionList.value.filter((element) => { element != attractionDelete.value })
+        console.log("Delete : addedAttractionList.value after  => " + JSON.stringify(addedAttractionList.value));
+    }
+);
 
 ////// 작성중입니다 //////////
 
@@ -91,9 +94,8 @@ onMounted(() => {
         initMap();
     } else {
         const script = document.createElement("script");
-        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
-            import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
-        }&libraries=services,clusterer`;
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
+            }&libraries=services,clusterer`;
         /* global kakao */
         script.onload = () => kakao.maps.load(() => initMap());
         document.head.appendChild(script);
@@ -123,6 +125,10 @@ const addMyAttraction = (position) => {
     emit("addAttractionMyList", position);
     console.log("addAttractionMyList");
 };
+
+const deleteAttraction = (index) => {
+    emit("deleteAttractionMyList", index);
+}
 
 const loadMarkers = (position) => {
     var marker = new kakao.maps.Marker({
@@ -228,11 +234,11 @@ const loadMarkers = (position) => {
     // overlays.push(overlay);
 
     // 마커 배열의 마커들에게 클릭 이벤트 추가 하는 부분.
-    markers.value.forEach((marker) => {
-        kakao.maps.event.addListener(marker, "click", function () {
-            overlays.value.setMap(map);
-        });
-    });
+    // markers.value.forEach((marker) => {
+    //     kakao.maps.event.addListener(marker, "click", function () {
+    //         overlays.value.setMap(map);
+    //     });
+    // });
 
     // 4. 지도를 이동시켜주기
     // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);

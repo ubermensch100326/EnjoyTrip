@@ -1,11 +1,32 @@
 <script setup>
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch, provide } from "vue";
 import { listSido, listGugun, listAttraction } from "@/api/map";
 
 import TestMap from "@/components/common/TestMap.vue";
 import OptionSelect from "@/components/common/OptionSelect.vue";
 
 const props = defineProps({ selectedAttraction: Object });
+
+const sidoList = ref([]);
+const gugunList = ref([{ text: "구군선택", value: "" }]);
+const attractionList = ref([]);
+const attractionSelect = ref({});
+const addedAttractionList = ref([]);
+const attractionDelete = ref({});
+const keyword = ref("");
+const type = ref("");
+
+const param = ref({
+    pageNo: 1,
+    numOfRows: 20,
+    // zscode: 0,
+    sido: 0,
+    gugun: 0,
+    keyword: "가",
+    typeNum: 12,
+});
+
+provide('attractionDelete', attractionDelete);
 
 watch(
     () => props.selectedAttraction.value,
@@ -22,24 +43,6 @@ watch(
     },
     { deep: true }
 );
-
-const sidoList = ref([]);
-const gugunList = ref([{ text: "구군선택", value: "" }]);
-const attractionList = ref([]);
-const attractionSelect = ref({});
-const addedAttractionList = ref([]);
-const keyword = ref("");
-const type = ref("");
-
-const param = ref({
-    pageNo: 1,
-    numOfRows: 20,
-    // zscode: 0,
-    sido: 0,
-    gugun: 0,
-    keyword: "가",
-    typeNum: 12,
-});
 
 onMounted(() => {
     getSidoList();
@@ -123,9 +126,11 @@ const addAttractionMyList = (attraction) => {
     addedAttractionList.value.push(attraction);
 };
 
-const deleteAttractionMyList = () => {
-    console.log("deleteAttractionMyList 호출");
+const deleteAttractionMyList = (attraction) => {
+    attractionDelete.value = attraction;
+    addedAttractionList.value = addedAttractionList.value.filter((element) => { element != attraction.value });
 };
+
 </script>
 
 <template>
@@ -157,12 +162,9 @@ const deleteAttractionMyList = () => {
             </div>
         </div>
         <div class="d-flex justify-content">
-            <Suspense
-                ><TestMap
-                    :attractionList="attractionList"
-                    :attractionSelect="attractionSelect"
-                    @addAttractionMyList="addAttractionMyList"
-                ></TestMap>
+            <Suspense>
+                <TestMap :attractionList="attractionList" :attractionSelect="attractionSelect"
+                    @addAttractionMyList="addAttractionMyList"></TestMap>
             </Suspense>
 
             <div class="table‑wrapper" style="width: 100%">
@@ -173,17 +175,13 @@ const deleteAttractionMyList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            class="text-center"
-                            v-for="attraction in addedAttractionList"
-                            :key="attraction.attraction_id"
-                        >
+                        <tr class="text-center" v-for="attraction in addedAttractionList" :key="attraction.attraction_id">
                             <th><img :src="attraction.first_image" alt="" width="150" /></th>
                             <th>
                                 {{ attraction.title }}
                             </th>
                             <th>
-                                <button @click="deleteAttractionMyList">삭제</button>
+                                <button @click="deleteAttractionMyList(attraction)">삭제</button>
                             </th>
                         </tr>
                     </tbody>
@@ -197,12 +195,8 @@ const deleteAttractionMyList = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr
-                    class="text-center"
-                    v-for="attraction in attractionList"
-                    :key="attraction.attraction_id"
-                    @click="viewAttraction(attraction)"
-                >
+                <tr class="text-center" v-for="attraction in attractionList" :key="attraction.attraction_id"
+                    @click="viewAttraction(attraction)">
                     <th><img :src="attraction.first_image" width="50" /></th>
                     <th>{{ attraction.attraction_id }}</th>
                     <th>{{ attraction.title }}</th>
