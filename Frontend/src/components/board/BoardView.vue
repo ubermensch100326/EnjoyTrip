@@ -59,8 +59,11 @@ const getCommentList = () => {
   listComment(
     param.value,
     ({ data }) => {
+      console.log("댓글 요청##############################");
       console.log(data);
       commentList.value = data.commentList;
+      console.log("댓글 리스트 테스트#####################");
+      console.log(commentList);
     },
     (error) => {
       console.log(error);
@@ -129,7 +132,7 @@ const getCommentList = () => {
           <CommentListItem
             v-for="comment in commentList"
             :key="comment.commentNo"
-            :commnet="comment"
+            :comment="comment"
           ></CommentListItem>
         </tbody>
       </table>
