@@ -6,6 +6,7 @@ import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
 
 const onlyAuthUser = async (to, from, next) => {
+  console.log("onlyAuthUser Execute");
   const userStore = useUserStore();
   const { userInfo, isValidToken } = storeToRefs(userStore);
   const { getUserInfo } = userStore;
@@ -13,8 +14,14 @@ const onlyAuthUser = async (to, from, next) => {
   let token = sessionStorage.getItem("accessToken");
 
   if (userInfo.value != null && token) {
-    await getUserInfo(token);
+    getUserInfo(token);
   }
+  console.log("isValidToken : " + isValidToken.value);
+
+  setTimeout(function () {
+    console.log("Works!");
+  }, 3000);
+
   if (!isValidToken.value || userInfo.value === null) {
     next({ name: "user-login" });
   } else {
@@ -77,21 +84,18 @@ const router = createRouter({
         {
           path: "view/:boardno",
           name: "board-view",
-          beforeEnter: onlyAuthUser,
           component: () => import("@/components/board/BoardView.vue"),
         },
         {
           path: "write",
           name: "board-write",
           beforeEnter: onlyAuthUser,
-
           component: () => import("@/components/board/BoardWrite.vue"),
         },
         {
           path: "modify/:boardno",
           name: "board-modify",
           beforeEnter: onlyAuthUser,
-
           component: () => import("@/components/board/BoardModify.vue"),
         },
       ],
