@@ -11,7 +11,10 @@ watch(
     () => props.selectedAttraction.value,
     () => {
         // 이동할 위도 경도 위치를 생성합니다
-        var moveLatLon = new kakao.maps.LatLng(props.selectedAttraction.lat, props.selectedAttraction.lng);
+        var moveLatLon = new kakao.maps.LatLng(
+            props.selectedAttraction.lat,
+            props.selectedAttraction.lng
+        );
 
         // 지도 중심을 부드럽게 이동시킵니다
         // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
@@ -34,7 +37,7 @@ const param = ref({
     sido: 0,
     gugun: 0,
     keyword: "가",
-    typeNum: 12
+    typeNum: 12,
 });
 
 onMounted(() => {
@@ -88,7 +91,6 @@ const onChangeType = () => {
     console.log("On change type : val => " + type.value);
 };
 
-
 // const onChangeType
 
 const onSearchButtonClick = () => {
@@ -112,6 +114,7 @@ const getAttractionList = () => {
 };
 
 const viewAttraction = (attraction) => {
+    console.log("@@@@@@@@@@@@@@  viewAttraction change => " + attraction.attraction_id);
     attractionSelect.value = attraction;
 };
 </script>
@@ -152,8 +155,12 @@ const viewAttraction = (attraction) => {
                 </tr>
             </thead>
             <tbody>
-                <tr class="text-center" v-for="attraction in attractionList" :key="attraction.attraction_id"
-                    @click="viewAttraction(attraction)">
+                <tr
+                    class="text-center"
+                    v-for="attraction in attractionList"
+                    :key="attraction.attraction_id"
+                    @click="viewAttraction(attraction)"
+                >
                     <th><img :src="attraction.first_image" width="50" /></th>
                     <th>{{ attraction.attraction_id }}</th>
                     <th>{{ attraction.title }}</th>

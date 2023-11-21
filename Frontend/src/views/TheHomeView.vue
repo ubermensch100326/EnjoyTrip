@@ -62,7 +62,8 @@ const onChangeGugun = (val) => {
         :modifiable="false"
         :searchAttraction="searchAttraction"
         :selectedAttraction="selectedAttraction"
-    ></KakaoMap>
+    >
+    </KakaoMap>
 
     <div class="container">
         <div id="carouselExampleCaptions" class="carousel slide">
