@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, watch, provide } from "vue";
-import { listSido, listGugun, listAttraction } from "@/api/map";
+import { listSido, listGugun, listAttraction, createMyPlan } from "@/api/map";
 
 import TestMap from "@/components/common/TestMap.vue";
 import OptionSelect from "@/components/common/OptionSelect.vue";
@@ -13,12 +13,11 @@ const attractionList = ref([]);
 const attractionSelect = ref({});
 const addedAttractionList = ref([]);
 const keyword = ref("");
-const type = ref("");
+const type = ref("0");
 
 const param = ref({
     pageNo: 1,
-    numOfRows: 20,
-    // zscode: 0,
+    numOfRows: 30,
     sido: 0,
     gugun: 0,
     keyword: "가",
@@ -106,9 +105,7 @@ const getAttractionList = () => {
     listAttraction(
         param.value,
         ({ data }) => {
-            console.log("data : " + data);
             attractionList.value = data;
-            console.log("##################" + attractionList.value);
         },
         (err) => {
             console.log(err);
@@ -129,6 +126,28 @@ const deleteAttractionMyList = (index) => {
     addedAttractionList.value.splice(index, 1);
 };
 
+/////////// 작성중입니다 ///////////////
+const saveMyPlan = () => {
+
+    var index = 1;
+    addedAttractionList.value.forEach((plan) => {
+
+        // 저장할 관광지의 여행 계획 순서 추가.
+        plan.order = index;
+        index++;
+        createMyPlan(
+            plan,
+            ({ data }) => {
+                console.log(data);
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
+    })
+}
+
+/////////// 작성중입니다 ///////////////
 </script>
 
 <template>
@@ -143,7 +162,8 @@ const deleteAttractionMyList = (index) => {
                 <OptionSelect :optionList="gugunList" @onKeySelect="onChangeGugun" />
             </div>
             <div class="col">
-                <select @change="onChangeType" v-model="type">
+                <select class="form-select form-select-sm w-50" @change="onChangeType" v-model="type">
+                    <option value="0" selected disabled>관광지유형</option>
                     <option value="12">관광지</option>
                     <option value="14">문화시설</option>
                     <option value="15">축제공연행사</option>
@@ -156,7 +176,8 @@ const deleteAttractionMyList = (index) => {
             </div>
             <div class="col">
                 <input type="text" v-model="keyword" @keyup.enter="onSearchButtonClick" />
-                <button @click="onSearchButtonClick">검색</button>
+                <button class="pb-2" @click="onSearchButtonClick">검색</button>
+                <button @click="saveMyPlan">계획 저장</button>
             </div>
         </div>
         <div class="d-flex justify-content">

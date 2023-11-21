@@ -10,5 +10,6 @@ public interface MapService {
 	List<SidoGugunCodeDto> getSido() throws Exception;
 	List<SidoGugunCodeDto> getGugunInSido(String sido) throws Exception;
 	List<Map<String, String>> getAttractionList(Map<String, String> sidogugun) throws Exception;
+	void createUserPlan(Map<String, Object> map) throws Exception;
 	
 }

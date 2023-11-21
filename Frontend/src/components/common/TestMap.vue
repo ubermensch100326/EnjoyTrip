@@ -22,6 +22,7 @@ watch(
         positions = [];
         props.attractionList.forEach((attraction) => {
             let obj = {};
+            obj.attraction_id = attraction.attraction_id;
             obj.latlng = new kakao.maps.LatLng(attraction.latitude, attraction.longitude);
             obj.title = attraction.title;
             obj.addr = attraction.addr1;

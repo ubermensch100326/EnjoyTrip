@@ -14,4 +14,8 @@ function listAttraction(param, success, fail) {
   local.get(`/map/attraction`, { params: param }).then(success).catch(fail);
 }
 
-export { listSido, listGugun, listAttraction };
+function createMyPlan(param, success, fail) {
+  local.post(`/map/plan`, JSON.stringify(param)).then(success).catch(fail);
+}
+
+export { listSido, listGugun, listAttraction, createMyPlan };

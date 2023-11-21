@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,6 +76,17 @@ public class MapController {
 			map.put("typeNum", typeNum);
 		
 		return new ResponseEntity<List<AttractionDto>> (mapService.getAttractionList(map), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "사용자 여행 계획 저장", notes = "plan을 json으로 받는다.", response = Object.class)
+	@PostMapping("/plan")
+	public ResponseEntity<Map<String, Object>> plan(@RequestBody Map<String, Object> map) throws Exception {
+		System.out.println("###############" + map.get("attraction_id"));
+		
+		mapService.createUserPlan(map);
+		
+		// 받은거 그대로 돌려주기 ( 확인용 )
+		return new ResponseEntity<Map<String, Object>> (map, HttpStatus.OK);
 	}
 	
 }

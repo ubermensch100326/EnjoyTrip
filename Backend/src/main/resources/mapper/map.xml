@@ -48,5 +48,9 @@
 			limit ${numOfRows}
 		</if>
 	</select>
+	
+	<insert id="createUserPlan" parameterType="map">
+		insert into board_detail values(1, #{attraction_id}, #{order}, '응애응애응애응애' )
+	</insert>
 
 </mapper>

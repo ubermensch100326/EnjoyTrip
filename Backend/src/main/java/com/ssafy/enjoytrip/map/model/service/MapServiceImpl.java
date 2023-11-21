@@ -33,4 +33,10 @@ public class MapServiceImpl implements MapService {
 		return mapMapper.getAttractionList(sidogugun);
 	}
 
+	@Override
+	public void createUserPlan(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		mapMapper.createUserPlan(map);
+	}
+
 }

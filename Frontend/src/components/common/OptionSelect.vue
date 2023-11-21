@@ -13,14 +13,9 @@ const onSelect = () => {
 </script>
 
 <template>
-    <h1>Select.vue</h1>
-    <select v-model="gugun" class="form-select form-select-sm w-50" @change="onSelect">
-        <option
-            v-for="option in optionList"
-            :key="option.value"
-            :value="option.value"
-            :disabled="option.value === '' ? true : false"
-        >
+    <select v-model="gugun" class="form-select form-select-bg w-50" @change="onSelect">
+        <option v-for="option in optionList" :key="option.value" :value="option.value"
+            :disabled="option.value === '' ? true : false">
             {{ option.text }}
         </option>
     </select>
