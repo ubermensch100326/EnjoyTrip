@@ -12,7 +12,7 @@ function viewBoard(boardno, success, fail) {
 
 function listComment(param, success, fail) {
   console.log("댓글 요청!!!!!!!!!!!!!!!!!!!!!");
-  local.get(`/comment`, { params: param }).then(success).catch(fail);
+  local.get(`/board/comment`, { params: param }).then(success).catch(fail);
 }
 
 function registerBoard(board, success, fail) {
