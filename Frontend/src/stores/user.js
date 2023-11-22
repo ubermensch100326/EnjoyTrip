@@ -1,10 +1,11 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
 import { userConfirm, findById, tokenRegeneration, logout } from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
+import { useNavigationBarStore } from "./navigation-bar";
 
 export const useUserStore = defineStore(
   "userStore",
@@ -125,6 +126,8 @@ export const useUserStore = defineStore(
             isLogin.value = false;
             userInfo.value = null;
             isValidToken.value = false;
+            sessionStorage.removeItem("accessToken");
+            sessionStorage.removeItem("refreshToken");
           } else {
             console.error("유저 정보 없음!!!!");
           }
@@ -134,6 +137,15 @@ export const useUserStore = defineStore(
         }
       );
     };
+
+    const { changeLogin, changeLogout } = useNavigationBarStore();
+    watch(isLogin, () => {
+      if (isLogin.value) {
+        changeLogin();
+      } else {
+        changeLogout();
+      }
+    });
 
     return {
       isLogin,

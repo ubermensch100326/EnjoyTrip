@@ -1,16 +1,18 @@
 <script setup>
 import { useNavigationBarStore } from "@/stores/navigation-bar";
 import { storeToRefs } from "pinia";
+import { useUserStore } from "@/stores/user";
 
 const navigationBarStore = useNavigationBarStore();
 
 const { navigationBarList } = storeToRefs(navigationBarStore);
-const { changeNavigationBarState } = navigationBarStore;
+const { userLogout, userInfo } = useUserStore();
 
 const logout = () => {
   console.log("TheNavigationBar.vue : 로그아웃");
-  changeNavigationBarState();
-
+  // changeNavigationBarState();
+  console.log(userInfo);
+  userLogout(userInfo.userId);
 };
 </script>
 
@@ -21,9 +23,15 @@ const logout = () => {
         <router-link :to="{ name: 'home' }" class="navbar-brand">
           <img src="@/assets/enjoytrip_logo.png" alt="favicon" width="50" />
         </router-link>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-          aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

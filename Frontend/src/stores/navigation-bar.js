@@ -19,9 +19,31 @@ export const useNavigationBarStore = defineStore(
       }));
     };
 
+    const changeLogin = () => {
+      navigationBarList.value.forEach((item) => {
+        if (item.name === "마이페이지" || item.name === "내 여행계획" || item.name === "로그아웃") {
+          item.show = true;
+        } else {
+          item.show = false;
+        }
+      });
+    };
+
+    const changeLogout = () => {
+      navigationBarList.value.forEach((item) => {
+        if (item.name === "회원가입" || item.name === "로그인") {
+          item.show = true;
+        } else {
+          item.show = false;
+        }
+      });
+    };
+
     return {
       navigationBarList,
-      changeNavigationBarState,
+      // changeNavigationBarState,
+      changeLogin,
+      changeLogout,
     };
   },
   { persist: true }

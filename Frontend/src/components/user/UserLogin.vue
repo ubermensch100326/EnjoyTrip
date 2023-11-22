@@ -34,7 +34,7 @@ const login = async () => {
     // 그런데 화면에 아직 user 정보를 찍은 상태는 아님
     // 그래서 token 정보를 가지고 userinfo로 가야 함
     getUserInfo(token);
-    changeNavigationBarState();
+    // changeNavigationBarState();
   }
   router.push("/");
 };
