@@ -82,7 +82,7 @@ const comment = ref({
 });
 
 function moveView() {
-  router.push({ name: "board-view", params: { boardno: boardno } });
+  router.push({ name: "board-view", params: boardno });
   location.reload();
 }
 
@@ -97,7 +97,7 @@ const submitComment = () => {
       // let msg = "댓글등록 처리시 문제 발생했습니다.";
       // if (response.status == 201) msg = "댓글등록이 완료되었습니다.";
       // alert(msg);
-      moveList();
+      moveView();
     },
     (error) => console.error(error)
   );

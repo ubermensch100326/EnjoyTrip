@@ -9,7 +9,7 @@ const { userInfo } = useUserStore();
 const router = useRouter();
 const route = useRoute();
 
-const props = defineProps({ type: String });
+const props = defineProps({ type: String, boardno: Number });
 
 const isUseId = ref(false);
 
@@ -98,13 +98,17 @@ function updateArticle() {
       if (response.status == 200) {
         // msg = "글정보 수정이 완료되었습니다.";
         // alert(msg);
-        moveList();
+        moveView();
         // router.push({ name: "board-view" });
         // router.push(`/board/view/${board.value.boardNo}`);
       }
     },
     (error) => console.log(error)
   );
+}
+
+function moveView() {
+  router.push({ name: "board-view", params: props.boardno });
 }
 
 function moveList() {
