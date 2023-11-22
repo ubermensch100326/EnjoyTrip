@@ -160,4 +160,8 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.registerComment(map);
 	}
 
+	public List<Map<String, Object>> getUserBoardList(Map<String, Object> map) {
+		return boardMapper.getUserBoardList(map);
+	}
+
 }

@@ -145,5 +145,14 @@
 		delete from comment
 		where comment_no = #{commentno};
 	</delete>
+	
+	<select id="getUserBoardList" parameterType="map" resultType="map">
+		select *
+		from
+			board_detail a
+			join (select * from board where user_id = #{userId}) b
+			using(board_no)
+		where private = 1
+	</select>
 
 </mapper>

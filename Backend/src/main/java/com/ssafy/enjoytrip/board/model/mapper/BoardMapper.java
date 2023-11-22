@@ -42,4 +42,6 @@ public interface BoardMapper {
 	void modifyComment(Map<String, String> map) throws SQLException;
 
 	void registerComment(Map<String, String> map) throws SQLException;
+
+	List<Map<String, Object>> getUserBoardList(Map<String, Object> map);
 }
