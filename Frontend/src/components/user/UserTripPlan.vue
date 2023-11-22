@@ -15,7 +15,7 @@ const clickBut = () => {
     userBoardList(
         UserInfo,
         ({ data }) => {
-            console.log(JSON.stringify(data));
+            console.log(JSON.stringify(data))
         },
         (err) => {
             console.log(err);
