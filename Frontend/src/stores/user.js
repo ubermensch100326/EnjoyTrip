@@ -101,10 +101,19 @@ export const useUserStore = defineStore(
                 } else {
                   console.log("리프레시 토큰 제거 실패");
                 }
+                console.log("------------------------");
+                console.log(isLogin.value);
+                console.log(isValidToken.value);
                 alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
+                // sessionStorage.removeItem("accessToken");
+                // sessionStorage.removeItem("refreshToken");
                 isLogin.value = false;
                 userInfo.value = null;
                 isValidToken.value = false;
+                console.log("로그인 페이지로 이동하기 직전입니다!!!!");
+                console.log(isLogin.value);
+                console.log(isValidToken.value);
+                console.log("-----------------------------");
                 router.push({ name: "user-login" });
               },
               (error) => {
@@ -141,11 +150,23 @@ export const useUserStore = defineStore(
     const { changeLogin, changeLogout } = useNavigationBarStore();
     watch(isLogin, () => {
       if (isLogin.value) {
+        console.log("네브바를 로그인 상태로 변경합니다!");
         changeLogin();
       } else {
+        console.log("네브바를 로그아웃 상태로 변경합니다!");
         changeLogout();
       }
     });
+
+    const changeLoginFalse = () => {
+      isLogin.value = false;
+      isValidToken.value = false;
+    };
+
+    const changeLoginTrue = () => {
+      isLogin.value = true;
+      isValidToken.value = true;
+    };
 
     return {
       isLogin,
@@ -156,6 +177,8 @@ export const useUserStore = defineStore(
       getUserInfo,
       tokenRegenerate,
       userLogout,
+      changeLoginFalse,
+      changeLoginTrue,
     };
   },
   { persist: true }

@@ -38,4 +38,6 @@ public interface BoardMapper {
 	List<CommentDto> listComment(int boardNo) throws SQLException;
 
 	void deleteComment(int commentno) throws SQLException;
+
+	void modifyComment(Map<String, String> map);
 }

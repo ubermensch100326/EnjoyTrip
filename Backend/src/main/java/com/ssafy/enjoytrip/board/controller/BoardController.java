@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.BoardListDto;
+import com.ssafy.enjoytrip.board.model.CommentDto;
 import com.ssafy.enjoytrip.board.model.CommentListDto;
 import com.ssafy.enjoytrip.board.model.service.BoardService;
 
@@ -125,7 +126,7 @@ public class BoardController {
 	public ResponseEntity<String> modifyBoard(
 			@RequestBody @ApiParam(value = "수정할 글정보.", required = true) BoardDto boardDto) throws Exception {
 		log.info("modifyBoard - 호출 {}", boardDto);
-
+		
 		boardService.modifyBoard(boardDto);
 		return ResponseEntity.ok().build();
 	}
@@ -148,6 +149,15 @@ public class BoardController {
 		return ResponseEntity.ok().build();
 	}
 	
+	@ApiOperation(value = "게시판 특정 댓글수정", notes = "댓글번호에 해당하는 댓글을 수정한다. 그리고 DB삭제 수정여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("/comment")
+	public ResponseEntity<?> modifyComment(@RequestBody @ApiParam(value = "특정 댓글을 얻기위한 댓글정보.", required = true) Map<String, String> map) throws Exception {
+		log.info("modifyComment - 호출");
+		System.out.println("###################################################");
+		System.out.println(map);
+		boardService.modifyComment(map);
+		return ResponseEntity.ok().build();
+	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();

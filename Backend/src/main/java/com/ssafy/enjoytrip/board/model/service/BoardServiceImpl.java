@@ -148,4 +148,11 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.deleteComment(commentno);
 	}
 
+	@Override
+	public void modifyComment(Map<String, String> map) {
+		System.out.println(map.get("commentno"));
+		System.out.println(map.get("content"));
+		boardMapper.modifyComment(map);
+	}
+
 }

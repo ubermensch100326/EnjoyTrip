@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-import { deleteComment } from "@/api/board";
+import { deleteComment, modifyComment } from "@/api/board";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -31,6 +31,35 @@ function onDeleteComment() {
     }
   );
 }
+
+const editing = ref(false);
+
+function editComment() {
+  editing.value = true;
+}
+
+// const editedContent = ref(props.comment.content);
+
+const editParam = ref({
+  commentno: props.comment.commentNo,
+  content: props.comment.content,
+});
+
+function saveComment() {
+  modifyComment(
+    editParam.value,
+    (response) => {
+      console.log("editParam : " + editParam.value);
+      if (response.status == 200) {
+        console.log("댓글 수정 완료!!!!");
+        moveView();
+      }
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+}
 </script>
 
 <template>
@@ -47,11 +76,32 @@ function onDeleteComment() {
       {{ comment.commentNo }}
     </td>
     <td>{{ comment.userId }}</td>
-    <td>{{ comment.content }}</td>
+    <td>
+      <div v-if="!editing">{{ comment.content }}</div>
+      <textarea v-if="editing" v-model="editParam.content" rows="1"></textarea>
+    </td>
     <td>{{ comment.registerTime }}</td>
     <td>
       <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteComment">
         댓글삭제
+      </button>
+    </td>
+    <td>
+      <button
+        v-if="!editing"
+        type="button"
+        class="btn btn-outline-primary ms-1"
+        @click="editComment"
+      >
+        댓글수정
+      </button>
+      <button
+        v-if="editing"
+        type="button"
+        class="btn btn-outline-success ms-1"
+        @click="saveComment"
+      >
+        댓글저장
       </button>
     </td>
   </tr>

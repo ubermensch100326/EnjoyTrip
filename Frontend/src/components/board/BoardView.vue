@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { viewBoard, deleteBoard, listComment } from "@/api/board";
-import CommentListItem from "./item/CommentListItem.vue";
+import CommentListItem from "@/components/board/item/CommentListItem.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -126,7 +126,8 @@ const getCommentList = () => {
             <th scope="col">댓글 작성자</th>
             <th scope="col">댓글 내용</th>
             <th scope="col">댓글 작성일</th>
-            <th scope="col">비고</th>
+            <th scope="col">삭제</th>
+            <th scope="col">수정</th>
           </tr>
         </thead>
         <tbody>

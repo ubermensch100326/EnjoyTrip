@@ -15,6 +15,10 @@ function listComment(param, success, fail) {
   local.get(`/board/comment`, { params: param }).then(success).catch(fail);
 }
 
+function modifyBoard(board, success, fail) {
+  local.put(`/board`, JSON.stringify(board)).then(success).catch(fail);
+}
+
 function registerBoard(board, success, fail) {
   console.log("boardjs board", board);
   local.post(`/board`, JSON.stringify(board)).then(success).catch(fail);
@@ -24,8 +28,8 @@ function toModifyBoard(boardno, success, fail) {
   local.get(`/board/modify/${boardno}`).then(success).catch(fail);
 }
 
-function modifyBoard(board, success, fail) {
-  local.put(`/board`, JSON.stringify(board)).then(success).catch(fail);
+function modifyComment(editParam, success, fail) {
+  local.put(`/board/comment`, JSON.stringify(editParam)).then(success).catch(fail);
 }
 
 function deleteBoard(boardno, success, fail) {
@@ -45,4 +49,5 @@ export {
   deleteBoard,
   listComment,
   deleteComment,
+  modifyComment,
 };

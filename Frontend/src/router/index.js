@@ -7,27 +7,47 @@ import { useUserStore } from "@/stores/user";
 
 const onlyAuthUser = async (to, from, next) => {
   console.log("onlyAuthUser Execute");
-  const userStore = useUserStore();
-  const { userInfo, isValidToken } = storeToRefs(userStore);
-  const { getUserInfo } = userStore;
+  const { isLogin, getUserInfo, userInfo, isValidToken, changeLoginFalse, changeLoginTrue } =
+    useUserStore();
 
   let token = sessionStorage.getItem("accessToken");
-
-  if (userInfo.value != null && token) {
+  if (userInfo != null && token) {
     getUserInfo(token);
   }
-  console.log("isValidToken : " + isValidToken.value);
+  console.log("isValidToken : " + isValidToken);
 
-  setTimeout(function () {
-    console.log("Works!");
-  }, 3000);
+  // setTimeout(function () {
+  //   console.log("!!!isLogin : " + isLogin);
+  //   console.log("!!!!userInfo : " + userInfo.userId);
+  //   console.log("Works!");
+  // }, 3000);
 
-  if (!isValidToken.value || userInfo.value === null) {
+  console.log("!!!isLogin : " + isLogin);
+  console.log("!!!!userInfo : " + userInfo.userId);
+
+  if (!isValidToken || userInfo == null) {
+    console.log(11111111);
+    // isLogin.value = false;
+    // isValidToken.value = false;
+    // isLogin.value = false;
     next({ name: "user-login" });
+  } else {
+    console.log(22222222);
+    next();
+  }
+};
+
+const alreadyLogin = async (to, from, next) => {
+  const { isValidToken, userInfo } = useUserStore();
+  if (isValidToken && userInfo) {
+    alert("이미 로그인된 상태입니다!");
+    next({ name: "home" });
   } else {
     next();
   }
 };
+
+// 나중에 네브바 인증처리도 해야함
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +70,7 @@ const router = createRouter({
         {
           path: "login",
           name: "user-login",
+          beforeEnter: alreadyLogin,
           component: () => import("@/components/user/UserLogin.vue"),
         },
         {
