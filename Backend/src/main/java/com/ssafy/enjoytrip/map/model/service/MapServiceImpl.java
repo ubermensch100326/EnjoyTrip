@@ -39,4 +39,16 @@ public class MapServiceImpl implements MapService {
 		mapMapper.createUserPlan(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> getUserPlan(Integer board_no) throws Exception {
+		// TODO Auto-generated method stub
+		return mapMapper.getUserPlan(board_no);
+	}
+
+	@Override
+	public void deleteUserPlan(Integer board_no) {
+		// TODO Auto-generated method stub
+		mapMapper.deleteUserPlan(board_no);
+	}
+
 }

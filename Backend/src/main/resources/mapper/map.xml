@@ -49,8 +49,18 @@
 		</if>
 	</select>
 	
+	<delete id="deleteUserPlan" parameterType="map">
+		delete from board_detail where board_no=#{board_no}
+	</delete>
+	
 	<insert id="createUserPlan" parameterType="map">
-		insert into board_detail values(1, #{attraction_id}, #{order}, '응애응애응애응애' )
+		insert into board_detail values(null, #{board_no}, #{attraction_id}, #{order}, '응애응애응애응애' )
 	</insert>
+	
+	<select id="getUserPlan" parameterType="Integer" resultType="map">
+		select * 
+		from board_detail a join attraction b using(attraction_id)
+		where board_no = #{board_no}
+	</select>
 
 </mapper>

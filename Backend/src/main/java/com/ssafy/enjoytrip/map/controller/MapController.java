@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -88,5 +89,22 @@ public class MapController {
 		// 받은거 그대로 돌려주기 ( 확인용 )
 		return new ResponseEntity<Map<String, Object>> (map, HttpStatus.OK);
 	}
+
+	@ApiOperation(value = "사용자 여행 계획 수정 전 삭제", notes = "board_no를 받아서 해당 계획을 삭제해준다.", response = Object.class)
+	@DeleteMapping("/plan")
+	public ResponseEntity<Integer> deletePlan(@RequestParam Integer board_no) throws Exception {
+		mapService.deleteUserPlan(board_no);
+		// 받은거 그대로 돌려주기 ( 확인용 )
+		return new ResponseEntity<Integer> (board_no, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "사용자 여행 계획 불러오기", notes = "board_no를 받아서 해당 게시물을 반환한다.", response = Map.class)
+	@GetMapping("/plan")
+	public ResponseEntity<List<Map<String, Object>>> getPlan(@RequestParam Integer board_no) throws Exception {
+		
+		// 받은거 그대로 돌려주기 ( 확인용 )
+		return new ResponseEntity<List<Map<String, Object>>> (mapService.getUserPlan(board_no), HttpStatus.OK);
+	}
+
 	
 }
