@@ -5,30 +5,31 @@ var map;
 var positions = [];
 const markers = ref([]);
 const overlays = ref([]);
-const addedAttractionList = inject('addedAttractionList');
 const PolyLines = [];
 
 const props = defineProps({
     attractionList: Array,
     attractionSelect: Object,
+    addedAttractionList: Array,
 });
 
 const emit = defineEmits(["addAttractionMyList", "deleteAttractionMyList"]);
 
 watch(
-    () => props.attractionList.value,
+    () => props.attractionList,
     () => {
         deleteMarkers();
         positions = [];
         props.attractionList.forEach((attraction) => {
-            let obj = {};
-            obj.attraction_id = attraction.attraction_id;
-            obj.latlng = new kakao.maps.LatLng(attraction.latitude, attraction.longitude);
-            obj.title = attraction.title;
-            obj.addr = attraction.addr1;
-            obj.first_image = attraction.first_image;
-            obj.tel = attraction.tel;
-            positions.push(obj);
+            // let obj = {};
+            // obj.attraction_id = attraction.attraction_id;
+            // obj.latlng = new kakao.maps.LatLng(attraction.latitude, attraction.longitude);
+            // obj.title = attraction.title;
+            // obj.addr = attraction.addr1;
+            // obj.first_image = attraction.first_image;
+            // obj.tel = attraction.tel;
+            // positions.push(obj);
+            positions.push(attraction);
         });
 
         for (let i = 0; i < positions.length; i++) {
@@ -40,7 +41,7 @@ watch(
 );
 
 watch(
-    () => props.attractionSelect.value,
+    () => props.attractionSelect,
     () => {
         // 이동할 위도 경도 위치를 생성합니다
         var moveLatLon = new kakao.maps.LatLng(
@@ -55,39 +56,76 @@ watch(
 );
 
 /** 사용자가 관광지를 선택, 삭제할 때 마다 선을 이어주는 코드 */
-watch(addedAttractionList.value, () => {
+watch(
+    () => props.addedAttractionList,
+    () => {
+        var latlng = [];
+        var moveLatLon;
+        positions = [];
+        console.log("ddddddddddddd" + props.addedAttractionList);
+        console.log(JSON.stringify("$123412341234" + props.addedAttractionList));
 
-    var latlng = [];
+        PolyLines.forEach((element) => {
+            element.setMap(null);
+        });
 
-    PolyLines.forEach((element) => {
-        element.setMap(null);
-    })
+        /** latlng 만 저장하는 배열 하나 생성 */
+        props.addedAttractionList.forEach((element) => {
+            moveLatLon = new kakao.maps.LatLng(element.latitude, element.longitude);
+            latlng.push(new kakao.maps.LatLng(element.latitude, element.longitude));
+            console.log("element === " + JSON.stringify(element));
 
-    /** latlng 만 저장하는 배열 하나 생성 */
-    addedAttractionList.value.forEach((element) => {
-        latlng.push(element.latlng);
-    });
+            var marker = new kakao.maps.Marker({
+                map: map, // 마커를 표시할 지도
+                position: moveLatLon, // 마커를 표시할 위치
+                // title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨.
+                clickable: true, // // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+                // image: markerImage, // 마커의 이미지
+            });
 
-    var polyline = new kakao.maps.Polyline({
-        path: latlng, // 선을 구성하는 좌표배열 입니다
-        strokeWeight: 5, // 선의 두께 입니다
-        strokeColor: "#FFAE00", // 선의 색깔입니다
-        strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-        strokeStyle: "dashed", // 선의 스타일입니다
-    });
+            positions.push({ latlng: new kakao.maps.LatLng(element.latitude, element.longitude) });
 
-    PolyLines.push(polyline);
+            // 마커 배열에 각 마커 추가
+            markers.value.push(marker);
+        });
 
-    polyline.setMap(map);
-});
+        console.log(JSON.stringify("$JSON.stringify(latlng))" + JSON.stringify(latlng)));
+
+        var polyline = new kakao.maps.Polyline({
+            path: latlng, // 선을 구성하는 좌표배열 입니다
+            strokeWeight: 5, // 선의 두께 입니다
+            strokeColor: "#ff0000", // 선의 색깔입니다
+            strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            strokeStyle: "dashed", // 선의 스타일입니다
+        });
+
+        PolyLines.push(polyline);
+
+        polyline.setMap(map);
+
+        map.panTo(moveLatLon);
+
+        console.log(positions);
+        const bounds = positions.reduce(
+            (bounds, position) => bounds.extend(position.latlng),
+            new kakao.maps.LatLngBounds()
+        );
+
+        map.setBounds(bounds);
+        {
+            true;
+        }
+    }
+);
 
 onMounted(() => {
     if (window.kakao && window.kakao.maps) {
         initMap();
     } else {
         const script = document.createElement("script");
-        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
-            }&libraries=services,clusterer`;
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
+            import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
+        }&libraries=services,clusterer`;
         /* global kakao */
         script.onload = () => kakao.maps.load(() => initMap());
         document.head.appendChild(script);
@@ -113,14 +151,12 @@ const initMap = () => {
 // }
 
 const addMyAttraction = (position) => {
-    addedAttractionList.value.push(position);
-    //emit("addAttractionMyList", position);
-    console.log("addAttractionMyList");
+    emit("addAttractionMyList", position);
 };
 
 const deleteAttraction = (index) => {
     emit("deleteAttractionMyList", index);
-}
+};
 
 const loadMarkers = (position) => {
     var marker = new kakao.maps.Marker({
