@@ -77,6 +77,34 @@ export const useUserStore = defineStore(
       );
     };
 
+    const tempUserInfo = (token) => {
+      // 가져온 token을 디코딩함
+      let decodeToken = jwtDecode(token);
+      findById(
+        // userId를 가지고 findById axios 호출 (밑에는 잠시 대기)
+        decodeToken.userId,
+        (response) => {
+          if (response.status === httpStatusCode.OK) {
+            // UserInfo에 데이터 저장해두기
+            userInfo.value = response.data.userInfo;
+          } else {
+            // 정상적으로 권한이 없다고 하면 여기로 들어옴
+            console.log("찾는 유저 정보 없음!!!!  : " + decodeToken.userId);
+          }
+        },
+        // 토큰 자체는 진짜인데 더 이상 유효하지 않은 정보를 가지고 있어서 exception이 나는 경우는 spring에서 custom error를 던짐
+        async (error) => {
+          console.error(
+            "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
+            error.response.status
+          );
+          isValidToken.value = false;
+
+          await tempRegenerate();
+        }
+      );
+    };
+
     const tokenRegenerate = async () => {
       // 사용자 정보를 들고 axios 요청
       // tokenRegeneration에서는 세션에 있는 refreshToken을 가지고 요청
@@ -120,6 +148,47 @@ export const useUserStore = defineStore(
                 console.error(error);
                 isLogin.value = false;
                 userInfo.value = null;
+                isValidToken.value = null;
+              }
+            );
+          }
+        }
+      );
+    };
+
+    const tempRegenerate = async () => {
+      // 사용자 정보를 들고 axios 요청
+      // tokenRegeneration에서는 세션에 있는 refreshToken을 가지고 요청
+      await tokenRegeneration(
+        JSON.stringify(userInfo.value),
+        (response) => {
+          if (response.status === httpStatusCode.CREATE) {
+            let accessToken = response.data["access-token"];
+            sessionStorage.setItem("accessToken", accessToken);
+            isValidToken.value = true;
+          }
+        },
+        async (error) => {
+          // HttpStatus.UNAUTHORIZE(401) : RefreshToken 기간 만료 >> 다시 로그인!!!!
+          if (error.response.status === httpStatusCode.UNAUTHORIZED) {
+            // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
+            await logout(
+              userInfo.value.userid,
+              (response) => {
+                if (response.status === httpStatusCode.OK) {
+                  console.log("리프레시 토큰 제거 성공");
+                } else {
+                  console.log("리프레시 토큰 제거 실패");
+                }
+                isLogin.value = false;
+                userInfo.value = null;
+                isValidToken.value = false;
+              },
+              (error) => {
+                console.error(error);
+                isLogin.value = false;
+                userInfo.value = null;
+                isValidToken.value = false;
               }
             );
           }
@@ -179,6 +248,8 @@ export const useUserStore = defineStore(
       userLogout,
       changeLoginFalse,
       changeLoginTrue,
+      tempUserInfo,
+      tempRegenerate,
     };
   },
   { persist: true }

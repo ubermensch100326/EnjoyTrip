@@ -23,7 +23,7 @@ const onlyAuthUser = async (to, from, next) => {
   // }, 3000);
 
   console.log("!!!isLogin : " + isLogin);
-  console.log("!!!!userInfo : " + userInfo.userId);
+  console.log("!!!!userInfo : " + userInfo);
 
   if (!isValidToken || userInfo == null) {
     console.log(11111111);
@@ -35,6 +35,19 @@ const onlyAuthUser = async (to, from, next) => {
     console.log(22222222);
     next();
   }
+};
+
+const check = async (to, from, next) => {
+  const { isLogin, tempUserInfo, userInfo, isValidToken, changeLoginFalse, changeLoginTrue } =
+    useUserStore();
+
+  let token = sessionStorage.getItem("accessToken");
+  if (userInfo != null && token) {
+    tempUserInfo(token);
+  }
+  console.log("isValidToken : " + isValidToken);
+
+  next();
 };
 
 const alreadyLogin = async (to, from, next) => {
@@ -55,11 +68,13 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
+      beforeEnter: check,
       component: HomeView,
     },
     {
       path: "/test",
       name: "test",
+      beforeEnter: check,
       component: () => import("@/views/TheTestView.vue"),
     },
     {
@@ -76,6 +91,7 @@ const router = createRouter({
         {
           path: "register",
           name: "user-register",
+          beforeEnter: alreadyLogin,
           component: () => import("@/components/user/UserRegister.vue"),
         },
         {
@@ -87,6 +103,7 @@ const router = createRouter({
         {
           path: "tripplan",
           name: "user-trip-plan",
+          beforeEnter: check,
           component: () => import("@/components/user/UserTripPlan.vue"),
         },
       ],
@@ -100,11 +117,13 @@ const router = createRouter({
         {
           path: "list",
           name: "board-list",
+          beforeEnter: check,
           component: () => import("@/components/board/BoardList.vue"),
         },
         {
           path: "view/:boardno",
           name: "board-view",
+          beforeEnter: check,
           component: () => import("@/components/board/BoardView.vue"),
         },
         {
@@ -124,6 +143,7 @@ const router = createRouter({
     {
       path: "/attraction",
       name: "attraction",
+      beforeEnter: check,
       component: TestView,
     },
   ],
