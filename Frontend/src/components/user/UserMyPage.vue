@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { useNavigationBarStore } from "@/stores/navigation-bar";
+import { modifyUserInfo } from "@/api/user";
 
 const userStore = useUserStore();
 let token = sessionStorage.getItem("accessToken");
@@ -47,12 +48,30 @@ const cancelEdit = () => {
   editing.value = false;
 };
 
-const saveChanges = async () => {
-  // API 호출 또는 저장 로직 추가
-  // editedUserInfo 객체를 이용하여 서버로 변경된 정보 전송
-  // 성공 시 editing 값을 false로 변경하여 수정 모드 종료
-  editing.value = false;
-};
+// 나중에 일부만 리로딩하는 걸로 바꿔볼 것
+function moveView() {
+  router.push({ name: "user-mypage" });
+  location.reload();
+}
+
+// API 호출 또는 저장 로직 추가
+// editedUserInfo 객체를 이용하여 서버로 변경된 정보 전송
+// 성공 시 editing 값을 false로 변경하여 수정 모드 종료
+function saveChanges() {
+  modifyUserInfo(
+    editedUserInfo.value,
+    (response) => {
+      console.log("editedUserInfo : " + editedUserInfo.value);
+      if (response.status == 200) {
+        console.log("회원정보 수정 완료!!!!");
+        moveView();
+      }
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+}
 </script>
 
 <template>

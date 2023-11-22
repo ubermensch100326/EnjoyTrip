@@ -149,10 +149,15 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void modifyComment(Map<String, String> map) {
+	public void modifyComment(Map<String, String> map) throws Exception {
 		System.out.println(map.get("commentno"));
 		System.out.println(map.get("content"));
 		boardMapper.modifyComment(map);
+	}
+
+	@Override
+	public void registerComment(Map<String, String> map) throws Exception {
+		boardMapper.registerComment(map);
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/user")
 @Slf4j
 public class UserController {
-	
+
 	private UserService userService;
 	private JWTUtility jwtUtility;
 
@@ -45,27 +46,27 @@ public class UserController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			UserDto loginUser = userService.login(userDto);
-			if(loginUser != null) {
+			if (loginUser != null) {
 				String accessToken = jwtUtility.createAccessToken(loginUser.getUserId());
 				String refreshToken = jwtUtility.createRefreshToken(loginUser.getUserId());
 				log.debug("access token : {}", accessToken);
 				log.debug("refresh token : {}", refreshToken);
-				
+
 //				발급받은 refresh token을 DB에 저장.
 				userService.saveRefreshToken(loginUser.getUserId(), refreshToken);
-				
+
 //				JSON으로 token 전달.
 				resultMap.put("access-token", accessToken);
-				
+
 //				Cookie로 변경
 				resultMap.put("refresh-token", refreshToken);
-				
+
 				status = HttpStatus.CREATED;
 			} else {
 				resultMap.put("message", "아이디 또는 패스워드를 확인해주세요.");
 				status = HttpStatus.UNAUTHORIZED;
-			} 
-			
+			}
+
 		} catch (Exception e) {
 			log.debug("로그인 에러 발생 : {}", e);
 			resultMap.put("message", e.getMessage());
@@ -73,7 +74,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 //	header를 통해서 access token이 넘어오고, path variable을 통해서 userId가 넘어옴 (두 개)
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
 	@GetMapping("/info/{userId}")
@@ -104,9 +105,19 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
+	@ApiOperation(value = "마이페이지 정보수정", notes = "수정할 마이페이지 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("/info")
+	public ResponseEntity<String> modifyUserInfo(
+			@RequestBody @ApiParam(value = "수정할 회원정보.", required = true) Map<String, String> map) throws Exception {
+		log.info("modifyUserInfo - 호출");
+		userService.modifyUserInfo(map);
+		return ResponseEntity.ok().build();
+	}
+
 	@ApiOperation(value = "로그아웃", notes = "회원 정보를 담은 Token을 제거한다.", response = Map.class)
 	@GetMapping("/logout/{userId}")
-	public ResponseEntity<?> removeToken(@PathVariable ("userId") @ApiParam(value = "로그아웃할 회원의 아이디.", required = true) String userId) {
+	public ResponseEntity<?> removeToken(
+			@PathVariable("userId") @ApiParam(value = "로그아웃할 회원의 아이디.", required = true) String userId) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
@@ -118,13 +129,20 @@ public class UserController {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
 
+	@ApiOperation(value = "회원가입", notes = "회원 정보를 입력한다.")
+	@PostMapping("/info")
+	public ResponseEntity<?> registerUser(
+			@RequestBody @ApiParam(value = "회원 정보.", required = true) Map<String, String> map) throws Exception {
+		log.info("registerUser - 호출", map);
+		userService.registerUser(map);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@ApiOperation(value = "Access Token 재발급", notes = "만료된 access token을 재발급받는다.", response = Map.class)
 	@PostMapping("/refresh")
-	public ResponseEntity<?> refreshToken(@RequestBody UserDto userDto, HttpServletRequest request)
-			throws Exception {
+	public ResponseEntity<?> refreshToken(@RequestBody UserDto userDto, HttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String token = request.getHeader("refreshToken");

@@ -23,4 +23,12 @@ async function tokenRegeneration(user, success, fail) {
   await local.post(`/user/refresh`, user).then(success).catch(fail);
 }
 
-export { userConfirm, logout, findById, tokenRegeneration };
+function modifyUserInfo(userInfo, success, fail) {
+  local.put(`/user/info`, JSON.stringify(userInfo)).then(success).catch(fail);
+}
+
+function registerUser(userData, success, fail) {
+  local.post(`/user/info`, JSON.stringify(userData)).then(success).catch(fail);
+}
+
+export { userConfirm, logout, findById, tokenRegeneration, modifyUserInfo, registerUser };

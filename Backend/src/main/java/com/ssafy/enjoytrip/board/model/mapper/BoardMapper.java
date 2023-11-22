@@ -39,5 +39,7 @@ public interface BoardMapper {
 
 	void deleteComment(int commentno) throws SQLException;
 
-	void modifyComment(Map<String, String> map);
+	void modifyComment(Map<String, String> map) throws SQLException;
+
+	void registerComment(Map<String, String> map) throws SQLException;
 }

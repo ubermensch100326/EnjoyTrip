@@ -42,6 +42,12 @@
 			select last_insert_id()
 		</selectKey>
 	</insert>
+	
+	<insert id="registerComment" parameterType="map">
+		insert into comment (board_no, user_id, content, register_time)
+		values
+		(#{boardNo} ,#{userId}, #{content}, now())
+	</insert>
 
 	<!-- <insert id="registerFile" parameterType="boardDto"> insert into file_info 
 		(board_no, save_folder, original_file, save_file) values <foreach collection="fileInfos" 

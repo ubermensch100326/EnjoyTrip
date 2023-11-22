@@ -49,4 +49,14 @@ public class UserServiceImpl implements UserService {
 		userMapper.deleteRefreshToken(map);
 	}
 
+	@Override
+	public void modifyUserInfo(Map<String, String> map) throws Exception {
+		userMapper.modifyUserInfo(map);
+	}
+
+	@Override
+	public void registerUser(Map<String, String> map) throws Exception {
+		userMapper.registerUser(map);
+	}
+
 }

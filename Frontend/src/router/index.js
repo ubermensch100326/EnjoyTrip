@@ -51,8 +51,8 @@ const check = async (to, from, next) => {
 };
 
 const alreadyLogin = async (to, from, next) => {
-  const { isValidToken, userInfo } = useUserStore();
-  if (isValidToken && userInfo) {
+  const { isValidToken, userInfo, isLogin } = useUserStore();
+  if (isValidToken && userInfo && isLogin) {
     alert("이미 로그인된 상태입니다!");
     next({ name: "home" });
   } else {

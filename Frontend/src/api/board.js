@@ -24,6 +24,10 @@ function registerBoard(board, success, fail) {
   local.post(`/board`, JSON.stringify(board)).then(success).catch(fail);
 }
 
+function registerComment(comment, success, fail) {
+  local.post(`/board/comment`, JSON.stringify(comment)).then(success).catch(fail);
+}
+
 function toModifyBoard(boardno, success, fail) {
   local.get(`/board/modify/${boardno}`).then(success).catch(fail);
 }
@@ -50,4 +54,5 @@ export {
   listComment,
   deleteComment,
   modifyComment,
+  registerComment,
 };

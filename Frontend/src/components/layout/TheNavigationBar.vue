@@ -3,7 +3,7 @@ import { useNavigationBarStore } from "@/stores/navigation-bar";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
 const { navigationBarList, changeLogout } = useNavigationBarStore();
-const { isLogin, getUserInfo, userInfo, userLogout, isValidToken, changeLoginTrue } =
+const { isLogin, getUserInfo, userInfo, userLogout, isValidToken, changeLoginFalse } =
   useUserStore();
 
 const logout = () => {
@@ -19,6 +19,7 @@ const logout = () => {
     userLogout(userInfo.userId);
   } else {
     changeLogout();
+    changeLoginFalse();
     console.log("네브바에서 userInfo null 검사");
   }
 };

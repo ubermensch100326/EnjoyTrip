@@ -15,6 +15,13 @@
 		<result column="birth_year" property="birthYear"/>
 		<result column="gender" property="gender"/>
 	</resultMap>
+	
+	<update id="modifyUserInfo" parameterType="map">
+		update user
+		set name = #{userName},
+		birth_year = #{birthYear}
+		where user_id = #{userId}
+	</update>
 
 	<select id="login" parameterType="map" resultMap="user">
 		select user_id, name, refresh_token
@@ -27,6 +34,11 @@
 		from user
 		where user_id = #{userId}
 	</select>
+	
+	<insert id="registerUser" parameterType="map">
+		insert into user (user_id, password, name, email_id, email_domain, birth_year, register_time)
+		values (#{userId}, #{userPwd}, #{userName}, #{emailId}, #{emailDomain}, #{birthYear}, now())
+	</insert>
 	
 	<update id="saveRefreshToken" parameterType="map">
 		update user

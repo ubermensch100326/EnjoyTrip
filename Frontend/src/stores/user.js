@@ -132,7 +132,7 @@ export const useUserStore = defineStore(
                 console.log("------------------------");
                 console.log(isLogin.value);
                 console.log(isValidToken.value);
-                alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
+                // alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
                 // sessionStorage.removeItem("accessToken");
                 // sessionStorage.removeItem("refreshToken");
                 isLogin.value = false;

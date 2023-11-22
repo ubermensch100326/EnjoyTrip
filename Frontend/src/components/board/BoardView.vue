@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { viewBoard, deleteBoard, listComment } from "@/api/board";
+import { viewBoard, deleteBoard, listComment, registerComment } from "@/api/board";
 import CommentListItem from "@/components/board/item/CommentListItem.vue";
 import { useUserStore } from "@/stores/user";
 
@@ -73,6 +73,36 @@ const getCommentList = () => {
       console.log(error);
     }
   );
+};
+
+const comment = ref({
+  boardNo: boardno,
+  userId: userInfo.userId,
+  content: "",
+});
+
+function moveView() {
+  router.push({ name: "board-view", params: { boardno: boardno } });
+  location.reload();
+}
+
+const submitComment = () => {
+  // API 호출 또는 저장 로직 추가
+  // commentAuthor.value와 commentContent.value를 이용하여 댓글 생성 API 호출
+  // 호출 성공 시 commentList 업데이트
+  // (여기에 API 호출 및 로직 추가 필요)
+  registerComment(
+    comment.value,
+    (response) => {
+      // let msg = "댓글등록 처리시 문제 발생했습니다.";
+      // if (response.status == 201) msg = "댓글등록이 완료되었습니다.";
+      // alert(msg);
+      moveList();
+    },
+    (error) => console.error(error)
+  );
+  moveView();
+  // getCommentList();
 };
 </script>
 
@@ -155,6 +185,30 @@ const getCommentList = () => {
             ></CommentListItem>
           </tbody>
         </table>
+      </div>
+      <!-- 댓글 작성 폼 -->
+      <div class="mt-3" v-if="userId">
+        <h3 class="text-center">댓글 작성하기</h3>
+        <div class="mb-3">
+          <label for="commentAuthor" class="form-label">댓글 작성자</label>
+          <input
+            type="text"
+            class="form-control"
+            id="commentAuthor"
+            :value="userId"
+            disabled="true"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="commentContent" class="form-label">댓글 내용</label>
+          <textarea
+            class="form-control"
+            id="commentContent"
+            rows="3"
+            v-model="comment.content"
+          ></textarea>
+        </div>
+        <button type="button" class="btn btn-primary" @click="submitComment">작성</button>
       </div>
     </div>
   </div>

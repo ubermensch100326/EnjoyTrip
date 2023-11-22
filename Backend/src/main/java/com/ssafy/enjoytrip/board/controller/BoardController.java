@@ -65,6 +65,19 @@ public class BoardController {
 			return exceptionHandling(e);
 		}
 	}
+	
+	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다.")
+	@PostMapping("/comment")
+	public ResponseEntity<?> registerComment(
+			@RequestBody @ApiParam(value = "게시글 정보.", required = true) Map<String, String> map) {
+		log.info("registerComment - 호출", map);
+		try {
+			boardService.registerComment(map);
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 
 	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원목록 OK!!"), @ApiResponse(code = 404, message = "페이지없어!!"),
