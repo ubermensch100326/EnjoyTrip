@@ -1,6 +1,6 @@
 <script setup>
-import TheNavigationbarVue from "./components/layout/TheNavigationbar.vue";
-import TheFooter from "./components/layout/TheFooter.vue";
+import TheNavigationbarVue from "@/components/layout/TheNavigationbar.vue";
+import TheFooter from "@/components/layout/TheFooter.vue";
 </script>
 
 <template>

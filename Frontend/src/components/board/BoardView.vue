@@ -77,7 +77,7 @@ const getCommentList = () => {
 
 const comment = ref({
   boardNo: boardno,
-  userId: userInfo.userId,
+  userId: userId,
   content: "",
 });
 
@@ -127,7 +127,7 @@ const submitComment = () => {
                 src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
               />
               <p>
-                <span class="fw-bold">안효인</span> <br />
+                <span class="fw-bold">{{ board.userId }}</span> <br />
                 <span class="text-secondary fw-light">
                   {{ board.registerTime }} 조회 : {{ board.hit }}
                 </span>

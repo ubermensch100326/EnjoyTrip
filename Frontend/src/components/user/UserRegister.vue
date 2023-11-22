@@ -23,6 +23,11 @@ function moveView() {
   location.reload();
 }
 
+const currentYear = new Date().getFullYear();
+const birthYearRange = ref(
+  Array.from({ length: currentYear - 1900 + 1 }, (_, i) => currentYear - i)
+);
+
 const register = () => {
   registerUser(
     userData.value,
@@ -59,15 +64,15 @@ const register = () => {
             style="width: 202px"
           />
           <br />
-          <input
+          <select
             v-model="userData.birthYear"
             class="form-control my-2 d-inline-block"
-            id="birthyear"
-            name="birth_year"
-            type="text"
-            placeholder="탄생년도"
             style="width: 202px"
-          />
+          >
+            <option disabled value="">탄생년도 선택</option>
+            <!-- Generating options for birth year from 1900 to current year -->
+            <option v-for="year in birthYearRange" :key="year" :value="year">{{ year }}</option>
+          </select>
           <br />
           <input
             v-model="userData.userId"

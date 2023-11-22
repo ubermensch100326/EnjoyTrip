@@ -78,10 +78,12 @@ function writeArticle() {
   registerBoard(
     board.value,
     (response) => {
-      let msg = "글등록 처리시 문제 발생했습니다.";
-      if (response.status == 201) msg = "글등록이 완료되었습니다.";
-      alert(msg);
-      moveList();
+      // let msg = "글등록 처리시 문제 발생했습니다.";
+      if (response.status == 201) {
+        // msg = "글등록이 완료되었습니다.";
+        // alert(msg);
+        moveList();
+      }
     },
     (error) => console.error(error)
   );
@@ -92,12 +94,14 @@ function updateArticle() {
   modifyBoard(
     board.value,
     (response) => {
-      let msg = "글수정 처리시 문제 발생했습니다.";
-      if (response.status == 200) msg = "글정보 수정이 완료되었습니다.";
-      alert(msg);
-      moveList();
-      // router.push({ name: "board-view" });
-      // router.push(`/board/view/${board.value.boardNo}`);
+      // let msg = "글수정 처리시 문제 발생했습니다.";
+      if (response.status == 200) {
+        // msg = "글정보 수정이 완료되었습니다.";
+        // alert(msg);
+        moveList();
+        // router.push({ name: "board-view" });
+        // router.push(`/board/view/${board.value.boardNo}`);
+      }
     },
     (error) => console.log(error)
   );
