@@ -4,9 +4,14 @@ import { ref } from "vue";
 import { deleteComment, modifyComment } from "@/api/board";
 import { useRouter } from "vue-router";
 
+// 이거 안 해주면 parentNode 큰 거 하나로 댓글 정보들을 묶어줘야 되는데 지금 당장은 미봉책으로 이렇게 함
+defineOptions({
+  inheritAttrs: false,
+});
+
 const router = useRouter();
 
-const props = defineProps({ comment: Object });
+const props = defineProps({ comment: Object, userId: String });
 
 const param = ref({
   commentno: props.comment.commentNo,
@@ -82,13 +87,18 @@ function saveComment() {
     </td>
     <td>{{ comment.registerTime }}</td>
     <td>
-      <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteComment">
+      <button
+        v-if="comment.userId == userId"
+        type="button"
+        class="btn btn-outline-danger mb-3 ms-1"
+        @click="onDeleteComment"
+      >
         댓글삭제
       </button>
     </td>
     <td>
       <button
-        v-if="!editing"
+        v-if="!editing && comment.userId === userId"
         type="button"
         class="btn btn-outline-primary ms-1"
         @click="editComment"
@@ -96,7 +106,7 @@ function saveComment() {
         댓글수정
       </button>
       <button
-        v-if="editing"
+        v-if="editing && comment.userId === userId"
         type="button"
         class="btn btn-outline-success ms-1"
         @click="saveComment"

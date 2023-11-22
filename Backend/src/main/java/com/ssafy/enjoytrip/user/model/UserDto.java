@@ -28,5 +28,8 @@ public class UserDto {
 	private String registerTime;
 	@ApiModelProperty(value = "refreshToken")
 	private String refreshToken;
-	
+	@ApiModelProperty(value = "탄생년도")
+	private int birthYear;
+//	@ApiModelProperty(value = "성별")
+//	private int gender;
 }

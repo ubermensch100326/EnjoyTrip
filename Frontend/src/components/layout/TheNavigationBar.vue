@@ -2,24 +2,25 @@
 import { useNavigationBarStore } from "@/stores/navigation-bar";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
-const { navigationBarList } = useNavigationBarStore();
-const { userLogout, userInfo } = useUserStore();
+const { navigationBarList, changeLogout } = useNavigationBarStore();
+const { isLogin, getUserInfo, userInfo, userLogout, isValidToken, changeLoginTrue } =
+  useUserStore();
 
 const logout = () => {
-  const { isLogin, getUserInfo, userInfo, isValidToken, changeLoginFalse, changeLoginTrue } =
-    useUserStore();
-
   let token = sessionStorage.getItem("accessToken");
-  if (userInfo != null && token) {
+  if (userInfo !== null && token) {
     getUserInfo(token);
   }
 
   console.log("TheNavigationBar.vue : 로그아웃");
   // changeNavigationBarState();
   console.log(userInfo);
-  if (userInfo == null) {
+  if (userInfo !== null) {
+    userLogout(userInfo.userId);
+  } else {
+    changeLogout();
     console.log("네브바에서 userInfo null 검사");
-  } else userLogout(userInfo.userId);
+  }
 };
 </script>
 

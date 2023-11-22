@@ -3,6 +3,10 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { viewBoard, deleteBoard, listComment } from "@/api/board";
 import CommentListItem from "@/components/board/item/CommentListItem.vue";
+import { useUserStore } from "@/stores/user";
+
+const { userInfo } = useUserStore();
+const userId = userInfo?.userId;
 
 const route = useRoute();
 const router = useRouter();
@@ -110,34 +114,48 @@ const getCommentList = () => {
             <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
               글목록
             </button>
-            <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify">
+            <button
+              v-if="board.userId === userId"
+              type="button"
+              class="btn btn-outline-success mb-3 ms-1"
+              @click="moveModify"
+            >
               글수정
             </button>
-            <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteBoard">
+            <button
+              v-if="board.userId === userId"
+              type="button"
+              class="btn btn-outline-danger mb-3 ms-1"
+              @click="onDeleteBoard"
+            >
               글삭제
             </button>
           </div>
         </div>
       </div>
-      <table class="table table-hover">
-        <thead>
-          <tr class="text-center">
-            <th scope="col">댓글 번호</th>
-            <th scope="col">댓글 작성자</th>
-            <th scope="col">댓글 내용</th>
-            <th scope="col">댓글 작성일</th>
-            <th scope="col">삭제</th>
-            <th scope="col">수정</th>
-          </tr>
-        </thead>
-        <tbody>
-          <CommentListItem
-            v-for="comment in commentList"
-            :key="comment.commentNo"
-            :comment="comment"
-          ></CommentListItem>
-        </tbody>
-      </table>
+      <div>
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">댓글 번호</th>
+              <th scope="col">댓글 작성자</th>
+              <th scope="col">댓글 내용</th>
+              <th scope="col">댓글 작성일</th>
+              <th scope="col">삭제</th>
+              <th scope="col">수정</th>
+            </tr>
+          </thead>
+          <tbody>
+            <CommentListItem
+              v-for="comment in commentList"
+              :key="comment.commentNo"
+              :comment="comment"
+              :userId="userId"
+              z
+            ></CommentListItem>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

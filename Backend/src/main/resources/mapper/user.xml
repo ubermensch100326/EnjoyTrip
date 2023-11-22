@@ -12,6 +12,8 @@
 		<result column="email_domain" property="emailDomain"/>
 		<result column="register_time" property="registerTime"/>
 		<result column="refresh_token" property="refreshToken"/>
+		<result column="birth_year" property="birthYear"/>
+		<result column="gender" property="gender"/>
 	</resultMap>
 
 	<select id="login" parameterType="map" resultMap="user">
@@ -21,7 +23,7 @@
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="user">
-		select name, user_id, email_id, email_domain, register_time
+		select name, user_id, email_id, email_domain, register_time, birth_year
 		from user
 		where user_id = #{userId}
 	</select>

@@ -2,6 +2,9 @@
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registerBoard, toModifyBoard, modifyBoard } from "@/api/board";
+import { useUserStore } from "@/stores/user";
+
+const { userInfo } = useUserStore();
 
 const router = useRouter();
 const route = useRoute();
@@ -14,7 +17,7 @@ const board = ref({
   boardNo: 0,
   title: "",
   content: "",
-  userId: "",
+  userId: userInfo.userId,
   userName: "",
   hit: 0,
   registerTime: "",
@@ -113,8 +116,8 @@ function moveList() {
       <input
         type="text"
         class="form-control"
-        v-model="board.userId"
-        :disabled="isUseId"
+        :value="userInfo.userId"
+        disabled="true"
         placeholder="작성자ID..."
       />
     </div>

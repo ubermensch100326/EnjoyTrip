@@ -11,20 +11,48 @@ const router = useRouter();
 
 const { getUserInfo, userInfo, isLogin, isValidToken } = userStore;
 
-onMounted(async (token) => {
-  // console.log("토큰 검사!!!!!!!!!!!!!!!!!! " + token);
-  // // 토큰 유효성 검증 후 유저 정보 가져오기.
-  // if (token) {
-  //   getUserInfo(token);
-  //   // if (!isLogin || !isValidToken) {
-  //   //   console.log("되나??");
-  //   //   router.push({ name: "home" });
-  //   // }
-  // } else {
-  //   console.log("MyPage async start with token => " + token);
-  // }
-  if (userInfo == null) router.push({ name: "home" });
+// onMounted(async (token) => {
+//   // console.log("토큰 검사!!!!!!!!!!!!!!!!!! " + token);
+//   // // 토큰 유효성 검증 후 유저 정보 가져오기.
+//   // if (token) {
+//   //   getUserInfo(token);
+//   //   // if (!isLogin || !isValidToken) {
+//   //   //   console.log("되나??");
+//   //   //   router.push({ name: "home" });
+//   //   // }
+//   // } else {
+//   //   console.log("MyPage async start with token => " + token);
+//   // }
+//   if (userInfo == null) router.push({ name: "home" });
+// });
+
+const editedUserInfo = ref({
+  userId: "",
+  userName: "",
+  email: "",
+  birthYear: 0,
 });
+
+const editing = ref(false);
+
+const editUserInfo = () => {
+  editedUserInfo.value.userId = userInfo.userId;
+  editedUserInfo.value.userName = userInfo.userName;
+  editedUserInfo.value.email = `${userInfo.emailId}@${userInfo.emailDomain}`;
+  editedUserInfo.value.birthYear = userInfo.birthYear;
+  editing.value = true;
+};
+
+const cancelEdit = () => {
+  editing.value = false;
+};
+
+const saveChanges = async () => {
+  // API 호출 또는 저장 로직 추가
+  // editedUserInfo 객체를 이용하여 서버로 변경된 정보 전송
+  // 성공 시 editing 값을 false로 변경하여 수정 모드 종료
+  editing.value = false;
+};
 </script>
 
 <template>
@@ -48,20 +76,54 @@ onMounted(async (token) => {
             </div>
             <div class="col-md-8">
               <div class="card-body text-start">
-                <ul class="list-group list-group-flush" v-if="userInfo != null">
-                  <li class="list-group-item">{{ userInfo.userId }}</li>
-                  <li class="list-group-item">{{ userInfo.userName }}</li>
-                  <li class="list-group-item">
-                    {{ userInfo.emailId + "@" + userInfo.emailDomain }}
-                  </li>
-                </ul>
+                <div v-if="!editing">
+                  <ul class="list-group list-group-flush" v-if="userInfo">
+                    <li class="list-group-item">{{ userInfo.userId }}</li>
+                    <li class="list-group-item">{{ userInfo.userName }}</li>
+                    <li class="list-group-item">
+                      {{ userInfo.emailId + "@" + userInfo.emailDomain }}
+                    </li>
+                    <li class="list-group-item">{{ userInfo.birthYear }}</li>
+                  </ul>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary mt-2"
+                    @click="editUserInfo"
+                  >
+                    수정
+                  </button>
+                </div>
+                <div v-else>
+                  <form @submit.prevent="saveChanges">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        <input v-model="editedUserInfo.userId" disabled="true" />
+                      </li>
+                      <li class="list-group-item"><input v-model="editedUserInfo.userName" /></li>
+                      <li class="list-group-item">
+                        <input v-model="editedUserInfo.email" disabled="true" />
+                      </li>
+                      <li class="list-group-item">
+                        <input v-model="editedUserInfo.birthYear" />
+                      </li>
+                      <button type="submit" class="btn btn-primary mt-2" @click="saveChanges">
+                        저장
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary mt-2"
+                        @click="cancelEdit"
+                      >
+                        취소
+                      </button>
+                    </ul>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div>
-          <button type="button" class="btn btn-outline-secondary mt-2">수정</button>
-        </div>
+        <div></div>
       </div>
     </div>
   </div>
