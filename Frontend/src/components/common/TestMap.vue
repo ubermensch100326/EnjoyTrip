@@ -15,6 +15,7 @@ const props = defineProps({
 
 const emit = defineEmits(["addAttractionMyList", "deleteAttractionMyList"]);
 
+/** 관광지 검색했을 때 마커 소환하기 */
 watch(
     () => props.attractionList,
     () => {
@@ -22,13 +23,13 @@ watch(
         positions = [];
 
         props.attractionList.forEach((attraction) => {
-            console.log("아이ㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣㅣ잉" + JSON.stringify(attraction));
             loadMarkers(attraction);
         })
     },
     { deep: true }
 );
 
+/** 검색해서 나온 리스트 중 하나 클릭했을 떄 맵 스무스하게 움직이기 */
 watch(
     () => props.attractionSelect,
     () => {
@@ -44,15 +45,13 @@ watch(
     { deep: true }
 );
 
-/** 사용자가 관광지를 선택, 삭제할 때 마다 선을 이어주는 코드 */
+/** 사용자가 관광지를 계획 추가, 삭제 버튼을 눌러서
+ * addedAttractionList 가 변경될 때 마다 선을 이어주는 코드 */
 watch(
     () => props.addedAttractionList,
     () => {
         var latlng = [];
-        var moveLatLon;
         positions = [];
-        console.log("ddddddddddddd" + props.addedAttractionList);
-        console.log(JSON.stringify("$123412341234" + props.addedAttractionList));
 
         PolyLines.forEach((element) => {
             element.setMap(null);
@@ -60,9 +59,9 @@ watch(
 
         /** latlng 만 저장하는 배열 하나 생성 */
         props.addedAttractionList.forEach((element) => {
-            moveLatLon = new kakao.maps.LatLng(element.latitude, element.longitude);
+            var moveLatLon = new kakao.maps.LatLng(element.latitude, element.longitude);
             latlng.push(new kakao.maps.LatLng(element.latitude, element.longitude));
-            console.log("element === " + JSON.stringify(element));
+            console.log("추가 or 삭제 버튼을 눌렀을 때 각 요소들 돌면서 확인하기 === " + JSON.stringify(element));
 
             var marker = new kakao.maps.Marker({
                 map: map, // 마커를 표시할 지도
@@ -92,8 +91,6 @@ watch(
 
         polyline.setMap(map);
 
-        map.panTo(moveLatLon);
-
         console.log(positions);
         const bounds = positions.reduce(
             (bounds, position) => bounds.extend(position.latlng),
@@ -104,6 +101,9 @@ watch(
         {
             true;
         }
+    },
+    {
+        deep: true
     }
 );
 
@@ -138,19 +138,19 @@ const initMap = () => {
 //   overlay.setMap(null);
 // }
 
-const addMyAttraction = (position) => {
-    emit("addAttractionMyList", position);
+const addMyAttraction = (attraction) => {
+    emit("addAttractionMyList", attraction);
 };
 
 const deleteAttraction = (index) => {
     emit("deleteAttractionMyList", index);
 };
 
-const loadMarkers = (position) => {
+const loadMarkers = (attraction) => {
 
     var marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
-        position: new kakao.maps.LatLng(position.latitude, position.longitude), // 마커를 표시할 위치
+        position: new kakao.maps.LatLng(attraction.latitude, attraction.longitude), // 마커를 표시할 위치
         // title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨.
         clickable: true, // // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
         // image: markerImage, // 마커의 이미지
@@ -170,7 +170,7 @@ const loadMarkers = (position) => {
     var titleDiv = document.createElement("div");
     titleDiv.classList.add("title");
     titleDiv.style.backgroundColor = "gray";
-    titleDiv.textContent = position.title;
+    titleDiv.textContent = attraction.title;
 
     var closeButton = document.createElement("button");
     closeButton.classList.add("close");
@@ -191,8 +191,8 @@ const loadMarkers = (position) => {
     image.setAttribute("src", "/src/assets/noimage.png");
     image.setAttribute("width", "73");
     image.setAttribute("height", "70");
-    if (position.first_image !== "") image.setAttribute("src", position.first_image);
-    //position.first_image
+    if (attraction.first_image !== "") image.setAttribute("src", attraction.first_image);
+    //attraction.first_image
 
     imgDiv.appendChild(image);
 
@@ -201,11 +201,11 @@ const loadMarkers = (position) => {
 
     var ellipsisDiv = document.createElement("div");
     ellipsisDiv.classList.add("ellipsis");
-    ellipsisDiv.textContent = position.addr;
+    ellipsisDiv.textContent = attraction.addr1;
 
     var linkDiv = document.createElement("div");
     var paragraph = document.createElement("p");
-    paragraph.textContent = position.tel;
+    paragraph.textContent = attraction.tel;
     linkDiv.appendChild(paragraph);
 
     descDiv.appendChild(ellipsisDiv);
@@ -232,7 +232,7 @@ const loadMarkers = (position) => {
     var attractionAddBtn = document.createElement("button");
     attractionAddBtn.innerHTML = "추가";
     attractionAddBtn.onclick = function () {
-        addMyAttraction(position);
+        addMyAttraction(attraction);
         overlay.setMap(null);
     };
 
@@ -260,7 +260,7 @@ const loadMarkers = (position) => {
     // 4. 지도를 이동시켜주기
     // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
     const bounds = props.attractionList.reduce(
-        (bounds, position) => bounds.extend(new kakao.maps.LatLng(position.latitude, position.longitude)),
+        (bounds, attraction) => bounds.extend(new kakao.maps.LatLng(attraction.latitude, attraction.longitude)),
         new kakao.maps.LatLngBounds()
     );
 
