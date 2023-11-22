@@ -1,7 +1,6 @@
 <script setup>
-import TheNavigationbarVue from "@/components/layout/TheNavigationbar.vue";
+import TheNavigationbarVue from "./components/layout/TheNavigationbar.vue";
 import TheFooter from "./components/layout/TheFooter.vue";
-import TheTestView from "./views/TheTestView.vue";
 </script>
 
 <template>
@@ -13,7 +12,7 @@ import TheTestView from "./views/TheTestView.vue";
     <the-navigationbar-vue></the-navigationbar-vue>
     <router-view></router-view>
   </div>
-  <!-- <the-test-view></the-test-view> -->
+
   <the-footer></the-footer>
 </template>
 
