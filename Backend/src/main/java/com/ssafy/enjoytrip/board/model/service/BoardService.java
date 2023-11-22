@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.board.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
@@ -21,5 +22,6 @@ public interface BoardService {
 	void deleteBoardComment(int boardNo) throws Exception;
 	void deleteComment(int commentno) throws Exception;
 	void modifyComment(Map<String, String> map);
+	List<Map<String, Object>> getUserBoardList(Map<String, Object> map);
 	
 }

@@ -40,6 +40,10 @@ function deleteComment(param, success, fail) {
   local.delete(`/board/comment`, { params: param }).then(success).catch(fail);
 }
 
+function userBoardList(userInfo, success, fail) {
+  console.log(userInfo);
+  local.get(`/board/list`, { params: userInfo }).then(success).catch(fail);
+}
 export {
   listBoard,
   viewBoard,
@@ -50,4 +54,5 @@ export {
   listComment,
   deleteComment,
   modifyComment,
+  userBoardList,
 };

@@ -40,4 +40,6 @@ public interface BoardMapper {
 	void deleteComment(int commentno) throws SQLException;
 
 	void modifyComment(Map<String, String> map);
+
+	List<Map<String, Object>> getUserBoardList(Map<String, Object> map);
 }

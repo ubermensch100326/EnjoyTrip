@@ -155,4 +155,9 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.modifyComment(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> getUserBoardList(Map<String, Object> map) {
+		return boardMapper.getUserBoardList(map);
+	}
+
 }

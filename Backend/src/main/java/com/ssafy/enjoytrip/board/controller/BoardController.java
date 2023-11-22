@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.BoardListDto;
-import com.ssafy.enjoytrip.board.model.CommentDto;
 import com.ssafy.enjoytrip.board.model.CommentListDto;
 import com.ssafy.enjoytrip.board.model.service.BoardService;
 
@@ -157,6 +156,14 @@ public class BoardController {
 		System.out.println(map);
 		boardService.modifyComment(map);
 		return ResponseEntity.ok().build();
+	}
+	
+	@ApiOperation(value = "게시판 상세정보까지 요청", notes = "게시판과 게시판 세부정보를 요청한다.", response = List.class)
+	@GetMapping("/list")
+	public ResponseEntity<List<Map<String, Object>>> getUserBoardList( @ApiParam(value = "UserInfo가 들어온다.", required = true) @RequestParam Map<String, Object> map) throws Exception {
+		log.info("modifyComment - 호출");
+		System.out.println("###############map" + map);
+		return new ResponseEntity<List<Map<String, Object>>>( boardService.getUserBoardList(map), HttpStatus.OK);
 	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
