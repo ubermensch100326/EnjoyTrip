@@ -32,6 +32,7 @@ onMounted(() => {
 });
 
 const changeKey = (val) => {
+  console.log("검색 조건 변경 : " + val);
   param.value.key = val;
 };
 
@@ -59,6 +60,10 @@ const onPageChange = (val) => {
 const moveWrite = () => {
   router.push({ name: "board-write" });
 };
+
+const moveList = () => {
+  location.reload();
+};
 </script>
 
 <template>
@@ -70,12 +75,16 @@ const moveWrite = () => {
       <div class="col-lg-10 my-2">
         <div class="row align-self-center">
           <div class="col-md-2 text-start">
-            <button type="button" class="btn btn-secondary" @click="moveWrite">글쓰기</button>
+            <button type="button" class="btn btn-secondary my-1" @click="moveList">목록</button>
           </div>
-          <div class="col-md-5 offset-5">
-            <form class="d-flex">
+          <div class="col-md-2 text-start">
+            <button type="button" class="btn btn-secondary my-1" @click="moveWrite">글쓰기</button>
+          </div>
+          <div class="col-md-5 offset-3">
+            <form class="d-flex my-1">
               <OptionSelect :optionList="optionList" @onKeySelect="changeKey" />
-              <div class="input-group input-group ms-1">
+              <!-- 왜 엔터 keyup.enter이 안 먹힐까 -->
+              <div class="input-group ms-1">
                 <input type="text" class="form-control" v-model="param.word" placeholder="검색어" />
                 <button class="btn btn-secondary" type="button" @click="getBoardList">검색</button>
               </div>
@@ -86,11 +95,11 @@ const moveWrite = () => {
         <table class="table table-hover">
           <thead>
             <tr class="text-center">
-              <th scope="col">글번호</th>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-              <th scope="col">조회수</th>
-              <th scope="col">작성일</th>
+              <th scope="col" style="width: 10%">글번호</th>
+              <th scope="col" style="width: 35%">제목</th>
+              <th scope="col" style="width: 15%">작성자</th>
+              <th scope="col" style="width: 10%">조회수</th>
+              <th scope="col" style="width: 20%">작성시간</th>
             </tr>
           </thead>
           <tbody>
