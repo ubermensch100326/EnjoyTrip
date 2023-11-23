@@ -113,7 +113,7 @@ const submitComment = () => {
 
 <template>
     <h1>BoardDetail.vue</h1>
-    <the-test-view :selectedAttraction="selectedAttraction"></the-test-view>
+    <the-test-view :selectedAttraction="selectedAttraction" :boardno="boardno"></the-test-view>
 
     <div class="container">
         <div class="row justify-content-center">
@@ -194,7 +194,6 @@ const submitComment = () => {
                             :key="comment.commentNo"
                             :comment="comment"
                             :userId="userId"
-                            z
                         ></CommentListItem>
                     </tbody>
                 </table>

@@ -12,7 +12,10 @@ import {
 import TestMap from "@/components/common/TestMap.vue";
 import OptionSelect from "@/components/common/OptionSelect.vue";
 
-const props = defineProps({ selectedAttraction: Object });
+const props = defineProps({
+    selectedAttraction: Object,
+    boardno: Number,
+});
 
 const sidoList = ref([]);
 const gugunList = ref([{ text: "구군선택", value: "" }]);
@@ -23,7 +26,7 @@ const keyword = ref("");
 const type = ref("0");
 
 const planParam = ref({
-    board_no: 587,
+    board_no: props.boardno,
 });
 
 const param = ref({
@@ -53,6 +56,7 @@ watch(
 
 onMounted(() => {
     getSidoList();
+    getPlan();
 });
 
 const getSidoList = () => {
@@ -130,7 +134,8 @@ const viewAttraction = (attraction) => {
 const addAttractionMyList = (attraction) => {
     addedAttractionList.value.push(attraction);
     console.log(
-        " @@@@@@@@@@@@@@@@@@@@@@@@ addAttractionMyList @@@@@@@@@@@@@@@@@@@@@@@@" + JSON.stringify(addedAttractionList.value)
+        " @@@@@@@@@@@@@@@@@@@@@@@@ addAttractionMyList @@@@@@@@@@@@@@@@@@@@@@@@" +
+            JSON.stringify(addedAttractionList.value)
     );
 };
 
@@ -193,7 +198,11 @@ const getPlan = () => {
                 <OptionSelect :optionList="gugunList" @onKeySelect="onChangeGugun" />
             </div>
             <div class="col">
-                <select class="form-select form-select-sm w-50" @change="onChangeType" v-model="type">
+                <select
+                    class="form-select form-select-sm w-50"
+                    @change="onChangeType"
+                    v-model="type"
+                >
                     <option value="0" selected disabled>관광지유형</option>
                     <option value="12">관광지</option>
                     <option value="14">문화시설</option>
@@ -209,13 +218,17 @@ const getPlan = () => {
                 <input type="text" v-model="keyword" @keyup.enter="onSearchButtonClick" />
                 <button class="pb-2" @click="onSearchButtonClick">검색</button>
                 <button @click="savePlan">계획 저장</button>
-                <button @click="getPlan">계획 불러오기</button>
+                <!-- <button @click="getPlan">계획 불러오기</button> -->
             </div>
         </div>
         <div class="d-flex justify-content">
             <Suspense>
-                <TestMap :attractionList="attractionList" :attractionSelect="attractionSelect"
-                    :addedAttractionList="addedAttractionList" @addAttractionMyList="addAttractionMyList"></TestMap>
+                <TestMap
+                    :attractionList="attractionList"
+                    :attractionSelect="attractionSelect"
+                    :addedAttractionList="addedAttractionList"
+                    @addAttractionMyList="addAttractionMyList"
+                ></TestMap>
             </Suspense>
 
             <div class="table‑wrapper" style="width: 100%">
@@ -226,8 +239,11 @@ const getPlan = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" v-for="(attraction, index) in addedAttractionList"
-                            :key="attraction.attraction_id">
+                        <tr
+                            class="text-center"
+                            v-for="(attraction, index) in addedAttractionList"
+                            :key="attraction.attraction_id"
+                        >
                             <th><img :src="attraction.first_image" alt="" width="150" /></th>
                             <th>
                                 {{ attraction.title }}
@@ -247,8 +263,12 @@ const getPlan = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr class="text-center" v-for="attraction in attractionList" :key="attraction.attraction_id"
-                    @click="viewAttraction(attraction)">
+                <tr
+                    class="text-center"
+                    v-for="attraction in attractionList"
+                    :key="attraction.attraction_id"
+                    @click="viewAttraction(attraction)"
+                >
                     <th><img :src="attraction.first_image" width="50" /></th>
                     <th>{{ attraction.attraction_id }}</th>
                     <th>{{ attraction.title }}</th>
