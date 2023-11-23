@@ -63,35 +63,26 @@ const moveWrite = () => {
 
 <template>
   <!-- <h1>BoardList.vue</h1> -->
-  <div class="container">
+  <div class="container text-center">
     <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글목록</mark>
-        </h2>
-      </div>
-      <div class="col-lg-10">
-        <div class="row align-self-center mb-2">
+      <div class="fs-3 fw-bold container">여행 후기</div>
+      <div style="height: 30px"></div>
+      <div class="col-lg-10 my-2">
+        <div class="row align-self-center">
           <div class="col-md-2 text-start">
-            <button type="button" class="btn btn-outline-primary btn-sm" @click="moveWrite">
-              글쓰기
-            </button>
+            <button type="button" class="btn btn-secondary" @click="moveWrite">글쓰기</button>
           </div>
           <div class="col-md-5 offset-5">
             <form class="d-flex">
               <OptionSelect :optionList="optionList" @onKeySelect="changeKey" />
-              <div class="input-group input-group-sm ms-1">
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="param.word"
-                  placeholder="검색어..."
-                />
-                <button class="btn btn-dark" type="button" @click="getBoardList">검색</button>
+              <div class="input-group input-group ms-1">
+                <input type="text" class="form-control" v-model="param.word" placeholder="검색어" />
+                <button class="btn btn-secondary" type="button" @click="getBoardList">검색</button>
               </div>
             </form>
           </div>
         </div>
+        <div style="height: 20px"></div>
         <table class="table table-hover">
           <thead>
             <tr class="text-center">

@@ -8,7 +8,7 @@ export const useNavigationBarStore = defineStore(
       { name: "회원가입", show: true, routeName: "user-register" },
       { name: "로그인", show: true, routeName: "user-login" },
       { name: "마이페이지", show: false, routeName: "user-mypage" },
-      { name: "내 여행계획", show: false, routeName: "user-trip-plan" },
+      { name: "여행계획", show: false, routeName: "user-trip-plan" },
       { name: "로그아웃", show: false, routeName: "user-logout" },
     ]);
 
@@ -21,7 +21,7 @@ export const useNavigationBarStore = defineStore(
 
     const changeLogin = () => {
       navigationBarList.value.forEach((item) => {
-        if (item.name === "마이페이지" || item.name === "내 여행계획" || item.name === "로그아웃") {
+        if (item.name === "마이페이지" || item.name === "여행계획" || item.name === "로그아웃") {
           item.show = true;
         } else {
           item.show = false;

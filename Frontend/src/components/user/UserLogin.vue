@@ -51,8 +51,7 @@ const loginFailMessage = ref("아이디나 비밀번호를 확인하세요");
   <main class="container text-center">
     <div class="login-page">
       <div class="fs-3 fw-bold container">로그인</div>
-      <br />
-      <br />
+      <div style="height: 30px"></div>
       <div class="form">
         <form>
           <!-- 로그인에 실패했을 경우에 나오는 메시지 -->
