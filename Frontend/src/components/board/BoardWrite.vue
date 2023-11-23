@@ -4,16 +4,11 @@ import BoardFormItem from "@/components/board/item/BoardFormItem.vue";
 
 <template>
   <!-- <h1>BoardWrite.vue</h1> -->
-  <div class="container">
+  <div class="container text-center">
     <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글쓰기</mark>
-        </h2>
-      </div>
-      <div class="col-lg-10 text-start">
-        <BoardFormItem :boardno="$route.params" type="register" />
-      </div>
+      <div class="fs-3 fw-bold container">후기작성</div>
+      <div style="height: 30px"></div>
+      <BoardFormItem :boardno="$route.params" type="register" />
     </div>
   </div>
 </template>
