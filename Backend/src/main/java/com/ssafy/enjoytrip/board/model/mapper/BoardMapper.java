@@ -13,7 +13,7 @@ import com.ssafy.enjoytrip.board.model.CommentDto;
 @Mapper
 public interface BoardMapper {
 
-	void writeBoard(BoardDto boardDto) throws SQLException;
+	int writeBoard(BoardDto boardDto) throws SQLException;
 
 //	void registerFile(BoardDto boardDto) throws Exception;
 

@@ -23,6 +23,7 @@ import com.ssafy.enjoytrip.board.model.BoardDto;
 import com.ssafy.enjoytrip.board.model.BoardListDto;
 import com.ssafy.enjoytrip.board.model.CommentListDto;
 import com.ssafy.enjoytrip.board.model.service.BoardService;
+import com.ssafy.enjoytrip.map.model.SidoGugunCodeDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,9 +58,12 @@ public class BoardController {
 			@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto) {
 		log.info("writeBoard boardDto - {}", boardDto);
 		try {
-			boardService.writeBoard(boardDto);
+			int boardno = boardService.writeBoard(boardDto);
+			System.out.println("######################" + boardno);
 //			return ResponseEntity.ok().build();
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
+//			return new ResponseEntity<List<SidoGugunCodeDto>>(mapService.getGugunInSido(sido), HttpStatus.OK);
+			
+			return ResponseEntity.status(HttpStatus.CREATED).body(boardno);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
