@@ -4,59 +4,59 @@ import TheFooter from "@/components/layout/TheFooter.vue";
 </script>
 
 <template>
-    <br />
-    <br />
-    <br />
-    <h1>App.vue</h1>
-    <div id="wrapper">
-        <the-navigationbar-vue></the-navigationbar-vue>
-        <router-view></router-view>
-    </div>
+  <!-- <h1>App.vue</h1> -->
+  <div id="wrapper">
+    <the-navigationbar-vue></the-navigationbar-vue>
 
-    <the-footer></the-footer>
+    <div style="height: 150px"></div>
+    <router-view></router-view>
+    <div style="height: 70px"></div>
+  </div>
+
+  <the-footer></the-footer>
 </template>
 
 <style scoped>
 :focus {
-    border-color: none !important;
-    box-shadow: none !important;
-    outline: none !important;
+  border-color: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 #wrapper {
-    height: auto;
-    min-height: 100%;
-    padding-bottom: 10px;
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 10px;
 }
 
 the-footer {
-    height: 10px;
-    position: relative;
-    transform: translateY(-100%);
+  height: 10px;
+  position: relative;
+  transform: translateY(-100%);
 }
 </style>
 
 <style>
 * {
-    font-family: "JUA";
-    font-size: 20px;
+  font-family: "JUA";
+  font-size: 18px;
 }
 
 @font-face {
-    font-family: "JUA";
-    src: url("@/assets/fonts/JUA.ttf");
+  font-family: "JUA";
+  src: url("@/assets/fonts/JUA.ttf");
 }
 
 @font-face {
-    font-family: "D2Coding";
-    src: url("@/assets/fonts/D2Coding.ttf");
+  font-family: "D2Coding";
+  src: url("@/assets/fonts/D2Coding.ttf");
 }
 
 input[type="password"] {
-    font-family: "D2Coding";
+  font-family: "D2Coding";
 }
 
 input[type="password"]::placeholder {
-    font-family: "JUA";
+  font-family: "JUA";
 }
 </style>

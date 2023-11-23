@@ -117,7 +117,7 @@ function moveList() {
 </script>
 
 <template>
-  <h1>BoardFormItem.vue</h1>
+  <!-- <h1>BoardFormItem.vue</h1> -->
   <form @submit.prevent="onSubmit">
     <div class="mb-3">
       <label for="userid" class="form-label">작성자 ID : </label>

@@ -32,7 +32,7 @@ const logout = () => {
         <router-link :to="{ name: 'home' }" class="navbar-brand">
           <img src="@/assets/enjoytrip_logo.png" alt="favicon" width="50" />
         </router-link>
-        <h1>EnjoyTrip</h1>
+        <h3>EnjoyTrip</h3>
         <button
           class="navbar-toggler border-0"
           type="button"

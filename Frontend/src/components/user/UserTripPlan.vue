@@ -11,27 +11,27 @@ const UserInfo = User.userInfo;
 
 /** 이 페이지에 들어오면 해당 사용자의 여행 계획을 로드 해야 함. */
 const clickBut = () => {
-    /** Axios 요청을 보내서 Board와 Board_detail 정보를 가져 오도록 함. */
-    userBoardList(
-        UserInfo,
-        ({ data }) => {
-            data.forEach((element) => {
-                console.log(element.board_no);
-            });
-        },
-        (err) => {
-            console.log(err);
-        }
-    );
+  /** Axios 요청을 보내서 Board와 Board_detail 정보를 가져 오도록 함. */
+  userBoardList(
+    UserInfo,
+    ({ data }) => {
+      data.forEach((element) => {
+        console.log(element.board_no);
+      });
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
 };
 </script>
 
 <template>
-    <h1>UserTripPlan.vue</h1>
+  <!-- <h1>UserTripPlan.vue</h1> -->
 
-    <router-view></router-view>
+  <router-view></router-view>
 
-    <!-- <div class="container d-flex flex-column">
+  <!-- <div class="container d-flex flex-column">
         <button @click="clickBut">버튼입네데</button>
         <div class="d-flex justify-content-around mt-5 mb-5">
             <div>

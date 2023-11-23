@@ -68,7 +68,7 @@ function saveComment() {
 </script>
 
 <template>
-  <h1>CommentListItem.vue</h1>
+  <!-- <h1>CommentListItem.vue</h1> -->
   <tr class="text-center">
     <td class="text-start">
       <!-- 삭제, 수정용 -->

@@ -62,7 +62,7 @@ const moveWrite = () => {
 </script>
 
 <template>
-  <h1>BoardList.vue</h1>
+  <!-- <h1>BoardList.vue</h1> -->
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
