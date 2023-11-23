@@ -57,14 +57,6 @@ const onChangeGugun = (val) => {
 <template>
     <h1>TheHomeView.vue</h1>
 
-    <!-- <KakaoMap :searchAttraction="chargingStations" :selectedAttraction="selectStation"></KakaoMap> -->
-    <KakaoMap
-        :modifiable="false"
-        :searchAttraction="searchAttraction"
-        :selectedAttraction="selectedAttraction"
-    >
-    </KakaoMap>
-
     <div class="container">
         <div id="carouselExampleCaptions" class="carousel slide">
             <div class="carousel-indicators">
