@@ -15,6 +15,7 @@ import OptionSelect from "@/components/common/OptionSelect.vue";
 const props = defineProps({
   selectedAttraction: Object,
   boardno: Number,
+  board: Object,
 });
 
 const sidoList = ref([]);
@@ -189,89 +190,115 @@ const getPlan = () => {
 
 <template>
   <!-- <h1>TheTestView.vue</h1> -->
-  <div class="container text-center mt-3">
-    <div class="row mb-2">
-      <div class="col alert alert-success" role="alert">관광지정보</div>
-      <div class="col-md-2">
-        <OptionSelect :optionList="sidoList" @onKeySelect="onChangeSido" />
-      </div>
-      <div class="col-md-2">
-        <OptionSelect :optionList="gugunList" @onKeySelect="onChangeGugun" />
-      </div>
-      <div class="col-md-2">
-        <select class="form-select form-select-bg w-50" @change="onChangeType" v-model="type">
-          <option value="0" selected disabled>관광지유형</option>
-          <option value="12">관광지</option>
-          <option value="14">문화시설</option>
-          <option value="15">축제공연행사</option>
-          <option value="25">여행코스</option>
-          <option value="28">레포츠</option>
-          <option value="32">숙박</option>
-          <option value="38">쇼핑</option>
-          <option value="39">음식점</option>
-        </select>
-      </div>
-      <div class="col">
-        <input type="text" v-model="keyword" @keyup.enter="onSearchButtonClick" />
-        <button class="pb-2" @click="onSearchButtonClick">검색</button>
-        <!-- <button @click="savePlan">계획 저장</button>
-              <button @click="getPlan">계획 불러오기</button> -->
-      </div>
-    </div>
-    <div class="d-flex justify-content">
-      <Suspense>
-        <TestMap
-          :attractionList="attractionList"
-          :attractionSelect="attractionSelect"
-          :addedAttractionList="addedAttractionList"
-          @addAttractionMyList="addAttractionMyList"
-        ></TestMap>
-      </Suspense>
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="fs-3 fw-bold container">{{ board.title }}</div>
+      <div style="height: 30px"></div>
+      <div class="col-lg-10">
+        <div class="row mb-2">
+          <!-- <div class="col alert alert-success" role="alert">관광지정보</div>
+          <div class="col-md-2">
+            <OptionSelect :optionList="sidoList" @onKeySelect="onChangeSido" />
+          </div>
+          <div class="col-md-2">
+            <OptionSelect :optionList="gugunList" @onKeySelect="onChangeGugun" />
+          </div>
+          <div class="col-md-2">
+            <select class="form-select form-select-bg w-50" @change="onChangeType" v-model="type">
+              <option value="0" selected disabled>관광지유형</option>
+              <option value="12">관광지</option>
+              <option value="14">문화시설</option>
+              <option value="15">축제공연행사</option>
+              <option value="25">여행코스</option>
+              <option value="28">레포츠</option>
+              <option value="32">숙박</option>
+              <option value="38">쇼핑</option>
+              <option value="39">음식점</option>
+            </select>
+          </div> -->
+          <!-- <div class="col">
+            <input type="text" v-model="keyword" @keyup.enter="onSearchButtonClick" />
+            <button class="pb-2" @click="onSearchButtonClick">검색</button>
+            <button @click="savePlan">계획 저장</button>
+              <button @click="getPlan">계획 불러오기</button>
+          </div> -->
+        </div>
+        <div class="d-flex justify-content border-1">
+          <Suspense>
+            <TestMap
+              :attractionList="attractionList"
+              :attractionSelect="attractionSelect"
+              :addedAttractionList="addedAttractionList"
+              @addAttractionMyList="addAttractionMyList"
+            ></TestMap>
+          </Suspense>
 
-      <div class="table‑wrapper" style="width: 100%">
-        <table class="table table-hover table-striped table-bordered table‑condensed">
+          <div class="table table-borderless" style="width: 100%">
+            <div class="fs-5 fw-bold container mb-3">다녀온 여행지</div>
+            <table class="table table-borderless table‑condensed table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th>사진</th>
+                  <th>이름</th>
+                  <!-- <th>비고</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="text-center"
+                  v-for="(attraction, index) in addedAttractionList"
+                  :key="attraction.attraction_id"
+                >
+                  <th class="rounded-0">
+                    <img
+                      v-if="attraction.first_image"
+                      :src="attraction.first_image"
+                      alt=""
+                      @error="handleImageError"
+                      width="150"
+                      class="rounded-3"
+                    />
+                    <img
+                      v-else
+                      src="../assets/noimage.png"
+                      alt="noimage"
+                      @error="handleImageError"
+                      width="150"
+                      class="rounded-3"
+                    />
+                  </th>
+                  <th class="fs-6 align-middle fw-normal rounded-0">
+                    {{ attraction.title }}
+                  </th>
+                  <!-- <th>
+                    <button @click="deleteAttractionMyList(index)">삭제</button>
+                  </th> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- <table class="table table-hover">
           <thead>
             <tr class="text-center">
-              선택한 관광지
+              <th scope="col">관광지 상세/th></th>
             </tr>
           </thead>
           <tbody>
             <tr
               class="text-center"
-              v-for="(attraction, index) in addedAttractionList"
+              v-for="attraction in attractionList"
               :key="attraction.attraction_id"
+              @click="viewAttraction(attraction)"
             >
-              <th><img :src="attraction.first_image" alt="" width="150" /></th>
-              <th>
-                {{ attraction.title }}
-              </th>
-              <th>
-                <button @click="deleteAttractionMyList(index)">삭제</button>
-              </th>
+              <th><img :src="attraction.first_image" width="50" /></th>
+              <th>{{ attraction.attraction_id }}</th>
+              <th>{{ attraction.title }}</th>
             </tr>
           </tbody>
-        </table>
+        </table> -->
       </div>
     </div>
-    <table class="table table-hover">
-      <thead>
-        <tr class="text-center">
-          <!-- <th scope="col">관광지 상세/th></th> -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class="text-center"
-          v-for="attraction in attractionList"
-          :key="attraction.attraction_id"
-          @click="viewAttraction(attraction)"
-        >
-          <th><img :src="attraction.first_image" width="50" /></th>
-          <th>{{ attraction.attraction_id }}</th>
-          <th>{{ attraction.title }}</th>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 

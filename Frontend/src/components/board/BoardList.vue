@@ -70,7 +70,7 @@ const moveList = () => {
   <!-- <h1>BoardList.vue</h1> -->
   <div class="container text-center">
     <div class="row justify-content-center">
-      <div class="fs-3 fw-bold container">여행후기</div>
+      <div class="fs-3 fw-bold container">여행 후기</div>
       <div style="height: 30px"></div>
       <div class="col-lg-10">
         <div class="row align-self-center my-2 alert-secondary alert">

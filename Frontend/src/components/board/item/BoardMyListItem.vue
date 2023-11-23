@@ -5,8 +5,8 @@ defineProps({ board: Object });
 <template>
   <!-- <h1>BOARDMYLISTITEM</h1> -->
   <tr class="text-center">
-    <th scope="row">{{ board.boardNo }}</th>
-    <td class="text-start">
+    <th scope="row" class="rounded-0">{{ board.boardNo }}</th>
+    <td class="text-start rounded-0">
       <router-link
         :to="{ name: 'board-view', params: { boardno: board.boardNo } }"
         class="board-title link-dark"
@@ -14,9 +14,9 @@ defineProps({ board: Object });
         {{ board.title }}
       </router-link>
     </td>
-    <td>{{ board.userName }}</td>
-    <td>{{ board.hit }}</td>
-    <td>{{ board.registerTime }}</td>
+    <td class="rounded-0">{{ board.userName }}</td>
+    <td class="rounded-0">{{ board.hit }}</td>
+    <td class="rounded-0">{{ board.registerTime }}</td>
   </tr>
 </template>
 

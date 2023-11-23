@@ -257,8 +257,8 @@ const getPlan = () => {
           <thead>
             <tr class="text-center">
               <th>사진</th>
-              <th>위치</th>
               <th>이름</th>
+              <th>삭제</th>
             </tr>
           </thead>
           <tbody>
@@ -267,19 +267,28 @@ const getPlan = () => {
               v-for="(attraction, index) in addedAttractionList"
               :key="attraction.attraction_id"
             >
-              <th>
+              <th class="rounded-0">
                 <img
+                  v-if="attraction.first_image"
                   :src="attraction.first_image"
                   alt=""
                   @error="handleImageError"
                   width="150"
                   class="rounded-3"
                 />
+                <img
+                  v-else
+                  src="../assets/noimage.png"
+                  alt="noimage"
+                  @error="handleImageError"
+                  width="150"
+                  class="rounded-3"
+                />
               </th>
-              <th class="fs-6 align-middle fw-normal">
+              <th class="fs-6 align-middle fw-normal rounded-0">
                 {{ attraction.title }}
               </th>
-              <th class="align-middle">
+              <th class="align-middle rounded-0">
                 <button class="btn btn-secondary btn-sm" @click="deleteAttractionMyList(index)">
                   삭제
                 </button>
@@ -305,11 +314,17 @@ const getPlan = () => {
           :key="attraction.attraction_id"
           @click="viewAttraction(attraction)"
         >
-          <th class="fs-6 align-middle fw-normal">
-            <img :src="attraction.first_image" width="50" class="rounded-3" />
+          <th class="fs-6 align-middle fw-normal rounded-0">
+            <img
+              v-if="attraction.first_image"
+              :src="attraction.first_image"
+              width="50"
+              class="rounded-3"
+            />
+            <img v-else src="../assets/noimage.png" width="50" class="rounded-3" />
           </th>
-          <th class="fs-6 align-middle fw-normal">{{ attraction.addr1 }}</th>
-          <th class="fs-6 align-middle fw-normal">{{ attraction.title }}</th>
+          <th class="fs-6 align-middle fw-normal rounded-0">{{ attraction.addr1 }}</th>
+          <th class="fs-6 align-middle fw-normal rounded-0">{{ attraction.title }}</th>
         </tr>
       </tbody>
     </table>

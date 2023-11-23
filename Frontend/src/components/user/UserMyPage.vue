@@ -76,15 +76,13 @@ function saveChanges() {
 
 <template>
   <!-- <h1>UserMyPage.vue</h1> -->
-  <div class="container">
+  <div class="container text-center">
     <div class="row justify-content-center">
+      <div class="fs-3 fw-bold container">내 정보</div>
+      <div style="height: 30px"></div>
+
       <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="orange">내정보</mark>
-        </h2>
-      </div>
-      <div class="col-lg-10">
-        <div class="card mt-3 m-auto" style="max-width: 700px">
+        <div class="card m-auto my-2 border-0" style="max-width: 700px">
           <div class="row g-0">
             <div class="col-md-4">
               <img
@@ -94,19 +92,19 @@ function saveChanges() {
               />
             </div>
             <div class="col-md-8">
-              <div class="card-body text-start">
+              <div class="card-body text-start border-0">
                 <div v-if="!editing">
-                  <ul class="list-group list-group-flush" v-if="userInfo">
-                    <li class="list-group-item">{{ userInfo.userId }}</li>
-                    <li class="list-group-item">{{ userInfo.userName }}</li>
-                    <li class="list-group-item">
+                  <ul class="list-group list-group-flush border-0" v-if="userInfo">
+                    <li class="list-group-item border-0 my-1">{{ userInfo.userId }}</li>
+                    <li class="list-group-item border-0 md-1">{{ userInfo.userName }}</li>
+                    <li class="list-group-item border-0 md-1">
                       {{ userInfo.emailId + "@" + userInfo.emailDomain }}
                     </li>
-                    <li class="list-group-item">{{ userInfo.birthYear }}</li>
+                    <li class="list-group-item border-0 md-1">{{ userInfo.birthYear }}</li>
                   </ul>
                   <button
                     type="button"
-                    class="btn btn-outline-secondary mt-2"
+                    class="ms-5 me-2 my-5 btn btn-secondary mt-2"
                     @click="editUserInfo"
                   >
                     수정
@@ -114,28 +112,38 @@ function saveChanges() {
                 </div>
                 <div v-else>
                   <form @submit.prevent="saveChanges">
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">
-                        <input v-model="editedUserInfo.userId" disabled="true" />
+                    <ul class="list-group list-group-flush border-0">
+                      <li class="list-group-item border-0">
+                        <input
+                          v-model="editedUserInfo.userId"
+                          disabled="true"
+                          class="border-0 rounded-1"
+                        />
                       </li>
-                      <li class="list-group-item"><input v-model="editedUserInfo.userName" /></li>
-                      <li class="list-group-item">
-                        <input v-model="editedUserInfo.email" disabled="true" />
+                      <li class="list-group-item border-0">
+                        <input v-model="editedUserInfo.userName" class="border-1 rounded-1" />
                       </li>
-                      <li class="list-group-item">
-                        <input v-model="editedUserInfo.birthYear" />
+                      <li class="list-group-item border-0">
+                        <input
+                          v-model="editedUserInfo.email"
+                          disabled="true"
+                          class="border-0 rounded-1"
+                        />
                       </li>
-                      <button type="submit" class="btn btn-primary mt-2" @click="saveChanges">
-                        저장
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-outline-secondary mt-2"
-                        @click="cancelEdit"
-                      >
-                        취소
-                      </button>
+                      <li class="list-group-item border-0">
+                        <input v-model="editedUserInfo.birthYear" class="border-1 rounded-1" />
+                      </li>
                     </ul>
+                    <button
+                      type="submit"
+                      class="ms-5 me-2 my-5 btn btn-secondary mt-2"
+                      @click="saveChanges"
+                    >
+                      저장
+                    </button>
+                    <button type="button" class="my-5 btn btn-secondary mt-2" @click="cancelEdit">
+                      취소
+                    </button>
                   </form>
                 </div>
               </div>

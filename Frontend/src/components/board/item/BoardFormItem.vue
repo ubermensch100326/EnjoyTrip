@@ -137,7 +137,7 @@ const selectedAttraction = ref({});
     :boardno="propsno"
   ></the-test-view>
 
-  <div class="col-10">
+  <div class="col-lg-10">
     <form @submit.prevent="onSubmit" class="row">
       <div style="height: 70px"></div>
       <div class="fs-5 fw-bold container mb-3">후기</div>
@@ -164,6 +164,7 @@ const selectedAttraction = ref({});
           placeholder="내용"
         ></textarea>
       </div>
+      <div style="height: 30px"></div>
       <div class="col text-center">
         <button
           type="button"

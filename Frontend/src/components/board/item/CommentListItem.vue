@@ -70,33 +70,24 @@ function saveComment() {
 <template>
   <!-- <h1>CommentListItem.vue</h1> -->
   <tr class="text-center">
-    <td class="text-start">
-      <!-- 삭제, 수정용 -->
-      <!-- <router-link
+    <!-- <td class="text-start">
+      삭제, 수정용
+      <router-link
         :to="{ name: 'board-view', params: { commentno: board.boardNo } }"
         class="board-title link-dark"
       >
         {{ board.title }}
-      </router-link> -->
+      </router-link>
       {{ comment.commentNo }}
-    </td>
-    <td>{{ comment.userId }}</td>
-    <td>
+    </td> -->
+    <td class="rounded-0">{{ comment.userId }}</td>
+    <td class="rounded-0">
       <div v-if="!editing">{{ comment.content }}</div>
       <textarea v-if="editing" v-model="editParam.content" rows="1"></textarea>
     </td>
-    <td>{{ comment.registerTime }}</td>
-    <td>
-      <button
-        v-if="comment.userId == userId"
-        type="button"
-        class="btn btn-outline-danger mb-3 ms-1"
-        @click="onDeleteComment"
-      >
-        댓글삭제
-      </button>
-    </td>
-    <td>
+    <td class="rounded-0">{{ comment.registerTime }}</td>
+
+    <td class="rounded-0">
       <button
         v-if="!editing && comment.userId === userId"
         type="button"
@@ -112,6 +103,16 @@ function saveComment() {
         @click="saveComment"
       >
         댓글저장
+      </button>
+    </td>
+    <td class="rounded-0">
+      <button
+        v-if="comment.userId == userId"
+        type="button"
+        class="btn btn-outline-danger mb-3 ms-1"
+        @click="onDeleteComment"
+      >
+        댓글삭제
       </button>
     </td>
   </tr>

@@ -172,18 +172,18 @@ const loadMarkers = (attraction) => {
   infoDiv.classList.add("info");
 
   var titleDiv = document.createElement("div");
-  titleDiv.classList.add("title");
+  titleDiv.classList.add("title", "text-light", "mb-3", "rounded-1");
   titleDiv.style.backgroundColor = "gray";
   titleDiv.textContent = attraction.title;
 
-  var closeButton = document.createElement("button");
-  closeButton.classList.add("close");
-  closeButton.setAttribute("title", "닫기");
+  // var closeButton = document.createElement("button");
+  // closeButton.classList.add("close");
+  // closeButton.setAttribute("title", "닫기");
   //   closeButton.textContent = "x";
-  closeButton.onclick = closeBtn; // closeOverlay 함수를 연결합니다.
+  // closeButton.onclick = closeBtn; // closeOverlay 함수를 연결합니다.
 
   titleDiv.appendChild(document.createTextNode(" "));
-  titleDiv.appendChild(closeButton);
+  // titleDiv.appendChild(closeButton);
 
   var bodyDiv = document.createElement("div");
   bodyDiv.classList.add("body");
@@ -204,12 +204,13 @@ const loadMarkers = (attraction) => {
   descDiv.classList.add("desc");
 
   var ellipsisDiv = document.createElement("div");
-  ellipsisDiv.classList.add("ellipsis");
+  ellipsisDiv.classList.add("ellipsis", "mx-2", "my-2");
   ellipsisDiv.textContent = attraction.addr1;
 
   var linkDiv = document.createElement("div");
   var paragraph = document.createElement("p");
-  paragraph.textContent = attraction.tel;
+  paragraph.classList.add("mx-2");
+  // paragraph.textContent = attraction.tel;
   linkDiv.appendChild(paragraph);
 
   descDiv.appendChild(ellipsisDiv);
@@ -235,6 +236,7 @@ const loadMarkers = (attraction) => {
 
   var attractionAddBtn = document.createElement("button");
   attractionAddBtn.innerHTML = "추가";
+  attractionAddBtn.classList.add("btn", "btn-secondary", "mx-1", "btn-sm", "my-1");
   attractionAddBtn.onclick = function () {
     addMyAttraction(attraction);
     overlay.setMap(null);
@@ -242,6 +244,7 @@ const loadMarkers = (attraction) => {
 
   var closeBtn = document.createElement("button");
   closeBtn.innerHTML = "닫기";
+  closeBtn.classList.add("btn", "btn-secondary", "mx-1", "btn-sm", "my-1");
   closeBtn.onclick = function () {
     overlay.setMap(null);
   };

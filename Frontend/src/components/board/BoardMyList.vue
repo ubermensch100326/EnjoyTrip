@@ -66,45 +66,25 @@ const moveWrite = () => {
 
 <template>
   <!-- <h1>BoardMyList.vue</h1> -->
-  <div class="container">
+  <div class="container text-center">
     <div class="row justify-content-center">
+      <div class="fs-3 fw-bold container">내 여행</div>
+      <div style="height: 30px"></div>
       <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글목록</mark>
-        </h2>
-      </div>
-      <div class="col-lg-10">
-        <div class="row align-self-center mb-2">
+        <div class="row align-self-center my-2 alert-secondary alert">
           <div class="col-md-2 text-start">
-            <button type="button" class="btn btn-outline-primary btn-sm" @click="moveWrite">
-              글쓰기
-            </button>
+            <button type="button" class="btn btn-secondary" @click="moveWrite">글쓰기</button>
           </div>
-          <!-- <div class="col-md-5 offset-5">
-                        <form class="d-flex">
-                            <OptionSelect :optionList="optionList" @onKeySelect="changeKey" />
-                            <div class="input-group input-group-sm ms-1">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="param.word"
-                                    placeholder="검색어..."
-                                />
-                                <button class="btn btn-dark" type="button" @click="getBoardList">
-                                    검색
-                                </button>
-                            </div>
-                        </form>
-                    </div> -->
         </div>
+        <div style="height: 20px"></div>
         <table class="table table-hover">
           <thead>
             <tr class="text-center">
-              <th scope="col">글번호</th>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-              <th scope="col">조회수</th>
-              <th scope="col">작성일</th>
+              <th scope="col" style="width: 10%">글번호</th>
+              <th scope="col" style="width: 35%">제목</th>
+              <th scope="col" style="width: 15%">작성자</th>
+              <th scope="col" style="width: 10%">조회수</th>
+              <th scope="col" style="width: 20%">작성시간</th>
             </tr>
           </thead>
           <tbody>
@@ -118,6 +98,7 @@ const moveWrite = () => {
           </tbody>
         </table>
       </div>
+      <div style="height: 30px"></div>
       <PageNavigation
         :current-page="currentPage"
         :total-page="totalPage"

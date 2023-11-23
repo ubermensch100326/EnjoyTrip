@@ -113,83 +113,125 @@ const submitComment = () => {
 
 <template>
   <!-- <h1>BoardDetail.vue</h1> -->
-  <the-test-view :selectedAttraction="selectedAttraction" :boardno="boardno"></the-test-view>
+  <the-test-view
+    :selectedAttraction="selectedAttraction"
+    :boardno="boardno"
+    :board="board"
+  ></the-test-view>
 
-  <div class="container">
+  <div class="container text-center">
     <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글보기</mark>
-        </h2>
+      <div style="height: 70px"></div>
+      <div class="fs-5 fw-bold container mb-3">후기</div>
+      <div class="mb-3">
+        {{ board.content }}
       </div>
-      <div class="col-lg-10 text-start">
-        <div class="row my-2">
-          <h2 class="text-secondary px-5">{{ board.boardNo }}. {{ board.subject }}</h2>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            <div class="clearfix align-content-center">
-              <img class="avatar me-2 float-md-start bg-light p-2"
-                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" />
-              <p>
-                <span class="fw-bold">{{ board.userId }}</span> <br />
-                <span class="text-secondary fw-light">
-                  {{ board.registerTime }} 조회 : {{ board.hit }}
-                </span>
-              </p>
+      <div class="col-lg-10">
+        <!-- <div class="col-lg-10 text-start">
+          <div class="row my-2">
+            <h2 class="text-secondary px-5">{{ board.boardNo }}. {{ board.subject }}</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="clearfix align-content-center">
+                <img
+                  class="avatar me-2 float-md-start bg-light p-2"
+                  src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                />
+                <p>
+                  <span class="fw-bold">{{ board.userId }}</span> <br />
+                  <span class="text-secondary fw-light">
+                    {{ board.registerTime }} 조회 : {{ board.hit }}
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4 align-self-center text-end">댓글 : {{ commentList.length }}</div>
+            <div class="divider mb-3"></div>
+            <div class="text-secondary">
+              {{ board.content }}
+            </div>
+            <div class="divider mt-3 mb-3"></div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
+                글목록
+              </button>
+              <button
+                v-if="board.userId === userId"
+                type="button"
+                class="btn btn-outline-success mb-3 ms-1"
+                @click="moveModify"
+              >
+                글수정
+              </button>
+              <button
+                v-if="board.userId === userId"
+                type="button"
+                class="btn btn-outline-danger mb-3 ms-1"
+                @click="onDeleteBoard"
+              >
+                글삭제
+              </button>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : {{ commentList.length }}</div>
-          <div class="divider mb-3"></div>
-          <div class="text-secondary">
-            {{ board.content }}
+        </div> -->
+        <div>
+          <div style="height: 70px"></div>
+          <table class="table table-hover table-borderless">
+            <thead>
+              <tr class="text-center">
+                <!-- <th scope="col">댓글 번호</th> -->
+                <th scope="col" style="width: 10%">댓글 작성자</th>
+                <th scope="col" style="width: 35%">댓글 내용</th>
+                <th scope="col" style="width: 15%">댓글 작성시간</th>
+                <th scope="col" style="width: 10%">수정</th>
+                <th scope="col" style="width: 10%">삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              <CommentListItem
+                v-for="comment in commentList"
+                :key="comment.commentNo"
+                :comment="comment"
+                :userId="userId"
+              >
+              </CommentListItem>
+            </tbody>
+          </table>
+        </div>
+        <div style="height: 70px"></div>
+        <!-- 댓글 작성 폼 -->
+        <div class="mt-3" v-if="userId">
+          <div class="fs-5 fw-bold container mb-3">댓글</div>
+          <div class="mb-3">
+            <label for="commentAuthor" class="form-label">댓글 작성자</label>
+            <input
+              type="text"
+              class="form-control"
+              id="commentAuthor"
+              :value="userId"
+              disabled="true"
+            />
           </div>
-          <div class="divider mt-3 mb-3"></div>
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
-              글목록
-            </button>
-            <button v-if="board.userId === userId" type="button" class="btn btn-outline-success mb-3 ms-1"
-              @click="moveModify">
-              글수정
-            </button>
-            <button v-if="board.userId === userId" type="button" class="btn btn-outline-danger mb-3 ms-1"
-              @click="onDeleteBoard">
-              글삭제
-            </button>
+          <div class="mb-3">
+            <label for="commentContent" class="form-label">댓글 내용</label>
+            <textarea
+              class="form-control"
+              id="commentContent"
+              rows="3"
+              v-model="comment.content"
+            ></textarea>
           </div>
+          <div style="height: 30px"></div>
+          <div class="col text-center"></div>
+          <button
+            type="button"
+            class="row-3 float-right btn btn-secondary mb-3 mx-3 rounded-1 border-"
+            @click="submitComment"
+          >
+            작성
+          </button>
         </div>
-      </div>
-      <div>
-        <table class="table table-hover">
-          <thead>
-            <tr class="text-center">
-              <th scope="col">댓글 번호</th>
-              <th scope="col">댓글 작성자</th>
-              <th scope="col">댓글 내용</th>
-              <th scope="col">댓글 작성일</th>
-              <th scope="col">삭제</th>
-              <th scope="col">수정</th>
-            </tr>
-          </thead>
-          <tbody>
-            <CommentListItem v-for="comment in commentList" :key="comment.commentNo" :comment="comment" :userId="userId">
-            </CommentListItem>
-          </tbody>
-        </table>
-      </div>
-      <!-- 댓글 작성 폼 -->
-      <div class="mt-3" v-if="userId">
-        <h3 class="text-center">댓글 작성하기</h3>
-        <div class="mb-3">
-          <label for="commentAuthor" class="form-label">댓글 작성자</label>
-          <input type="text" class="form-control" id="commentAuthor" :value="userId" disabled="true" />
-        </div>
-        <div class="mb-3">
-          <label for="commentContent" class="form-label">댓글 내용</label>
-          <textarea class="form-control" id="commentContent" rows="3" v-model="comment.content"></textarea>
-        </div>
-        <button type="button" class="btn btn-primary" @click="submitComment">작성</button>
       </div>
     </div>
   </div>
