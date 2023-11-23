@@ -28,7 +28,10 @@ const clickBut = () => {
 
 <template>
     <h1>UserTripPlan.vue</h1>
-    <div class="container d-flex flex-column">
+
+    <router-view></router-view>
+
+    <!-- <div class="container d-flex flex-column">
         <button @click="clickBut">버튼입네데</button>
         <div class="d-flex justify-content-around mt-5 mb-5">
             <div>
@@ -88,7 +91,7 @@ const clickBut = () => {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <style scoped></style>
