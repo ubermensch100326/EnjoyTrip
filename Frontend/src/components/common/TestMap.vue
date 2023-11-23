@@ -50,12 +50,15 @@ watch(
 watch(
     () => props.addedAttractionList,
     () => {
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ addedAttractionList 변화 감지함 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        console.log("props.addedAttractionList : " + JSON.stringify(props.addedAttractionList.value));
         var latlng = [];
         positions = [];
 
         PolyLines.forEach((element) => {
             element.setMap(null);
         });
+
 
         /** latlng 만 저장하는 배열 하나 생성 */
         props.addedAttractionList.forEach((element) => {
@@ -102,9 +105,7 @@ watch(
             true;
         }
     },
-    {
-        deep: true
-    }
+    { deep: true }
 );
 
 onMounted(() => {

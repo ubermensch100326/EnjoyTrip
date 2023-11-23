@@ -21,6 +21,8 @@ watch(
     () => props.boardno.value,
     () => {
         console.log("call watch!!!!!!!!!!!!!!!!!!!!!!!!!");
+        console.log(props.boardno);
+
         savePlan();
     },
     { deep: true }
@@ -144,7 +146,7 @@ const addAttractionMyList = (attraction) => {
     addedAttractionList.value.push(attraction);
     console.log(
         " @@@@@@@@@@@@@@@@@@@@@@@@ addAttractionMyList @@@@@@@@@@@@@@@@@@@@@@@@" +
-            JSON.stringify(addedAttractionList.value)
+        JSON.stringify(addedAttractionList.value)
     );
 };
 
@@ -160,10 +162,13 @@ const savePlan = () => {
         ({ data }) => {
             var index = 1;
 
+            console.log("delete는 됩니다 !!!!!!!!!!!!!!!");
+            console.log(JSON.stringify(data));
+
             addedAttractionList.value.forEach((plan) => {
                 // 저장할 관광지의 여행 계획 순서 추가.
                 plan.order = index;
-                plan.board_no = planParam.value.board_no;
+                plan.board_no = props.boardno;
                 index++;
                 createMyPlan(
                     plan,
@@ -187,7 +192,10 @@ const getPlan = () => {
     getMyPlan(
         planParam.value,
         ({ data }) => {
-            addedAttractionList.value = data;
+            console.log("getPlan 결과 입니다 :=============");
+            console.log(JSON.stringify(data));
+            if (data.length != 0)
+                addedAttractionList.value = data;
         },
         (err) => {
             console.log(err);
@@ -208,11 +216,7 @@ const getPlan = () => {
                 <OptionSelect :optionList="gugunList" @onKeySelect="onChangeGugun" />
             </div>
             <div class="col">
-                <select
-                    class="form-select form-select-sm w-50"
-                    @change="onChangeType"
-                    v-model="type"
-                >
+                <select class="form-select form-select-sm w-50" @change="onChangeType" v-model="type">
                     <option value="0" selected disabled>관광지유형</option>
                     <option value="12">관광지</option>
                     <option value="14">문화시설</option>
@@ -233,12 +237,8 @@ const getPlan = () => {
         </div>
         <div class="d-flex justify-content">
             <Suspense>
-                <TestMap
-                    :attractionList="attractionList"
-                    :attractionSelect="attractionSelect"
-                    :addedAttractionList="addedAttractionList"
-                    @addAttractionMyList="addAttractionMyList"
-                ></TestMap>
+                <TestMap :attractionList="attractionList" :attractionSelect="attractionSelect"
+                    :addedAttractionList="addedAttractionList" @addAttractionMyList="addAttractionMyList"></TestMap>
             </Suspense>
 
             <div class="table‑wrapper" style="width: 100%">
@@ -249,11 +249,8 @@ const getPlan = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            class="text-center"
-                            v-for="(attraction, index) in addedAttractionList"
-                            :key="attraction.attraction_id"
-                        >
+                        <tr class="text-center" v-for="(attraction, index) in addedAttractionList"
+                            :key="attraction.attraction_id">
                             <th><img :src="attraction.first_image" alt="" width="150" /></th>
                             <th>
                                 {{ attraction.title }}
@@ -273,12 +270,8 @@ const getPlan = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr
-                    class="text-center"
-                    v-for="attraction in attractionList"
-                    :key="attraction.attraction_id"
-                    @click="viewAttraction(attraction)"
-                >
+                <tr class="text-center" v-for="attraction in attractionList" :key="attraction.attraction_id"
+                    @click="viewAttraction(attraction)">
                     <th><img :src="attraction.first_image" width="50" /></th>
                     <th>{{ attraction.attraction_id }}</th>
                     <th>{{ attraction.title }}</th>

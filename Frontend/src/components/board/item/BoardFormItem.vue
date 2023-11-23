@@ -68,13 +68,7 @@ onMounted(() => {
     childComponentRef.value = ref("childComponent");
 });
 
-function callSavePlan() {
-    childComponentRef.value?.value?.savePlan?.();
-}
-
 function onSubmit() {
-    // event.preventDefault();
-    callSavePlan();
 
     if (titleErrMsg.value) {
         alert(titleErrMsg.value);
@@ -89,6 +83,7 @@ const propsno = ref(0);
 
 function writeArticle() {
     console.log("글등록하자!!", board.value);
+    // 리턴 값으로 글 번호 들어옴
     registerBoard(
         board.value,
         (response) => {
@@ -100,6 +95,7 @@ function writeArticle() {
             //     moveList();
             // }
             propsno.value = response.data;
+            console.log("propsno.value!!!!!!!!!!!!" + propsno.value);
         },
         (error) => console.error(error)
     );
@@ -136,22 +132,12 @@ const selectedAttraction = ref({});
 
 <template>
     <!-- <h1>BoardFormItem.vue</h1> -->
-    <the-test-view
-        ref="childComponent"
-        :selectedAttraction="selectedAttraction"
-        :boardno="propsno"
-    ></the-test-view>
+    <the-test-view ref="childComponent" :selectedAttraction="selectedAttraction" :boardno="propsno"></the-test-view>
 
     <form @submit.prevent="onSubmit">
         <div class="mb-3">
             <label for="userid" class="form-label">작성자 ID : </label>
-            <input
-                type="text"
-                class="form-control"
-                :value="userInfo.userId"
-                disabled="true"
-                placeholder="작성자ID..."
-            />
+            <input type="text" class="form-control" :value="userInfo.userId" disabled="true" placeholder="작성자ID..." />
         </div>
         <div class="mb-3">
             <label for="title" class="form-label">제목 : </label>
