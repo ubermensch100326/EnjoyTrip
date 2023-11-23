@@ -27,8 +27,10 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional
-	public void writeBoard(BoardDto boardDto) throws Exception {
+	public int writeBoard(BoardDto boardDto) throws Exception {
 		boardMapper.writeBoard(boardDto);
+		int boardno = boardDto.getBoardNo();
+		return boardno;
 //		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
 //		if (fileInfos != null && !fileInfos.isEmpty()) {
 //			boardMapper.registerFile(boardDto);

@@ -9,14 +9,13 @@ import com.ssafy.enjoytrip.board.model.CommentListDto;
 
 public interface BoardService {
 
-	void writeBoard(BoardDto boardDto) throws Exception;
+	int writeBoard(BoardDto boardDto) throws Exception;
 	BoardListDto listBoard(Map<String, String> map) throws Exception;
 //	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 	BoardDto getBoard(int boardNo) throws Exception;
 	void updateHit(int boardNo) throws Exception;
 	
 	void modifyBoard(BoardDto boardDto) throws Exception;
-//	
 	void deleteBoard(int boardNo) throws Exception;
 	CommentListDto listComment(Map<String, String> map) throws Exception;
 	void deleteBoardComment(int boardNo) throws Exception;

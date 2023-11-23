@@ -17,6 +17,15 @@ const props = defineProps({
     boardno: Number,
 });
 
+watch(
+    () => props.boardno.value,
+    () => {
+        console.log("call watch!!!!!!!!!!!!!!!!!!!!!!!!!");
+        savePlan();
+    },
+    { deep: true }
+);
+
 const sidoList = ref([]);
 const gugunList = ref([{ text: "구군선택", value: "" }]);
 const attractionList = ref([]);
