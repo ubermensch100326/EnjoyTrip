@@ -72,16 +72,16 @@ const moveList = () => {
     <div class="row justify-content-center">
       <div class="fs-3 fw-bold container">여행후기</div>
       <div style="height: 30px"></div>
-      <div class="col-lg-10 my-2">
-        <div class="row align-self-center">
+      <div class="col-lg-10">
+        <div class="row align-self-center my-2 alert-secondary alert">
           <div class="col-md-2 text-start">
-            <button type="button" class="btn btn-secondary my-1" @click="moveList">목록</button>
+            <button type="button" class="btn btn-secondary" @click="moveList">목록</button>
           </div>
           <div class="col-md-2 text-start">
-            <button type="button" class="btn btn-secondary my-1" @click="moveWrite">글쓰기</button>
+            <button type="button" class="btn btn-secondary" @click="moveWrite">글쓰기</button>
           </div>
           <div class="col-md-5 offset-3">
-            <form class="d-flex my-1">
+            <form class="d-flex">
               <OptionSelect :optionList="optionList" @onKeySelect="changeKey" />
               <!-- 왜 엔터 keyup.enter이 안 먹힐까 -->
               <div class="input-group ms-1">
@@ -111,6 +111,7 @@ const moveList = () => {
           </tbody>
         </table>
       </div>
+      <div style="height: 30px"></div>
       <PageNavigation
         :current-page="currentPage"
         :total-page="totalPage"

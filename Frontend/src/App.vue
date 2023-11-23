@@ -40,6 +40,7 @@ the-footer {
 * {
   font-family: "JUA";
   font-size: 18px;
+  border-radius: 10px;
 }
 
 @font-face {

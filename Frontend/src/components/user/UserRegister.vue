@@ -141,7 +141,7 @@ const check = () => {
               aria-label="이메일 도메인"
               style="width: 151px"
             >
-              <option value="0" selected disabled>선택</option>
+              <option value="0" selected disabled>이메일 도메인</option>
               <option value="ssafy.com">ssafy.com</option>
               <option value="google.com">google.com</option>
               <option value="naver.com">naver.com</option>

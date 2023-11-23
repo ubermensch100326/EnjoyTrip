@@ -29,7 +29,7 @@ watch(
 );
 
 const sidoList = ref([]);
-const gugunList = ref([{ text: "구군선택", value: "" }]);
+const gugunList = ref([{ text: "구/군", value: "" }]);
 const attractionList = ref([]);
 const attractionSelect = ref({});
 const addedAttractionList = ref([]);
@@ -75,7 +75,7 @@ const getSidoList = () => {
     ({ data }) => {
       console.log(data);
       let options = [];
-      options.push({ text: "시도선택", value: "" });
+      options.push({ text: "시/도", value: "" });
       data.forEach((sido) => {
         options.push({ text: sido.sidoName, value: sido.sidoCode });
       });
@@ -94,7 +94,7 @@ const onChangeSido = (val) => {
     ({ data }) => {
       console.log(data);
       let options = [];
-      options.push({ text: "구군선택", value: "" });
+      options.push({ text: "구/군", value: "" });
       data.forEach((gugun) => {
         options.push({ text: gugun.gugunName, value: gugun.gugunCode });
       });
@@ -205,18 +205,17 @@ const getPlan = () => {
 
 <template>
   <!-- <h1>TheTestViewWrite.vue</h1> -->
-  <div class="container text-center">
-    <div class="row justify-content-center my-2 alert-secondary alert">
-      <div class="col-md-2 text-start">관광지정보</div>
-      <div class="col">
+  <div class="col-lg-10">
+    <div class="row align-self-center my-2 alert-secondary alert">
+      <div class="col-md-3 text-start">
         <OptionSelect :optionList="sidoList" @onKeySelect="onChangeSido" />
       </div>
-      <div class="col">
+      <div class="col-md-3 text-start">
         <OptionSelect :optionList="gugunList" @onKeySelect="onChangeGugun" />
       </div>
-      <div class="col">
-        <select class="form-select form-select-sm w-50" @change="onChangeType" v-model="type">
-          <option value="0" selected disabled>관광지유형</option>
+      <div class="col-md-3 text-start">
+        <select class="form-select form-select-bg w-50" @change="onChangeType" v-model="type">
+          <option value="0" selected disabled>유형</option>
           <option value="12">관광지</option>
           <option value="14">문화시설</option>
           <option value="15">축제공연행사</option>
@@ -227,19 +226,23 @@ const getPlan = () => {
           <option value="39">음식점</option>
         </select>
       </div>
-      <div class="input-group col ms-1">
-        <input
-          class="form-control"
-          type="text"
-          v-model="keyword"
-          @keyup.enter="onSearchButtonClick"
-        />
-        <button class="btn btn-secondary" @click="onSearchButtonClick">검색</button>
-        <!-- <button @click="savePlan">계획 저장</button> -->
-        <!-- <button @click="getPlan">계획 불러오기</button> -->
+      <div class="col-md-3">
+        <div class="input-group col-3">
+          <input
+            class="form-control"
+            type="text"
+            v-model="keyword"
+            placeholder="검색어"
+            @keyup.enter="onSearchButtonClick"
+          />
+          <button class="btn btn-secondary" @click="onSearchButtonClick">검색</button>
+          <!-- <button @click="savePlan">계획 저장</button> -->
+          <!-- <button @click="getPlan">계획 불러오기</button> -->
+        </div>
       </div>
     </div>
-    <div class="d-flex justify-content">
+    <div style="height: 20px"></div>
+    <div class="d-flex justify-content border-1">
       <Suspense>
         <TestMap
           :attractionList="attractionList"
@@ -248,12 +251,14 @@ const getPlan = () => {
           @addAttractionMyList="addAttractionMyList"
         ></TestMap>
       </Suspense>
-
-      <div class="table‑wrapper" style="width: 100%">
-        <table class="table table-hover table-striped table-bordered table‑condensed">
+      <div class="table table-borderless" style="width: 100%">
+        <div class="fs-5 fw-bold container mb-3">선택된 여행지</div>
+        <table class="table table-borderless table‑condensed table-hover">
           <thead>
             <tr class="text-center">
-              선택한 관광지
+              <th>사진</th>
+              <th>위치</th>
+              <th>이름</th>
             </tr>
           </thead>
           <tbody>
@@ -262,22 +267,35 @@ const getPlan = () => {
               v-for="(attraction, index) in addedAttractionList"
               :key="attraction.attraction_id"
             >
-              <th><img :src="attraction.first_image" alt="" width="150" /></th>
               <th>
+                <img
+                  :src="attraction.first_image"
+                  alt=""
+                  @error="handleImageError"
+                  width="150"
+                  class="rounded-3"
+                />
+              </th>
+              <th class="fs-6 align-middle fw-normal">
                 {{ attraction.title }}
               </th>
-              <th>
-                <button @click="deleteAttractionMyList(index)">삭제</button>
+              <th class="align-middle">
+                <button class="btn btn-secondary btn-sm" @click="deleteAttractionMyList(index)">
+                  삭제
+                </button>
               </th>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <table class="table table-hover">
+    <div class="fs-5 fw-bold container my-3">검색 결과</div>
+    <table class="table table-borderless table-hover">
       <thead>
         <tr class="text-center">
-          <!-- <th scope="col">관광지 상세/th></th> -->
+          <th>사진</th>
+          <th>위치</th>
+          <th>이름</th>
         </tr>
       </thead>
       <tbody>
@@ -287,9 +305,11 @@ const getPlan = () => {
           :key="attraction.attraction_id"
           @click="viewAttraction(attraction)"
         >
-          <th><img :src="attraction.first_image" width="50" /></th>
-          <th>{{ attraction.attraction_id }}</th>
-          <th>{{ attraction.title }}</th>
+          <th class="fs-6 align-middle fw-normal">
+            <img :src="attraction.first_image" width="50" class="rounded-3" />
+          </th>
+          <th class="fs-6 align-middle fw-normal">{{ attraction.addr1 }}</th>
+          <th class="fs-6 align-middle fw-normal">{{ attraction.title }}</th>
         </tr>
       </tbody>
     </table>
