@@ -167,7 +167,8 @@ const check = () => {
             <option v-for="year in birthYearRange" :key="year" :value="year">{{ year }}</option>
           </select>
           <br />
-          <div class="my-5"></div>
+          <!-- <div class="my-5"></div> -->
+          <div style="height: 30px"></div>
           <button id="btn-tologin" class="btn btn-secondary me-3" type="button" @click="login">
             로그인
           </button>

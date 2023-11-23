@@ -55,7 +55,7 @@ const loginFailMessage = ref("아이디나 비밀번호를 확인하세요");
       <div class="form">
         <form>
           <!-- 로그인에 실패했을 경우에 나오는 메시지 -->
-          <div class="text-danger my-2">{{ loginFailMessage }}</div>
+          <!-- <div class="text-danger my-2">{{ loginFailMessage }}</div> -->
 
           <input
             class="form-control my-2 d-inline-block"
@@ -79,16 +79,16 @@ const loginFailMessage = ref("아이디나 비밀번호를 확인하세요");
             @keyup.enter="login"
           />
           <br />
-          <input
+          <!-- <input
             class="form-check-input mb-2"
             type="checkbox"
             value="ok"
             id="saveid"
             name="saveid"
-          />
-          <label class="form-check-label" for="saveid"> 아이디 저장 </label>
-          <div class="my-5"></div>
-
+          /> -->
+          <!-- <label class="form-check-label" for="saveid"> 아이디 저장 </label> -->
+          <!-- <div class="my-5"></div> -->
+          <div style="height: 30px"></div>
           <button
             id="btn-toregister"
             class="btn btn-secondary me-3"
