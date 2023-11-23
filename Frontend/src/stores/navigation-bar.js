@@ -8,7 +8,7 @@ export const useNavigationBarStore = defineStore(
       { name: "회원가입", show: true, routeName: "user-register" },
       { name: "로그인", show: true, routeName: "user-login" },
       { name: "마이페이지", show: false, routeName: "user-mypage" },
-      { name: "여행계획", show: false, routeName: "user-trip-plan" },
+      { name: "여행계획", show: false, routeName: "board-my-list" },
       { name: "로그아웃", show: false, routeName: "user-logout" },
     ]);
 

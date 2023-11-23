@@ -135,7 +135,7 @@ const addAttractionMyList = (attraction) => {
   addedAttractionList.value.push(attraction);
   console.log(
     " @@@@@@@@@@@@@@@@@@@@@@@@ addAttractionMyList @@@@@@@@@@@@@@@@@@@@@@@@" +
-      JSON.stringify(addedAttractionList.value)
+    JSON.stringify(addedAttractionList.value)
   );
 };
 
@@ -214,18 +214,14 @@ const getPlan = () => {
       <div class="col">
         <input type="text" v-model="keyword" @keyup.enter="onSearchButtonClick" />
         <button class="pb-2" @click="onSearchButtonClick">검색</button>
-        <button @click="savePlan">계획 저장</button>
-        <!-- <button @click="getPlan">계획 불러오기</button> -->
+        <!-- <button @click="savePlan">계획 저장</button>
+              <button @click="getPlan">계획 불러오기</button> -->
       </div>
     </div>
     <div class="d-flex justify-content">
       <Suspense>
-        <TestMap
-          :attractionList="attractionList"
-          :attractionSelect="attractionSelect"
-          :addedAttractionList="addedAttractionList"
-          @addAttractionMyList="addAttractionMyList"
-        ></TestMap>
+        <TestMap :attractionList="attractionList" :attractionSelect="attractionSelect"
+          :addedAttractionList="addedAttractionList" @addAttractionMyList="addAttractionMyList"></TestMap>
       </Suspense>
 
       <div class="table‑wrapper" style="width: 100%">
@@ -236,11 +232,7 @@ const getPlan = () => {
             </tr>
           </thead>
           <tbody>
-            <tr
-              class="text-center"
-              v-for="(attraction, index) in addedAttractionList"
-              :key="attraction.attraction_id"
-            >
+            <tr class="text-center" v-for="(attraction, index) in addedAttractionList" :key="attraction.attraction_id">
               <th><img :src="attraction.first_image" alt="" width="150" /></th>
               <th>
                 {{ attraction.title }}
@@ -260,12 +252,8 @@ const getPlan = () => {
         </tr>
       </thead>
       <tbody>
-        <tr
-          class="text-center"
-          v-for="attraction in attractionList"
-          :key="attraction.attraction_id"
-          @click="viewAttraction(attraction)"
-        >
+        <tr class="text-center" v-for="attraction in attractionList" :key="attraction.attraction_id"
+          @click="viewAttraction(attraction)">
           <th><img :src="attraction.first_image" width="50" /></th>
           <th>{{ attraction.attraction_id }}</th>
           <th>{{ attraction.title }}</th>

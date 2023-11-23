@@ -129,10 +129,8 @@ const submitComment = () => {
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
-              <img
-                class="avatar me-2 float-md-start bg-light p-2"
-                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
-              />
+              <img class="avatar me-2 float-md-start bg-light p-2"
+                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" />
               <p>
                 <span class="fw-bold">{{ board.userId }}</span> <br />
                 <span class="text-secondary fw-light">
@@ -151,20 +149,12 @@ const submitComment = () => {
             <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
               글목록
             </button>
-            <button
-              v-if="board.userId === userId"
-              type="button"
-              class="btn btn-outline-success mb-3 ms-1"
-              @click="moveModify"
-            >
+            <button v-if="board.userId === userId" type="button" class="btn btn-outline-success mb-3 ms-1"
+              @click="moveModify">
               글수정
             </button>
-            <button
-              v-if="board.userId === userId"
-              type="button"
-              class="btn btn-outline-danger mb-3 ms-1"
-              @click="onDeleteBoard"
-            >
+            <button v-if="board.userId === userId" type="button" class="btn btn-outline-danger mb-3 ms-1"
+              @click="onDeleteBoard">
               글삭제
             </button>
           </div>
@@ -183,12 +173,8 @@ const submitComment = () => {
             </tr>
           </thead>
           <tbody>
-            <CommentListItem
-              v-for="comment in commentList"
-              :key="comment.commentNo"
-              :comment="comment"
-              :userId="userId"
-            ></CommentListItem>
+            <CommentListItem v-for="comment in commentList" :key="comment.commentNo" :comment="comment" :userId="userId">
+            </CommentListItem>
           </tbody>
         </table>
       </div>
@@ -197,22 +183,11 @@ const submitComment = () => {
         <h3 class="text-center">댓글 작성하기</h3>
         <div class="mb-3">
           <label for="commentAuthor" class="form-label">댓글 작성자</label>
-          <input
-            type="text"
-            class="form-control"
-            id="commentAuthor"
-            :value="userId"
-            disabled="true"
-          />
+          <input type="text" class="form-control" id="commentAuthor" :value="userId" disabled="true" />
         </div>
         <div class="mb-3">
           <label for="commentContent" class="form-label">댓글 내용</label>
-          <textarea
-            class="form-control"
-            id="commentContent"
-            rows="3"
-            v-model="comment.content"
-          ></textarea>
+          <textarea class="form-control" id="commentContent" rows="3" v-model="comment.content"></textarea>
         </div>
         <button type="button" class="btn btn-primary" @click="submitComment">작성</button>
       </div>
