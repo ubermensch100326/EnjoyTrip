@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { registerUser } from "@/api/user";
 const router = useRouter();
@@ -42,6 +42,23 @@ const register = () => {
     (error) => console.error(error)
   );
 };
+
+const passwordMatchMessage = ref("");
+// 비밀번호 일치 여부 확인 함수
+const checkPasswordMatch = () => {
+  if (userData.value.userPwd === userData.value.checkPwd) {
+    passwordMatchMessage.value = "비밀번호가 일치합니다.";
+  } else {
+    passwordMatchMessage.value = "비밀번호가 일치하지 않습니다.";
+  }
+};
+// userData 값 변경 시마다 비밀번호 일치 여부 확인
+watch(
+  () => userData.value.checkPwd,
+  () => {
+    checkPasswordMatch();
+  }
+);
 </script>
 
 <template>
@@ -64,13 +81,13 @@ const register = () => {
             style="width: 202px"
           />
           <br />
+          <br />
           <select
             v-model="userData.birthYear"
             class="form-control my-2 d-inline-block"
             style="width: 202px"
           >
-            <option disabled value="">탄생년도 선택</option>
-            <!-- Generating options for birth year from 1900 to current year -->
+            <option value="0" selected disabled>출생 연도</option>
             <option v-for="year in birthYearRange" :key="year" :value="year">{{ year }}</option>
           </select>
           <br />
@@ -84,8 +101,7 @@ const register = () => {
             style="width: 202px"
           />
           <br />
-          <!-- 원래 여기는 아이디 입력할 때마다 쓸 수 있는 건지 확인함 -->
-          <div id="result-view-id" class="mb-2"><br /></div>
+          <br />
           <input
             v-model="userData.userPwd"
             class="form-control my-2 d-inline-block"
@@ -107,6 +123,8 @@ const register = () => {
             placeholder="비밀번호 확인"
             style="width: 202px"
           />
+          <!-- 원래 여기는 아이디 입력할 때마다 쓸 수 있는 건지 확인함 -->
+          <div id="result-view-id" class="mb-2">{{ passwordMatchMessage }}</div>
           <br />
           <div id="result-view-pw" class="mb-2"><br /></div>
           <div class="input-group my-3 mx-auto" style="width: 350px">

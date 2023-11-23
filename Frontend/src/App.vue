@@ -35,3 +35,27 @@ the-footer {
   transform: translateY(-100%);
 }
 </style>
+
+<style>
+* {
+  font-family: "JUA";
+}
+
+@font-face {
+  font-family: "JUA";
+  src: url("@/assets/fonts/JUA.ttf");
+}
+
+@font-face {
+  font-family: "D2Coding";
+  src: url("@/assets/fonts/D2Coding.ttf");
+}
+
+input[type="password"] {
+  font-family: "D2Coding";
+}
+
+input[type="password"]::placeholder {
+  font-family: "JUA";
+}
+</style>
