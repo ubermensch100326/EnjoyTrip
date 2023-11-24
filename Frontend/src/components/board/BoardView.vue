@@ -128,54 +128,67 @@ const submitComment = () => {
                 {{ board.content }}
             </div>
             <div class="col-lg-10">
+                <!-- start -->
+
                 <!-- <div class="col-lg-10 text-start">
-          <div class="row my-2">
-            <h2 class="text-secondary px-5">{{ board.boardNo }}. {{ board.subject }}</h2>
-          </div>
-          <div class="row">
-            <div class="col-md-8">
-              <div class="clearfix align-content-center">
-                <img
-                  class="avatar me-2 float-md-start bg-light p-2"
-                  src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
-                />
-                <p>
-                  <span class="fw-bold">{{ board.userId }}</span> <br />
-                  <span class="text-secondary fw-light">
-                    {{ board.registerTime }} 조회 : {{ board.hit }}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div class="col-md-4 align-self-center text-end">댓글 : {{ commentList.length }}</div>
-            <div class="divider mb-3"></div>
-            <div class="text-secondary">
-              {{ board.content }}
-            </div>
-            <div class="divider mt-3 mb-3"></div>
-            <div class="d-flex justify-content-end">
-              <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
-                글목록
-              </button>
-              <button
-                v-if="board.userId === userId"
-                type="button"
-                class="btn btn-outline-success mb-3 ms-1"
-                @click="moveModify"
-              >
-                글수정
-              </button>
-              <button
-                v-if="board.userId === userId"
-                type="button"
-                class="btn btn-outline-danger mb-3 ms-1"
-                @click="onDeleteBoard"
-              >
-                글삭제
-              </button>
-            </div>
-          </div>
-        </div> -->
+                    <div class="row my-2">
+                        <h2 class="text-secondary px-5">
+                            {{ board.boardNo }}. {{ board.subject }}
+                        </h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="clearfix align-content-center">
+                                <img
+                                    class="avatar me-2 float-md-start bg-light p-2"
+                                    src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                                />
+                                <p>
+                                    <span class="fw-bold">{{ board.userId }}</span> <br />
+                                    <span class="text-secondary fw-light">
+                                        {{ board.registerTime }} 조회 : {{ board.hit }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center text-end">
+                            댓글 : {{ commentList.length }}
+                        </div>
+                        <div class="divider mb-3"></div>
+                        <div class="text-secondary">
+                            {{ board.content }}
+                        </div>
+                        <div class="divider mt-3 mb-3"></div>
+                        <div class="d-flex justify-content-end">
+                            <button
+                                type="button"
+                                class="btn btn-outline-primary mb-3"
+                                @click="moveList"
+                            >
+                                글목록
+                            </button>
+                            <button
+                                v-if="board.userId === userId"
+                                type="button"
+                                class="btn btn-outline-success mb-3 ms-1"
+                                @click="moveModify"
+                            >
+                                글수정
+                            </button>
+                            <button
+                                v-if="board.userId === userId"
+                                type="button"
+                                class="btn btn-outline-danger mb-3 ms-1"
+                                @click="onDeleteBoard"
+                            >
+                                글삭제
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- end -->
+
                 <div>
                     <div style="height: 70px"></div>
                     <table class="table table-hover table-borderless">
