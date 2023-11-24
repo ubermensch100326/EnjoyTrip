@@ -29,10 +29,13 @@ const logout = () => {
   <body style="overflow-y: scroll">
     <nav class="navbar navbar-expand-sm bg-light-subtle bg-gradient shadow-sm fixed-top">
       <div class="container">
-        <router-link :to="{ name: 'home' }" class="navbar-brand">
+        <router-link :to="{ name: 'home' }" class="navbar-brand" style="padding: 0; margin: 0">
           <img src="@/assets/enjoytrip_logo.png" alt="favicon" width="50" />
         </router-link>
-        <h3>EnjoyTrip</h3>
+        <router-link :to="{ name: 'home' }" class="navbar-brand" style="padding: 0; margin: 0">
+          <div class="fs-3 fw-bold container">EnjoyTrip</div>
+        </router-link>
+
         <button
           class="navbar-toggler border-0"
           type="button"
