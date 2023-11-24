@@ -7,7 +7,7 @@ function listBoard(param, success, fail) {
 }
 
 function listMyBoard(param, success, fail) {
-    local.get(`/board`, { params: param }).then(success).catch(fail);
+    local.get(`/board/mylist`, { params: param }).then(success).catch(fail);
 }
 
 function viewBoard(boardno, success, fail) {
